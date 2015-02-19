@@ -1,0 +1,264 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Zikula 1.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-19 22:55+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lib/Zwork/Version.php:13
+msgid "System tools"
+msgstr ""
+
+#: lib/Zwork/Version.php:14
+msgid "zwork"
+msgstr ""
+
+#: lib/Zwork/Version.php:15
+msgid "System tools and code execution."
+msgstr ""
+
+#: lib/Zwork/Api/Admin.php:22 templates/admin/main.tpl:14
+msgid "Scripts"
+msgstr ""
+
+#: lib/Zwork/Api/Admin.php:28 templates/admin/sysinfo.tpl:4
+msgid "Server information"
+msgstr ""
+
+#: lib/Zwork/Api/Admin.php:34 templates/admin/clientinfo.tpl:4
+msgid "Client information"
+msgstr ""
+
+#: lib/Zwork/Api/Admin.php:40
+msgid "Settings"
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:59
+msgid "Directory exists: "
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:62
+msgid "Directory is created: "
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:64
+msgid "Can not create directory: "
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:72
+msgid "Done! Updated configuration."
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:89
+msgid "Please specify in module settings directory for scripts to execute!"
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:99
+msgid ""
+"Please visit module settings and create directory for scripts to execute!"
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:131
+msgid "Result from"
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:137
+msgid "Done! Executed selected scripts."
+msgstr ""
+
+#: lib/Zwork/Controller/Admin.php:139
+msgid "Please select scripts to execute!"
+msgstr ""
+
+#: templates/admin/main.tpl:4
+msgid "Scripts to execute"
+msgstr ""
+
+#: templates/admin/main.tpl:8
+msgid ""
+"This module executes PHP scripts, with system core functions and classes "
+"available."
+msgstr ""
+
+#: templates/admin/main.tpl:16
+msgid ""
+"To add more scripts ready for execution, please upload them in scripts "
+"directory:"
+msgstr ""
+
+#: templates/admin/main.tpl:17 templates/admin/modifyconfig.tpl:36
+msgid "See example.php for sample."
+msgstr ""
+
+#: templates/admin/main.tpl:28
+msgid "Execute"
+msgstr ""
+
+#: templates/admin/main.tpl:29 templates/admin/modifyconfig.tpl:46
+msgid "Cancel"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:9 templates/admin/clientinfo.tpl:9
+msgid "General info"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:12 templates/admin/sysinfo.tpl:35
+msgid "Please enter URL in settings."
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:12 templates/admin/sysinfo.tpl:14
+msgid "Hosting admin panel"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:14 templates/admin/sysinfo.tpl:37
+#: templates/admin/sysinfo.tpl:59
+msgid "Open on new page"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:18
+msgid "Operating system"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:22
+msgid "Server IP address and port"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:24 templates/admin/clientinfo.tpl:13
+#: templates/admin/clientinfo.tpl:21
+msgid "See details"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:27
+msgid "Site root directory"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:32
+msgid "Database info"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:35 templates/admin/sysinfo.tpl:37
+msgid "Database admin panel"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:41
+msgid "Database server"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:45
+msgid "Database driver"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:49
+msgid "Database host"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:53
+msgid "Database name"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:58
+msgid "PHP info"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:59
+msgid "Display PHP info in new page"
+msgstr ""
+
+#: templates/admin/sysinfo.tpl:65 templates/admin/clientinfo.tpl:37
+msgid "OK"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:4
+msgid "Module settings"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:11
+msgid "General settings"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:13
+msgid "Hosting admin URL"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:16
+msgid ""
+"Enter here URL address to your hosting provider admin panel (Cpanel or "
+"other)."
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:17 templates/admin/modifyconfig.tpl:25
+msgid "Link will appear in the info page for easy access."
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:21
+msgid "Database admin URL"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:24
+msgid ""
+"Enter here URL address to your database admin panel (phpMyAdmin or other)."
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:29
+msgid "Default scripts directory"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:32
+msgid "Directory exist."
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:34
+msgid "Directory does not exist!"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:36
+msgid "This is the place, where you upload scripts to execute."
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:40
+msgid "Create specified scripts directory"
+msgstr ""
+
+#: templates/admin/modifyconfig.tpl:45
+msgid "Save"
+msgstr ""
+
+#: templates/admin/clientinfo.tpl:11
+msgid "User IP address and port"
+msgstr ""
+
+#: templates/admin/clientinfo.tpl:17
+msgid "Browser info"
+msgstr ""
+
+#: templates/admin/clientinfo.tpl:19
+msgid "User agent"
+msgstr ""
+
+#: templates/admin/clientinfo.tpl:24
+msgid "Accept language"
+msgstr ""
+
+#: templates/admin/clientinfo.tpl:28
+msgid "Accept"
+msgstr ""
+
+#: templates/admin/clientinfo.tpl:32
+msgid "Cookies"
+msgstr ""
+
+#: templates/admin/clientinfo.tpl:33
+msgid "Display on new page"
+msgstr ""

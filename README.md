@@ -1,0 +1,1 @@
+This module allows administrators of Zikula sites to execute PHP code, while system functions and classes are available, and also to examine server (OS, PHP, database) and client (browser) information.
