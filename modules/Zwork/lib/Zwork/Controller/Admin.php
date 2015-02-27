@@ -201,7 +201,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function displaysysinforaw()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
 
         phpinfo();
         exit();
@@ -229,7 +229,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function displaycookies()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
 
         echo System::serverGetVar('HTTP_COOKIE');
         exit();
