@@ -1,6 +1,6 @@
 {adminheader}
 <div class="z-admin-content-pagetitle">
-    {icon type="info" size="small"}
+    {icon type="gears" size="small"}
     <h3>{gt text='Scripts to execute'}</h3>
 </div>
 
