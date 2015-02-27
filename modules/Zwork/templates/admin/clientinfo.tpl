@@ -33,9 +33,6 @@
             <span><strong><a href="{modurl modname='zwork' type='admin' func='displaycookies'}" target="_blank">{gt text='Display on new page'}</a></strong></span>
         </div>
     </fieldset>
-    <div class="z-buttons z-formbuttons">
-        {button src="button_ok.png" set="icons/extrasmall" __alt="OK" __title="OK" __text="OK"}
-    </div>
 </form>
 
 {adminfooter}

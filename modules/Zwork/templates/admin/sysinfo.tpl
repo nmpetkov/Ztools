@@ -70,9 +70,6 @@
         {/if}
     </fieldset>
     {/if}
-    <div class="z-buttons z-formbuttons">
-        {button src="button_ok.png" set="icons/extrasmall" __alt="OK" __title="OK" __text="OK"}
-    </div>
 </form>
 
 {adminfooter}
