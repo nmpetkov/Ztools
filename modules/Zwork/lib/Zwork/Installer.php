@@ -16,6 +16,7 @@ class Zwork_Installer extends Zikula_AbstractInstaller
     {
         // Set up module config variables
         $this->setVar('zwork_scriptsdir', 'userdata/Zwork/scripts');
+        $this->setVar('zwork_scriptssort', "0");
         $this->setVar('zwork_url_cpanel', '');
         $this->setVar('zwork_url_phpmyadmin', '');
 

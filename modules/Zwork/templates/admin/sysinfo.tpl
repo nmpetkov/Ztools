@@ -15,8 +15,8 @@
             {/if}
         </strong>
         <div class="z-formrow">
-            <label>{gt text='Operating system'}</label>
-            <span><strong>{$phpos}, {$server_software}</strong></span>
+            <label>{gt text='System'}</label>
+            <span><strong>{$phpos}, {$server_software}, PHP {$server_phpversion}</strong></span>
         </div>
         <div class="z-formrow">
             <label>{gt text='Server IP address and port'}</label>

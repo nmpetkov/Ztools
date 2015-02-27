@@ -40,6 +40,13 @@
             <label for="scriptsdir_createfolder">{gt text='Create specified scripts directory'}</label>
             <input id="scriptsdir_createfolder" type="checkbox" name="scriptsdir_createfolder" />
         </div>
+        <div class="z-formrow">
+            <label for="zwork_scriptssort">{gt text="Display scripts"}</label>
+            <select id="zwork_scriptssort" name="zwork_scriptssort" size="1">
+                <option value="0"{if $vars.zwork_scriptssort == "0"} selected="selected"{/if}>{gt text="Not sorted"}</option>
+                <option value="1"{if $vars.zwork_scriptssort == "1"} selected="selected"{/if}>{gt text="Alphabetical order"}</option>
+            </select>
+        </div>
     </fieldset>
     <div class="z-buttons z-formbuttons">
         {button src="button_ok.png" set="icons/extrasmall" __alt="Save" __title="Save" __text="Save"}

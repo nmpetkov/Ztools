@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-19 22:55+0000\n"
+"POT-Creation-Date: 2015-02-27 14:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,248 +17,383 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lib/Zwork/Version.php:13
+#: modules/Zwork/lib/Zwork/Version.php:13
 msgid "System tools"
 msgstr ""
 
-#: lib/Zwork/Version.php:14
+#: modules/Zwork/lib/Zwork/Version.php:14
 msgid "zwork"
 msgstr ""
 
-#: lib/Zwork/Version.php:15
+#: modules/Zwork/lib/Zwork/Version.php:15
 msgid "System tools and code execution."
 msgstr ""
 
-#: lib/Zwork/Api/Admin.php:22 templates/admin/main.tpl:14
+#: modules/Zwork/lib/Zwork/Api/Admin.php:22
+#: modules/Zwork/templates/admin/scripts.tpl:13
 msgid "Scripts"
 msgstr ""
 
-#: lib/Zwork/Api/Admin.php:28 templates/admin/sysinfo.tpl:4
+#: modules/Zwork/lib/Zwork/Api/Admin.php:28
+#: modules/Zwork/templates/admin/sysinfo.tpl:4
 msgid "Server information"
 msgstr ""
 
-#: lib/Zwork/Api/Admin.php:34 templates/admin/clientinfo.tpl:4
+#: modules/Zwork/lib/Zwork/Api/Admin.php:34
+#: modules/Zwork/templates/admin/clientinfo.tpl:4
 msgid "Client information"
 msgstr ""
 
-#: lib/Zwork/Api/Admin.php:40
+#: modules/Zwork/lib/Zwork/Api/Admin.php:40
 msgid "Settings"
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:59
-msgid "Directory exists: "
+#: modules/Zwork/lib/Zwork/Api/Admin.php:53
+msgid "Error! File name can not be empty."
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:62
-msgid "Directory is created: "
+#: modules/Zwork/lib/Zwork/Api/Admin.php:56
+#, php-format
+msgid "Error! File %s already exist."
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:64
-msgid "Can not create directory: "
+#: modules/Zwork/lib/Zwork/Api/Admin.php:62
+#, php-format
+msgid "Error! Can not create file %s."
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:72
+#: modules/Zwork/lib/Zwork/Api/Admin.php:68
+#, php-format
+msgid "Error! Can not write to file %s."
+msgstr ""
+
+#: modules/Zwork/lib/Zwork/Api/Admin.php:86
+#, php-format
+msgid "Result from: %s"
+msgstr ""
+
+#: modules/Zwork/lib/Zwork/Api/Admin.php:89
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:279
+#, php-format
+msgid "Error! File does not exist: %s"
+msgstr ""
+
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:62
+#, php-format
+msgid "Directory exists: %s."
+msgstr ""
+
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:65
+#, php-format
+msgid "Directory is created: %s."
+msgstr ""
+
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:67
+#, php-format
+msgid "Can not create directory %s."
+msgstr ""
+
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:75
 msgid "Done! Updated configuration."
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:89
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:92
 msgid "Please specify in module settings directory for scripts to execute!"
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:99
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:105
 msgid ""
 "Please visit module settings and create directory for scripts to execute!"
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:131
-msgid "Result from"
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:134
+#, php-format
+msgid "New file %s is created."
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:137
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:148
 msgid "Done! Executed selected scripts."
 msgstr ""
 
-#: lib/Zwork/Controller/Admin.php:139
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:151
 msgid "Please select scripts to execute!"
 msgstr ""
 
-#: templates/admin/main.tpl:4
-msgid "Scripts to execute"
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:306
+#, php-format
+msgid "File %s is deleted."
 msgstr ""
 
-#: templates/admin/main.tpl:8
-msgid ""
-"This module executes PHP scripts, with system core functions and classes "
-"available."
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:308
+#, php-format
+msgid "Error! File %s can not be deleted."
 msgstr ""
 
-#: templates/admin/main.tpl:16
-msgid ""
-"To add more scripts ready for execution, please upload them in scripts "
-"directory:"
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:311
+#, php-format
+msgid "File does not exist: %s"
 msgstr ""
 
-#: templates/admin/main.tpl:17 templates/admin/modifyconfig.tpl:36
-msgid "See example.php for sample."
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:331
+msgid "Error! File name is empty."
 msgstr ""
 
-#: templates/admin/main.tpl:28
-msgid "Execute"
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:337
+#, php-format
+msgid "Error! Can not write content to file %s."
 msgstr ""
 
-#: templates/admin/main.tpl:29 templates/admin/modifyconfig.tpl:46
-msgid "Cancel"
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:339
+#, php-format
+msgid "Done! File %s is saved."
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:9 templates/admin/clientinfo.tpl:9
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:342
+#, php-format
+msgid "Error! File %s does not exist."
+msgstr ""
+
+#: modules/Zwork/templates/admin/sysinfo.tpl:9
+#: modules/Zwork/templates/admin/clientinfo.tpl:9
 msgid "General info"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:12 templates/admin/sysinfo.tpl:35
+#: modules/Zwork/templates/admin/sysinfo.tpl:12
+#: modules/Zwork/templates/admin/sysinfo.tpl:35
 msgid "Please enter URL in settings."
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:12 templates/admin/sysinfo.tpl:14
+#: modules/Zwork/templates/admin/sysinfo.tpl:12
+#: modules/Zwork/templates/admin/sysinfo.tpl:14
 msgid "Hosting admin panel"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:14 templates/admin/sysinfo.tpl:37
-#: templates/admin/sysinfo.tpl:59
+#: modules/Zwork/templates/admin/sysinfo.tpl:14
+#: modules/Zwork/templates/admin/sysinfo.tpl:37
+#: modules/Zwork/templates/admin/sysinfo.tpl:59
 msgid "Open on new page"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:18
-msgid "Operating system"
+#: modules/Zwork/templates/admin/sysinfo.tpl:18
+msgid "System"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:22
+#: modules/Zwork/templates/admin/sysinfo.tpl:22
 msgid "Server IP address and port"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:24 templates/admin/clientinfo.tpl:13
-#: templates/admin/clientinfo.tpl:21
+#: modules/Zwork/templates/admin/sysinfo.tpl:24
+#: modules/Zwork/templates/admin/clientinfo.tpl:13
+#: modules/Zwork/templates/admin/clientinfo.tpl:21
 msgid "See details"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:27
+#: modules/Zwork/templates/admin/sysinfo.tpl:27
 msgid "Site root directory"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:32
+#: modules/Zwork/templates/admin/sysinfo.tpl:32
 msgid "Database info"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:35 templates/admin/sysinfo.tpl:37
+#: modules/Zwork/templates/admin/sysinfo.tpl:35
+#: modules/Zwork/templates/admin/sysinfo.tpl:37
 msgid "Database admin panel"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:41
+#: modules/Zwork/templates/admin/sysinfo.tpl:41
 msgid "Database server"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:45
+#: modules/Zwork/templates/admin/sysinfo.tpl:45
 msgid "Database driver"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:49
+#: modules/Zwork/templates/admin/sysinfo.tpl:49
 msgid "Database host"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:53
+#: modules/Zwork/templates/admin/sysinfo.tpl:53
 msgid "Database name"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:58
+#: modules/Zwork/templates/admin/sysinfo.tpl:58
 msgid "PHP info"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:59
+#: modules/Zwork/templates/admin/sysinfo.tpl:59
 msgid "Display PHP info in new page"
 msgstr ""
 
-#: templates/admin/sysinfo.tpl:65 templates/admin/clientinfo.tpl:37
+#: modules/Zwork/templates/admin/sysinfo.tpl:65
+#: modules/Zwork/templates/admin/clientinfo.tpl:37
 msgid "OK"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:4
+#: modules/Zwork/templates/admin/modifyconfig.tpl:4
 msgid "Module settings"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:11
+#: modules/Zwork/templates/admin/modifyconfig.tpl:11
 msgid "General settings"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:13
+#: modules/Zwork/templates/admin/modifyconfig.tpl:13
 msgid "Hosting admin URL"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:16
+#: modules/Zwork/templates/admin/modifyconfig.tpl:16
 msgid ""
 "Enter here URL address to your hosting provider admin panel (Cpanel or "
 "other)."
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:17 templates/admin/modifyconfig.tpl:25
+#: modules/Zwork/templates/admin/modifyconfig.tpl:17
+#: modules/Zwork/templates/admin/modifyconfig.tpl:25
 msgid "Link will appear in the info page for easy access."
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:21
+#: modules/Zwork/templates/admin/modifyconfig.tpl:21
 msgid "Database admin URL"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:24
+#: modules/Zwork/templates/admin/modifyconfig.tpl:24
 msgid ""
 "Enter here URL address to your database admin panel (phpMyAdmin or other)."
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:29
+#: modules/Zwork/templates/admin/modifyconfig.tpl:29
 msgid "Default scripts directory"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:32
+#: modules/Zwork/templates/admin/modifyconfig.tpl:32
 msgid "Directory exist."
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:34
+#: modules/Zwork/templates/admin/modifyconfig.tpl:34
 msgid "Directory does not exist!"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:36
+#: modules/Zwork/templates/admin/modifyconfig.tpl:36
 msgid "This is the place, where you upload scripts to execute."
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:40
+#: modules/Zwork/templates/admin/modifyconfig.tpl:36
+#: modules/Zwork/templates/admin/scripts.tpl:16
+msgid "See example.php for sample."
+msgstr ""
+
+#: modules/Zwork/templates/admin/modifyconfig.tpl:40
 msgid "Create specified scripts directory"
 msgstr ""
 
-#: templates/admin/modifyconfig.tpl:45
+#: modules/Zwork/templates/admin/modifyconfig.tpl:44
+msgid "Display scripts"
+msgstr ""
+
+#: modules/Zwork/templates/admin/modifyconfig.tpl:46
+msgid "Not sorted"
+msgstr ""
+
+#: modules/Zwork/templates/admin/modifyconfig.tpl:47
+msgid "Alphabetical order"
+msgstr ""
+
+#: modules/Zwork/templates/admin/modifyconfig.tpl:52
+#: modules/Zwork/templates/admin/editfile.tpl:48
 msgid "Save"
 msgstr ""
 
-#: templates/admin/clientinfo.tpl:11
+#: modules/Zwork/templates/admin/modifyconfig.tpl:53
+#: modules/Zwork/templates/admin/scripts.tpl:35
+#: modules/Zwork/templates/admin/editfile.tpl:51
+msgid "Cancel"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:4
+msgid "Scripts to execute"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:8
+msgid ""
+"This module executes PHP scripts, with system core functions and classes "
+"available."
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:15
+msgid ""
+"To add more scripts ready for execution, please upload them in scripts "
+"directory:"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:16
+msgid "You can create an empty script in the form below."
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:23
+msgid "Edit file"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:24
+msgid "Are you sure you want to delete file\\n"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:24
+msgid "Delete"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:28
+msgid "Create empty PHP file:"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:30
+msgid "Enter just file name, php extension will be forced."
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:34
+msgid "Execute"
+msgstr ""
+
+#: modules/Zwork/templates/admin/editfile.tpl:23
+msgid "Edit script"
+msgstr ""
+
+#: modules/Zwork/templates/admin/editfile.tpl:30
+msgid "Script"
+msgstr ""
+
+#: modules/Zwork/templates/admin/editfile.tpl:49
+msgid "Save and edit"
+msgstr ""
+
+#: modules/Zwork/templates/admin/editfile.tpl:50
+msgid "Save and execute"
+msgstr ""
+
+#: modules/Zwork/templates/admin/clientinfo.tpl:11
 msgid "User IP address and port"
 msgstr ""
 
-#: templates/admin/clientinfo.tpl:17
+#: modules/Zwork/templates/admin/clientinfo.tpl:17
 msgid "Browser info"
 msgstr ""
 
-#: templates/admin/clientinfo.tpl:19
+#: modules/Zwork/templates/admin/clientinfo.tpl:19
 msgid "User agent"
 msgstr ""
 
-#: templates/admin/clientinfo.tpl:24
+#: modules/Zwork/templates/admin/clientinfo.tpl:24
 msgid "Accept language"
 msgstr ""
 
-#: templates/admin/clientinfo.tpl:28
+#: modules/Zwork/templates/admin/clientinfo.tpl:28
 msgid "Accept"
 msgstr ""
 
-#: templates/admin/clientinfo.tpl:32
+#: modules/Zwork/templates/admin/clientinfo.tpl:32
 msgid "Cookies"
 msgstr ""
 
-#: templates/admin/clientinfo.tpl:33
+#: modules/Zwork/templates/admin/clientinfo.tpl:33
 msgid "Display on new page"
 msgstr ""

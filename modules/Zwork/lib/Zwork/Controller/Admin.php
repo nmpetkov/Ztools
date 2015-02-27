@@ -29,10 +29,13 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
         if (!isset($vars['zwork_url_phpmyadmin'])) {
             $vars['zwork_url_phpmyadmin'] = '';
         }
+        if (!isset($vars['zwork_scriptssort'])) {
+            $vars['zwork_scriptssort'] = '0';
+        }
 
         $this->view->assign('vars', $vars);
         $this->view->assign('scriptsdir_exist', is_dir($vars['zwork_scriptsdir']));
-        
+
         return $this->view->fetch('admin/modifyconfig.tpl');
     }
 
@@ -42,11 +45,11 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
     public function updateconfig()
     {
         $this->checkCsrfToken();
-        
         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         $vars = array();
         $vars['zwork_scriptsdir'] = FormUtil::getPassedValue('zwork_scriptsdir', 'userdata/Zwork');
+        $vars['zwork_scriptssort'] = FormUtil::getPassedValue('zwork_scriptssort', "0");
         $vars['zwork_url_cpanel'] = FormUtil::getPassedValue('zwork_url_cpanel', '');
         $vars['zwork_url_phpmyadmin'] = FormUtil::getPassedValue('zwork_url_phpmyadmin', '');
         $scriptsdir_createfolder = (bool)FormUtil::getPassedValue('scriptsdir_createfolder', false, 'POST');
@@ -56,12 +59,12 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
 
         if ($scriptsdir_createfolder && !empty($vars['zwork_scriptsdir'])) {
             if (is_dir($vars['zwork_scriptsdir'])) {
-                 LogUtil::registerStatus(__('Directory exists: ').$vars['zwork_scriptsdir']);
+                 LogUtil::registerStatus(__('Directory exists: %s.', $vars['zwork_scriptsdir']));
             } else {
                 if (FileUtil::mkdirs($vars['zwork_scriptsdir'], 0777)) {
-                    LogUtil::registerStatus(__('Directory is created: ').$vars['zwork_scriptsdir']);
+                    LogUtil::registerStatus(__('Directory is created: %s.', $vars['zwork_scriptsdir']));
                 } else {
-                    LogUtil::registerError(__('Can not create directory: ').$vars['zwork_scriptsdir']);
+                    LogUtil::registerError(__('Can not create directory %s.', $vars['zwork_scriptsdir']));
                 }
             }
         }
@@ -95,6 +98,9 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
                     $scripts[] = $file;
                     }
                 }
+                if ($vars['zwork_scriptssort']) {
+                    natcasesort($scripts);
+                }
             } else {
                 LogUtil::registerError(__('Please visit module settings and create directory for scripts to execute!'));
             }
@@ -103,40 +109,47 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
         $this->view->assign('vars', $vars);
         $this->view->assign('scripts', $scripts);
 
-        return $this->view->fetch('admin/main.tpl');
+        return $this->view->fetch('admin/scripts.tpl');
     }
 
     /**
      * Execute selected scripts
      */
-    public function executescrips()
+    public function executescripts()
     {
         $this->checkCsrfToken();
-        
         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
-
-        // Get module configuration vars
-        $vars = $this->getVars();
 
         $execute = FormUtil::getPassedValue('execute', array());
         $scripts = FormUtil::getPassedValue('scripts', array());
+        $newSriptFilename = FormUtil::getPassedValue('newSriptFilename', '');
+        
+        // create file, if given
+        if ($newSriptFilename) {
+            $newSriptFilename = pathinfo($newSriptFilename, PATHINFO_BASENAME) . '.php'; // force php extension
+            $newSriptFilename = $this->getScriptFullPath($newSriptFilename);
+            $filecontent = '<?php' . PHP_EOL;
+            $fileIsCreated = ModUtil::apiFunc($this->name, 'admin', 'createFile', array('filename' => $newSriptFilename, 'filecontent' => $filecontent));
+            if ($fileIsCreated) {
+                LogUtil::registerStatus($this->__f('New file %s is created.', $newSriptFilename));
+            }
+        }
 
+        // execute selected scripts
         $countexecutions = 0;
         foreach ($execute as $key => $value) {
             if ($value) {
-                ob_start();
-                include DataUtil::formatForOS($vars['zwork_scriptsdir'] . (substr($vars['zwork_scriptsdir'], -1) == '/' ? '' : '/') . $scripts[$key]);
-                $content = ob_get_clean();
+                ModUtil::apiFunc($this->name, 'admin', 'executeScript', array('filename' => $scripts[$key]));
                 $countexecutions ++;
-                LogUtil::registerStatus('<strong>' . $this->__('Result from') .' '. $scripts[$key] . ':</strong>');
-                LogUtil::registerStatus($content);
             }
         }
   
         if ($countexecutions > 0) {
             LogUtil::registerStatus($this->__('Done! Executed selected scripts.'));
         } else {
-            LogUtil::registerStatus($this->__('Please select scripts to execute!'));
+            if (!$newSriptFilename) {
+                LogUtil::registerStatus($this->__('Please select scripts to execute!'));
+            }
         }
 
         return $this->scripts();
@@ -174,6 +187,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
         $this->view->assign('server_ip', System::serverGetVar('SERVER_ADDR'));
         $this->view->assign('server_port', System::serverGetVar('SERVER_PORT'));
         $this->view->assign('server_software', System::serverGetVar('SERVER_SOFTWARE'));
+        $this->view->assign('server_phpversion', phpversion());
 
         return $this->view->fetch('admin/sysinfo.tpl');
     }
@@ -242,5 +256,105 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
 
         echo System::serverGetVar('HTTP_COOKIE');
         exit();
+    }
+
+    /**
+     * Edit a script (php) file in scripts directory
+     */
+    public function editfile($args)
+    {
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+
+        $filename = FormUtil::getPassedValue('filename', isset($args['filename']) ? $args['filename'] : null, 'REQUEST');
+
+        if (empty($filename)) {
+            LogUtil::registerArgsError();
+            return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
+        }
+        $filenameWithpath = $this->getScriptFullPath($filename);
+
+        if (file_exists($filenameWithpath)) {
+            $filecontent = file_get_contents($filenameWithpath);
+        } else {
+            LogUtil::registerError($this->__f('Error! File does not exist: %s', $filenameWithpath));
+            return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
+        }
+
+        $this->view->assign('filename', $filename);
+        $this->view->assign('filecontent', $filecontent);
+
+        return $this->view->fetch('admin/editfile.tpl');
+    }
+
+    /**
+     * Delete a script file in scripts directory
+     */
+    public function deletefile($args)
+    {
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+
+        $filename = FormUtil::getPassedValue('filename', isset($args['filename']) ? $args['filename'] : null, 'REQUEST');
+
+        if (empty($filename)) {
+            LogUtil::registerArgsError();
+            return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
+        }
+        $filenameWithpath = $this->getScriptFullPath($filename);
+
+        if (file_exists($filenameWithpath)) {
+            if (unlink($filenameWithpath)) {
+            LogUtil::registerStatus($this->__f('File %s is deleted.', $filenameWithpath));
+            } else {
+                LogUtil::registerError($this->__f('Error! File %s can not be deleted.', $filenameWithpath));
+            }
+        } else {
+            LogUtil::registerStatus($this->__f('File does not exist: %s', $filenameWithpath));
+        }
+
+        return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
+    }
+
+    /**
+     * Save edited script
+     */
+    public function savescript()
+    {
+        $this->checkCsrfToken();
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+
+        $filename = FormUtil::getPassedValue('filename', '');
+        $filecontent = FormUtil::getPassedValue('filecontent', '');
+        $edit = FormUtil::getPassedValue('edit', '');
+        $execute = FormUtil::getPassedValue('execute', '');
+
+        if (empty($filename)) {
+            LogUtil::registerError($this->__('Error! File name is empty.'));
+        }
+        $filenameWithpath = $this->getScriptFullPath($filename);
+
+        if (file_exists($filenameWithpath)) {
+            if (file_put_contents($filenameWithpath, $filecontent) === false) {
+                LogUtil::registerError($this->__f('Error! Can not write content to file %s.', $filenameWithpath));
+            } else {
+                LogUtil::registerStatus($this->__f('Done! File %s is saved.', $filenameWithpath));
+            }
+        } else {
+            LogUtil::registerError($this->__f('Error! File %s does not exist.', $filenameWithpath));
+        }
+
+        if ($edit) {
+            return System::redirect(ModUtil::url($this->name, 'admin', 'editfile', array('filename' => $filename)));
+        } elseif ($execute) {
+                ModUtil::apiFunc($this->name, 'admin', 'executeScript', array('filename' => $filename));
+        }
+
+        return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
+    }
+
+    public function getScriptFullPath($filename)
+    {
+        $scriptsdir = ModUtil::apiFunc($this->name, 'admin', 'getScriptsDir');
+
+        return DataUtil::formatForOS($scriptsdir . $filename);
     }
 }
