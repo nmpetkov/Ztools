@@ -4,8 +4,8 @@
     <h3>{gt text='Scripts to execute'}</h3>
 </div>
 
-<div>
-    <p>{gt text="This module executes PHP scripts, with system core functions and classes available."}</p>
+<div class="z-informationmsg">
+    {gt text="This module executes PHP scripts, with system core functions and classes available."}
 </div>
 <form class="z-form" action="{modurl modname="Zwork" type="admin" func="executescripts"}" method="post" enctype="application/x-www-form-urlencoded">
     <input type="hidden" name="csrftoken" value="{insert name="csrftoken"}" />
@@ -20,8 +20,9 @@
             <label for="script_{$index}">{$script}</label>
             <input id="script_{$index}" type="checkbox" name="execute[{$index}]" />
             <input id="script_{$index}" type="hidden" name="scripts[{$index}]" value="{$script}" />
-            &nbsp;&nbsp;&nbsp;<a href="{modurl modname='Zwork' type='admin' func='editfile' filename=$script}">{gt text='Edit file'}</a>
+            &nbsp;&nbsp;&nbsp;<a href="{modurl modname='Zwork' type='admin' func='editfile' filename=$script}">{gt text='Edit'}</a>
             &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Zwork' type='admin' func='deletefile' filename=$script}" onclick="return confirm('{gt text="Are you sure you want to delete file\\n"|cat:$script|cat:"?"}')">{gt text='Delete'}</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Zwork' type='admin' func='downloadfile' filename=$script}">{gt text='Download'}</a>
         </div>
         {/foreach}
         <div class="z-formrow">
@@ -32,7 +33,29 @@
     </fieldset>
     <div class="z-buttons z-formbuttons">
         {button src="button_ok.png" set="icons/extrasmall" __alt="Execute" __title="Execute" __text="Execute"}
-        <a href="{modurl modname="Zwork" type="admin" func='modifyconfig'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>
+        <a href="{modurl modname="Zwork" type="admin" func='main'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>
     </div>
 </form>
+
+<form class="z-form" action="{modurl modname="Zwork" type="admin" func="lockscriptsdir"}" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="csrftoken" value="{insert name="csrftoken"}" />
+    <fieldset>
+        <legend>{gt text='Security'}</legend>
+        <div class="z-informationmsg">
+            {gt text='By default the system is protected from unauthorized web access. Anyway, for security reason, you can explicitly lock access to scripts directory, by creating .htaccess file in it.'}
+        </div>
+        <div class="z-formrow">
+            <label for="scriptsdir">{gt text='Scripts directory'}</label>
+            <input id="scriptsdir" type="text" name="scriptsdir" value="{$vars.zwork_scriptsdir|safetext}" readonly />
+        </div>
+        <div class="{if $scriptsdirlockstatus}z-informationmsg{else}z-warningmsg{/if} z-formnote">
+            <strong>{gt text='Status'}: {if $scriptsdirlockstatus}{gt text='Locked'}{else}{gt text='Unlocked'}{/if}</strong>
+        </div>
+    </fieldset>
+    <div class="z-buttons z-formbuttons">
+        {button src="button_ok.png" name="unlock" value="1" set="icons/extrasmall" __alt="Unlock" __title="Unlock" __text="Unlock"}
+        {button src="button_cancel.png" name="lock" value="1"  set="icons/extrasmall" __alt="Lock" __title="Lock" __text="Lock"}
+    </div>
+</form>
+
 {adminfooter}

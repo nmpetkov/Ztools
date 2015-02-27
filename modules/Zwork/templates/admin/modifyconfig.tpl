@@ -26,6 +26,17 @@
             </div>
         </div>
         <div class="z-formrow">
+            <label for="zwork_showphpinfo">{gt text="Display PHP info"}</label>
+            <select id="zwork_showphpinfo" name="zwork_showphpinfo" size="1">
+                <option value="0"{if $vars.zwork_showphpinfo == "0"} selected="selected"{/if}>{gt text="With link in new page"}</option>
+                <option value="1"{if $vars.zwork_showphpinfo == "1"} selected="selected"{/if}>{gt text="Always on info page"}</option>
+                <option value="2"{if $vars.zwork_showphpinfo == "2"} selected="selected"{/if}>{gt text="Never"}</option>
+            </select>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>{gt text='Scripts'}</legend>
+        <div class="z-formrow">
             <label for="zwork_scriptsdir">{gt text='Default scripts directory'}</label>
             <input id="zwork_scriptsdir" type="text" name="zwork_scriptsdir" value="{$vars.zwork_scriptsdir|safetext}" />
             {if $scriptsdir_exist}
@@ -50,7 +61,7 @@
     </fieldset>
     <div class="z-buttons z-formbuttons">
         {button src="button_ok.png" set="icons/extrasmall" __alt="Save" __title="Save" __text="Save"}
-        <a href="{modurl modname="Zwork" type="admin" func='modifyconfig'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>
+        <a href="{modurl modname="Zwork" type="admin" func='main'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>
     </div>
     </div>
 </form>

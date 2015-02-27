@@ -1,1 +1,8 @@
 ﻿/* Zwork stylesheet */
+
+.phpinfodisplay {
+    max-width: 700px;
+}
+.phpinfodisplay .center table {
+    margin-left: 0;
+}

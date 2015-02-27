@@ -12,7 +12,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function main()
     {
-        return $this->scripts();
+        return $this->displaysysinfo();
     }
     /**
      * Modify module Config
@@ -32,6 +32,9 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
         if (!isset($vars['zwork_scriptssort'])) {
             $vars['zwork_scriptssort'] = '0';
         }
+        if (!isset($vars['zwork_showphpinfo'])) {
+            $vars['zwork_showphpinfo'] = '1';
+        }
 
         $this->view->assign('vars', $vars);
         $this->view->assign('scriptsdir_exist', is_dir($vars['zwork_scriptsdir']));
@@ -50,6 +53,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
         $vars = array();
         $vars['zwork_scriptsdir'] = FormUtil::getPassedValue('zwork_scriptsdir', 'userdata/Zwork');
         $vars['zwork_scriptssort'] = FormUtil::getPassedValue('zwork_scriptssort', "0");
+        $vars['zwork_showphpinfo'] = FormUtil::getPassedValue('zwork_showphpinfo', "0");
         $vars['zwork_url_cpanel'] = FormUtil::getPassedValue('zwork_url_cpanel', '');
         $vars['zwork_url_phpmyadmin'] = FormUtil::getPassedValue('zwork_url_phpmyadmin', '');
         $scriptsdir_createfolder = (bool)FormUtil::getPassedValue('scriptsdir_createfolder', false, 'POST');
@@ -108,6 +112,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
 
         $this->view->assign('vars', $vars);
         $this->view->assign('scripts', $scripts);
+        $this->view->assign('scriptsdirlockstatus', ModUtil::apiFunc($this->name, 'admin', 'getScriptsDirLockStatus'));
 
         return $this->view->fetch('admin/scripts.tpl');
     }
@@ -126,7 +131,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
         
         // create file, if given
         if ($newSriptFilename) {
-            $newSriptFilename = pathinfo($newSriptFilename, PATHINFO_BASENAME) . '.php'; // force php extension
+            $newSriptFilename = pathinfo($newSriptFilename, PATHINFO_FILENAME) . '.php'; // force php extension
             $newSriptFilename = $this->getScriptFullPath($newSriptFilename);
             $filecontent = '<?php' . PHP_EOL;
             $fileIsCreated = ModUtil::apiFunc($this->name, 'admin', 'createFile', array('filename' => $newSriptFilename, 'filecontent' => $filecontent));
@@ -160,11 +165,10 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function displaysysinfo()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_READ), LogUtil::getErrorMsgPermission());
 
         // Get module configuration vars
         $vars = $this->getVars();
-
         $connection = $this->entityManager->getConnection();
         $dbparams = $connection->getParams();
         // $connection->getDatabasePlatform()->getName() - returns mysql
@@ -177,12 +181,12 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
                 $dbserverversion = 'MySQL ' . $result[0]['Value'];
             }
         }
-        
+
         $this->view->assign('vars', $vars);
         $this->view->assign('dbserverversion', $dbserverversion);
         $this->view->assign('dbparams', $dbparams);
         $this->view->assign('phpos', PHP_OS);
-        $this->view->assign('phpinfo', $this->getphpinfoclean());
+        $this->view->assign('phpinfo', ModUtil::apiFunc($this->name, 'admin', 'getphpinfoclean'));
         $this->view->assign('site_root', System::serverGetVar('DOCUMENT_ROOT'));
         $this->view->assign('server_ip', System::serverGetVar('SERVER_ADDR'));
         $this->view->assign('server_port', System::serverGetVar('SERVER_PORT'));
@@ -204,38 +208,11 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
     }
 
     /**
-     * Get cleaned phpinfo() content
-     */
-    public function getphpinfoclean()
-    {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
-
-        ob_start();
-        phpinfo();
-        // $matches [1]; # Style information
-        // $matches [2]; # Body information
-        preg_match('%<style type="text/css">(.*?)</style>.*?<body>(.*?)</body>%s', ob_get_clean(), $matches);
-
-        ob_start();
-        echo "<div class='phpinfodisplay'><style type='text/css'>\n",
-            implode("\n",
-                array_map(create_function('$i', 'return ".phpinfodisplay " . preg_replace( "/,/", ",.phpinfodisplay ", $i );'),
-                    preg_split('/\n/', trim(preg_replace("/\nbody/", "\n", $matches[1]))))
-                ),
-            "</style>\n",
-            $matches[2],
-            "\n</div>\n";
-
-        return ob_get_clean();
-    }
-
-
-    /**
      * Display browser information
      */
     public function displaybrowserinfo()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
 
         $this->view->assign('user_ip', System::serverGetVar('REMOTE_ADDR'));
         $this->view->assign('user_port', System::serverGetVar('REMOTE_PORT'));
@@ -347,6 +324,28 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
         } elseif ($execute) {
                 ModUtil::apiFunc($this->name, 'admin', 'executeScript', array('filename' => $filename));
         }
+
+        return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
+    }
+
+    /**
+     * Save edited script
+     */
+    public function lockscriptsdir($args)
+    {
+        $this->checkCsrfToken();
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+
+        $lock = FormUtil::getPassedValue('lock', '');
+        $unlock = FormUtil::getPassedValue('unlock', '');
+        $type = '';
+        if ($lock) {
+             $type = 'lock';
+        } elseif ($unlock) {
+             $type = 'unlock';
+        }
+
+        ModUtil::apiFunc($this->name, 'admin', 'setScriptsDirLockStatus', array('type' => $type));
 
         return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
     }

@@ -12,27 +12,27 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
      *
      * @return array array of admin links
      */
-    public function getlinks()
+    public function getLinks()
     {
         $links = array();
     
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
-            $links[] = array(
-                'url' => ModUtil::url($this->name, 'admin', 'scripts'),
-                'text' => $this->__('Scripts'),
-                'class' => 'z-icon-es-info');
-        }
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
+        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_READ)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'displaysysinfo'),
                 'text' => $this->__('Server information'),
                 'class' => 'z-icon-es-info');
         }
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
+        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'displaybrowserinfo'),
                 'text' => $this->__('Client information'),
                 'class' => 'z-icon-es-info');
+        }
+        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
+            $links[] = array(
+                'url' => ModUtil::url($this->name, 'admin', 'scripts'),
+                'text' => $this->__('Scripts'),
+                'class' => 'z-icon-es-gears');
         }
         if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
             $links[] = array(
@@ -53,7 +53,7 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
             LogUtil::registerError($this->__('Error! File name can not be empty.'));
             return false;
         } elseif (file_exists($filename)) {
-            LogUtil::registerError($this->__f('Error! File %s already exist.', $filenameWithpath));
+            LogUtil::registerError($this->__f('Error! File %s already exist.', $filename));
             return false;
         }
 
@@ -66,6 +66,7 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
         if ($filecontent) {
             if (!fwrite($handle, $filecontent)) {
                 LogUtil::registerError($this->__f('Error! Can not write to file %s.', $filename));
+                fclose($handle);
                 return false;
             }
         }
@@ -98,5 +99,75 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
         $scriptsdir = $this->getVar('zwork_scriptsdir');
 
         return $scriptsdir . (substr($scriptsdir, -1) == '/' ? '' : '/');
+    }
+
+    public function getScriptsDirLockStatus($args)
+    {
+        $type = isset($args['type']) ? $args['type'] : ''; // 'human' to return string, otherwise return logical
+
+        $htaccessFile = DataUtil::formatForOS($this->getScriptsDir() . '.htaccess');
+
+        if (file_exists($htaccessFile)) {
+            $filecontent = file_get_contents($htaccessFile);
+            if (strpos($filecontent, 'deny from all') !== false) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function setScriptsDirLockStatus($args)
+    {
+        $type = isset($args['type']) ? $args['type'] : ''; // 'lock' or 'unlock'
+
+        $htaccessFile = DataUtil::formatForOS($this->getScriptsDir() . '.htaccess');
+
+        unlink($htaccessFile);
+        if ($type == 'lock') {
+            $handle = fopen($htaccessFile, 'w');
+            if (!$handle) {
+                LogUtil::registerError($this->__f('Error! Can not create file %s.', $htaccessFile));
+                return false;
+            }
+            $filecontent = 'Order deny,allow' . PHP_EOL . 'deny from all' . PHP_EOL;
+            if (!fwrite($handle, $filecontent)) {
+                LogUtil::registerError($this->__f('Error! Can not write to file %s.', $htaccessFile));
+                fclose($handle);
+                return false;
+            }
+            fclose($handle);
+        } elseif ($type == 'unlock') {
+            if (file_exists($htaccessFile)) {
+                LogUtil::registerError($this->__f('Error! File %s can not be deleted.', $htaccessFile));
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Get cleaned phpinfo() content
+     */
+    public function getphpinfoclean()
+    {
+        ob_start();
+        phpinfo();
+        // $matches [1]; # Style information
+        // $matches [2]; # Body information
+        preg_match('%<style type="text/css">(.*?)</style>.*?<body>(.*?)</body>%s', ob_get_clean(), $matches);
+
+        ob_start();
+        echo "<div class='phpinfodisplay'><style type='text/css'>\n",
+            implode("\n",
+                array_map(create_function('$i', 'return ".phpinfodisplay " . preg_replace( "/,/", ",.phpinfodisplay ", $i );'),
+                    preg_split('/\n/', trim(preg_replace("/\nbody/", "\n", $matches[1]))))
+                ),
+            ".phpinfodisplay .center table { margin-left: 0; max-width: 600px; } .phpinfodisplay td { padding: 4px; }\n</style>\n",
+            $matches[2],
+            "\n</div>\n";
+
+        return ob_get_clean();
     }
 }

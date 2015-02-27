@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-27 14:17+0000\n"
+"POT-Creation-Date: 2015-02-27 16:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,24 +58,32 @@ msgid "Error! File %s already exist."
 msgstr ""
 
 #: modules/Zwork/lib/Zwork/Api/Admin.php:62
+#: modules/Zwork/lib/Zwork/Api/Admin.php:130
 #, php-format
 msgid "Error! Can not create file %s."
 msgstr ""
 
 #: modules/Zwork/lib/Zwork/Api/Admin.php:68
+#: modules/Zwork/lib/Zwork/Api/Admin.php:135
 #, php-format
 msgid "Error! Can not write to file %s."
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Api/Admin.php:86
+#: modules/Zwork/lib/Zwork/Api/Admin.php:87
 #, php-format
 msgid "Result from: %s"
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Api/Admin.php:89
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:279
+#: modules/Zwork/lib/Zwork/Api/Admin.php:90
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:280
 #, php-format
 msgid "Error! File does not exist: %s"
+msgstr ""
+
+#: modules/Zwork/lib/Zwork/Api/Admin.php:142
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:309
+#, php-format
+msgid "Error! File %s can not be deleted."
 msgstr ""
 
 #: modules/Zwork/lib/Zwork/Controller/Admin.php:62
@@ -106,49 +114,44 @@ msgid ""
 "Please visit module settings and create directory for scripts to execute!"
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:134
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:135
 #, php-format
 msgid "New file %s is created."
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:148
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:149
 msgid "Done! Executed selected scripts."
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:151
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:152
 msgid "Please select scripts to execute!"
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:306
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:307
 #, php-format
 msgid "File %s is deleted."
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:308
-#, php-format
-msgid "Error! File %s can not be deleted."
-msgstr ""
-
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:311
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:312
 #, php-format
 msgid "File does not exist: %s"
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:331
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:332
 msgid "Error! File name is empty."
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:337
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:338
 #, php-format
 msgid "Error! Can not write content to file %s."
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:339
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:340
 #, php-format
 msgid "Done! File %s is saved."
 msgstr ""
 
-#: modules/Zwork/lib/Zwork/Controller/Admin.php:342
+#: modules/Zwork/lib/Zwork/Controller/Admin.php:343
 #, php-format
 msgid "Error! File %s does not exist."
 msgstr ""
@@ -331,7 +334,7 @@ msgid "You can create an empty script in the form below."
 msgstr ""
 
 #: modules/Zwork/templates/admin/scripts.tpl:23
-msgid "Edit file"
+msgid "Edit"
 msgstr ""
 
 #: modules/Zwork/templates/admin/scripts.tpl:24
@@ -352,6 +355,41 @@ msgstr ""
 
 #: modules/Zwork/templates/admin/scripts.tpl:34
 msgid "Execute"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:42
+msgid "Security"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:44
+msgid ""
+"By default the system is protected from unauthorized web access. Anyway, for "
+"security reason, you can explicitly lock access to scripts directory, by "
+"creating .htaccess file in it."
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:47
+msgid "Scripts directory"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:51
+msgid "Status"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:51
+msgid "Locked"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:51
+msgid "Unlocked"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:55
+msgid "Unlock"
+msgstr ""
+
+#: modules/Zwork/templates/admin/scripts.tpl:56
+msgid "Lock"
 msgstr ""
 
 #: modules/Zwork/templates/admin/editfile.tpl:23
