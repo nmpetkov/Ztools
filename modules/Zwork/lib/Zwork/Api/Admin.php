@@ -28,6 +28,12 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
                 'text' => $this->__('Client information'),
                 'class' => 'z-icon-es-info');
         }
+        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_EDIT)) {
+            $links[] = array(
+                'url' => ModUtil::url($this->name, 'admin', 'backupdb'),
+                'text' => $this->__('Backup database'),
+                'class' => 'z-icon-es-export');
+        }
         if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'scripts'),
@@ -94,11 +100,18 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
         return true;
     }
 
+    public function getBackupsDir()
+    {
+        $dir = $this->getVar('zwork_backupsdir');
+
+        return $dir . (substr($dir, -1) == '/' ? '' : '/');
+    }
+
     public function getScriptsDir()
     {
-        $scriptsdir = $this->getVar('zwork_scriptsdir');
+        $dir = $this->getVar('zwork_scriptsdir');
 
-        return $scriptsdir . (substr($scriptsdir, -1) == '/' ? '' : '/');
+        return $dir . (substr($dir, -1) == '/' ? '' : '/');
     }
 
     public function getScriptsDirLockStatus($args)

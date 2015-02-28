@@ -46,7 +46,7 @@
         </div>
         <div class="z-formrow">
             <label for="scriptsdir">{gt text='Scripts directory'}</label>
-            <input id="scriptsdir" type="text" name="scriptsdir" value="{$vars.zwork_scriptsdir|safetext}" readonly />
+            <input id="scriptsdir" type="text" name="scriptsdir" value="{$vars.zwork_scriptsdir|safetext}" disabled />
         </div>
         <div class="{if $scriptsdirlockstatus}z-informationmsg{else}z-warningmsg{/if} z-formnote">
             <strong>{gt text='Status'}: {if $scriptsdirlockstatus}{gt text='Locked'}{else}{gt text='Unlocked'}{/if}</strong>

@@ -2,7 +2,9 @@
 {pageaddvar name='javascript' value='modules/Zwork/javascript/vendor/codemirror/lib/codemirror.js'}
 {pageaddvar name='javascript' value='modules/Zwork/javascript/vendor/codemirror/addon/selection/active-line.js'}
 {pageaddvar name='javascript' value='modules/Zwork/javascript/vendor/codemirror/addon/edit/matchbrackets.js'}
+{pageaddvar name='javascript' value='modules/Zwork/javascript/vendor/codemirror/addon/edit/closebrackets.js'}
 {pageaddvar name='javascript' value='modules/Zwork/javascript/vendor/codemirror/addon/edit/matchtags.js'}
+{pageaddvar name='javascript' value='modules/Zwork/javascript/vendor/codemirror/addon/edit/closetag.js'}
 {pageaddvar name='stylesheet' value='modules/Zwork/javascript/vendor/codemirror/lib/codemirror.css'}
 {* add Javascript-mode dependencies *}
 {pageaddvar name='javascript' value='modules/Zwork/javascript/vendor/codemirror/mode/javascript/javascript.js'}
@@ -37,8 +39,10 @@
     mode: "application/x-httpd-php",
     styleActiveLine: true,
     matchBrackets: true,
+    autoCloseBrackets: true,
     lineNumbers: true,
-    lineWrapping: true
+    lineWrapping: true,
+    autoCloseTags: true
   });
 </script>
             </div>

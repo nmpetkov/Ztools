@@ -35,6 +35,26 @@
         </div>
     </fieldset>
     <fieldset>
+        <legend>{gt text='Backups'}</legend>
+        <div class="z-formrow">
+            <label for="zwork_backupsdir">{gt text='Default backups directory'}</label>
+            <input id="zwork_backupsdir" type="text" name="zwork_backupsdir" value="{$vars.zwork_backupsdir|safetext}" />
+            {if $backupsdir_exist}
+            <div class="z-informationmsg z-formnote">{gt text='Directory exist.'}
+            {else}
+            <div class="z-warningmsg z-formnote">{gt text='Directory does not exist!'}
+            {/if}
+            <br />{gt text='This is the place, where database backup files are stored.'}
+            </div>
+        </div>
+        {if !$backupsdir_exist}
+        <div class="z-formrow">
+            <label for="backupsdir_createfolder">{gt text='Create specified directory'}</label>
+            <input id="backupsdir_createfolder" type="checkbox" name="backupsdir_createfolder" />
+        </div>
+        {/if}
+    </fieldset>
+    <fieldset>
         <legend>{gt text='Scripts'}</legend>
         <div class="z-formrow">
             <label for="zwork_scriptsdir">{gt text='Default scripts directory'}</label>
@@ -47,10 +67,12 @@
             <br />{gt text='This is the place, where you upload scripts to execute.'} {gt text='See example.php for sample.'}
             </div>
         </div>
+        {if !$scriptsdir_exist}
         <div class="z-formrow">
-            <label for="scriptsdir_createfolder">{gt text='Create specified scripts directory'}</label>
+            <label for="scriptsdir_createfolder">{gt text='Create specified directory'}</label>
             <input id="scriptsdir_createfolder" type="checkbox" name="scriptsdir_createfolder" />
         </div>
+        {/if}
         <div class="z-formrow">
             <label for="zwork_scriptssort">{gt text="Display scripts"}</label>
             <select id="zwork_scriptssort" name="zwork_scriptssort" size="1">
