@@ -19,6 +19,7 @@ class Ztools_Installer extends Zikula_AbstractInstaller
         $this->setVar('ztools_scriptsdir', 'userdata/Ztools/scripts');
         $this->setVar('ztools_scriptssort', "0");
         $this->setVar('ztools_showphpinfo', "1");
+        $this->setVar('ztools_downloaduseranges', "0");
         $this->setVar('ztools_url_cpanel', '');
         $this->setVar('ztools_url_phpmyadmin', '');
 

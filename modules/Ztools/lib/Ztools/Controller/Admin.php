@@ -35,6 +35,9 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         if (!isset($vars['ztools_showphpinfo'])) {
             $vars['ztools_showphpinfo'] = '1';
         }
+        if (!isset($vars['ztools_downloaduseranges'])) {
+            $vars['ztools_downloaduseranges'] = '0';
+        }
 
         $this->view->assign('vars', $vars);
         $this->view->assign('scriptsdir_exist', is_dir($vars['ztools_scriptsdir']));
@@ -56,6 +59,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $vars['ztools_scriptsdir'] = FormUtil::getPassedValue('ztools_scriptsdir', 'userdata/Ztools/scripts');
         $vars['ztools_scriptssort'] = FormUtil::getPassedValue('ztools_scriptssort', "0");
         $vars['ztools_showphpinfo'] = FormUtil::getPassedValue('ztools_showphpinfo', "0");
+        $vars['ztools_downloaduseranges'] = FormUtil::getPassedValue('ztools_downloaduseranges', "0");
         $vars['ztools_url_cpanel'] = FormUtil::getPassedValue('ztools_url_cpanel', '');
         $vars['ztools_url_phpmyadmin'] = FormUtil::getPassedValue('ztools_url_phpmyadmin', '');
         $scriptsdir_createfolder = (bool)FormUtil::getPassedValue('scriptsdir_createfolder', false, 'POST');
@@ -309,6 +313,27 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
     }
 
     /**
+     * Download a file from scripts directory
+     */
+    public function downloadscript($args)
+    {
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+
+        $filename = FormUtil::getPassedValue('filename', isset($args['filename']) ? $args['filename'] : null, 'REQUEST');
+        if (empty($filename)) {
+            LogUtil::registerArgsError();
+            return false;
+        }
+
+        // Get module configuration vars
+        $vars = $this->getVars();
+
+        ModUtil::apiFunc($this->name, 'admin', 'downloadFile', array('filename' => $this->getScriptFullPath($filename), 'useranges' => $vars['ztools_downloaduseranges']));
+
+        return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
+    }
+
+    /**
      * Save edited script
      */
     public function savescript()
@@ -367,13 +392,6 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
     }
 
-    public function getScriptFullPath($filename)
-    {
-        $scriptsdir = ModUtil::apiFunc($this->name, 'admin', 'getScriptsDir');
-
-        return DataUtil::formatForOS($scriptsdir . $filename);
-    }
-
     /**
      * Backup database
      */
@@ -406,5 +424,54 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $this->view->assign('backups', $backups);
 
         return $this->view->fetch('admin/backupdb.tpl');
+    }
+
+    /**
+     * Execute action in beckupdb
+     */
+    public function executebackupdb()
+    {
+        $this->checkCsrfToken();
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_EDIT), LogUtil::getErrorMsgPermission());
+
+        $create = FormUtil::getPassedValue('create', 0);
+        $download = FormUtil::getPassedValue('download', 0);
+        $restore = FormUtil::getPassedValue('restore', 0);
+        $past_backup = FormUtil::getPassedValue('past_backup', '');
+
+        if ($create) {
+            // Create backup
+            // sample: 2015-02_28 22-56-16_cmstory1_climbingguidebg_structure.sql
+            // Only stem, extension will add createBackup
+            $newBackupFilename = '';
+
+            $fileIsCreated = ModUtil::apiFunc($this->name, 'admin', 'createBackup', array('filename' => $newBackupFilename));
+        }
+
+        if ($download) {
+            // Download existing backup file
+            if (empty($past_backup)) {
+                 LogUtil::registerStatus($this->__('Please select a file from the list.'));
+            } else {
+                $vars = $this->getVars();
+                ModUtil::apiFunc($this->name, 'admin', 'downloadFile', array('filename' => $this->getBackupFullPath($past_backup), 'useranges' => $vars['ztools_downloaduseranges']));
+            }
+        }
+
+        return $this->backupdb();
+    }
+
+    public function getScriptFullPath($filename)
+    {
+        $scriptsdir = ModUtil::apiFunc($this->name, 'admin', 'getScriptsDir');
+
+        return DataUtil::formatForOS($scriptsdir . $filename);
+    }
+
+    public function getBackupFullPath($filename)
+    {
+        $scriptsdir = ModUtil::apiFunc($this->name, 'admin', 'getBackupsDir');
+
+        return DataUtil::formatForOS($scriptsdir . $filename);
     }
 }

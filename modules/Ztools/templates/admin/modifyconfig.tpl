@@ -4,9 +4,8 @@
     <h3>{gt text='Module settings'}</h3>
 </div>
 
-<form class="z-form" action="{modurl modname="Ztools" type="admin" func="updateconfig"}" method="post" enctype="application/x-www-form-urlencoded">
-    <div>
-    <input type="hidden" name="csrftoken" value="{insert name="csrftoken"}" />
+<form class="z-form" action="{modurl modname='Ztools' type='admin' func='updateconfig'}" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="csrftoken" value="{insert name='csrftoken'}" />
     <fieldset>
         <legend>{gt text='General settings'}</legend>
         <div class="z-formrow">
@@ -34,6 +33,7 @@
             </select>
         </div>
     </fieldset>
+
     <fieldset>
         <legend>{gt text='Backups'}</legend>
         <div class="z-formrow">
@@ -54,6 +54,7 @@
         </div>
         {/if}
     </fieldset>
+
     <fieldset>
         <legend>{gt text='Scripts'}</legend>
         <div class="z-formrow">
@@ -81,10 +82,19 @@
             </select>
         </div>
     </fieldset>
+
+    <fieldset>
+        <legend>{gt text='Download files'}</legend>
+        <div class="z-formrow">
+            <label for="ztools_downloaduseranges">{gt text="Use HTTP ranges"}</label>
+            <input id="ztools_downloaduseranges" type="checkbox" name="ztools_downloaduseranges" value="1" {if $vars.ztools_downloaduseranges}checked="checked"{/if} />
+            <div class="z-informationmsg z-formnote">{gt text='This allow client (browser) to resume aborted downloads. Disable if broken files are received.'}</div>
+        </div>
+    </fieldset>
+
     <div class="z-buttons z-formbuttons">
         {button src="button_ok.png" set="icons/extrasmall" __alt="Save" __title="Save" __text="Save"}
         <a href="{modurl modname="Ztools" type="admin" func='main'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>
-    </div>
     </div>
 </form>
 {adminfooter}

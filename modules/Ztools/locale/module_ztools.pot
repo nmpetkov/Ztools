@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-28 10:52+0000\n"
+"POT-Creation-Date: 2015-02-28 15:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,11 +41,11 @@ msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:34
 #: modules/Ztools/templates/admin/backupdb.tpl:4
-msgid "Backup database"
+msgid "Backup"
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:40
-#: modules/Ztools/templates/admin/modifyconfig.tpl:58
+#: modules/Ztools/templates/admin/modifyconfig.tpl:59
 #: modules/Ztools/templates/admin/scripts.tpl:13
 msgid "Scripts"
 msgstr ""
@@ -81,106 +81,111 @@ msgid "Result from: %s"
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:96
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:273
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:277
 #, php-format
 msgid "Error! File does not exist: %s"
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:155
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:302
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:306
 #, php-format
 msgid "Error! File %s can not be deleted."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:69
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:82
+#: modules/Ztools/lib/Ztools/Api/Admin.php:274
 #, php-format
-msgid "Directory exists: %s."
+msgid "Can not read from file %s."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:72
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:85
-#, php-format
-msgid "Directory is created: %s."
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:74
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:88
-#, php-format
-msgid "Can not create directory %s."
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:75
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:86
-msgid "Please create it manually, for example with FTP client."
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:96
-msgid "Done! Updated configuration."
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:113
-msgid "Please specify in module settings directory for scripts to execute!"
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:126
-msgid ""
-"Please visit module settings and create directory for scripts to execute!"
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:156
-#, php-format
-msgid "New file %s is created."
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:170
-msgid "Done! Executed selected scripts."
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:173
-msgid "Please select scripts to execute!"
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:300
-#, php-format
-msgid "File %s is deleted."
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:305
+#: modules/Ztools/lib/Ztools/Api/Admin.php:278
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:309
 #, php-format
 msgid "File does not exist: %s"
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:325
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:73
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:86
+#, php-format
+msgid "Directory exists: %s."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:76
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:89
+#, php-format
+msgid "Directory is created: %s."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:78
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:92
+#, php-format
+msgid "Can not create directory %s."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:79
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:90
+msgid "Please create it manually, for example with FTP client."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:100
+msgid "Done! Updated configuration."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:117
+msgid "Please specify in module settings directory for scripts to execute!"
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:130
+msgid ""
+"Please visit module settings and create directory for scripts to execute!"
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:160
+#, php-format
+msgid "New file %s is created."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:174
+msgid "Done! Executed selected scripts."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:177
+msgid "Please select scripts to execute!"
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:304
+#, php-format
+msgid "File %s is deleted."
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:350
 msgid "Error! File name is empty."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:331
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:356
 #, php-format
 msgid "Error! Can not write content to file %s."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:333
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:358
 #, php-format
 msgid "Done! File %s is saved."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:336
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:361
 #, php-format
 msgid "Error! File %s does not exist."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:390
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:415
 msgid "Please specify in module settings directory for backups to store!"
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:401
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:426
 msgid "Please visit module settings and create directory for backups to store!"
 msgstr ""
 
 #: modules/Ztools/templates/admin/backupdb.tpl:10
-#: modules/Ztools/templates/admin/modifyconfig.tpl:38
-msgid "Backups"
+msgid "Database backups"
 msgstr ""
 
 #: modules/Ztools/templates/admin/backupdb.tpl:12
@@ -212,7 +217,7 @@ msgid "Restore backup"
 msgstr ""
 
 #: modules/Ztools/templates/admin/backupdb.tpl:32
-#: modules/Ztools/templates/admin/modifyconfig.tpl:86
+#: modules/Ztools/templates/admin/modifyconfig.tpl:97
 #: modules/Ztools/templates/admin/scripts.tpl:36
 #: modules/Ztools/templates/admin/editfile.tpl:55
 msgid "Cancel"
@@ -294,48 +299,52 @@ msgstr ""
 msgid "Module settings"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:11
+#: modules/Ztools/templates/admin/modifyconfig.tpl:10
 msgid "General settings"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:13
+#: modules/Ztools/templates/admin/modifyconfig.tpl:12
 msgid "Hosting admin URL"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:16
+#: modules/Ztools/templates/admin/modifyconfig.tpl:15
 msgid ""
 "Enter here URL address to your hosting provider admin panel (Cpanel or "
 "other)."
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:17
-#: modules/Ztools/templates/admin/modifyconfig.tpl:25
+#: modules/Ztools/templates/admin/modifyconfig.tpl:16
+#: modules/Ztools/templates/admin/modifyconfig.tpl:24
 msgid "Link will appear in the info page for easy access."
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:21
+#: modules/Ztools/templates/admin/modifyconfig.tpl:20
 msgid "Database admin URL"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:24
+#: modules/Ztools/templates/admin/modifyconfig.tpl:23
 msgid ""
 "Enter here URL address to your database admin panel (phpMyAdmin or other)."
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:29
+#: modules/Ztools/templates/admin/modifyconfig.tpl:28
 msgid "Display PHP info"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:31
+#: modules/Ztools/templates/admin/modifyconfig.tpl:30
 msgid "With link in new page"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:32
+#: modules/Ztools/templates/admin/modifyconfig.tpl:31
 msgid "Always on info page"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:33
+#: modules/Ztools/templates/admin/modifyconfig.tpl:32
 msgid "Never"
+msgstr ""
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:38
+msgid "Backups"
 msgstr ""
 
 #: modules/Ztools/templates/admin/modifyconfig.tpl:40
@@ -343,12 +352,12 @@ msgid "Default backups directory"
 msgstr ""
 
 #: modules/Ztools/templates/admin/modifyconfig.tpl:43
-#: modules/Ztools/templates/admin/modifyconfig.tpl:63
+#: modules/Ztools/templates/admin/modifyconfig.tpl:64
 msgid "Directory exist."
 msgstr ""
 
 #: modules/Ztools/templates/admin/modifyconfig.tpl:45
-#: modules/Ztools/templates/admin/modifyconfig.tpl:65
+#: modules/Ztools/templates/admin/modifyconfig.tpl:66
 msgid "Directory does not exist!"
 msgstr ""
 
@@ -357,36 +366,50 @@ msgid "This is the place, where database backup files are stored."
 msgstr ""
 
 #: modules/Ztools/templates/admin/modifyconfig.tpl:52
-#: modules/Ztools/templates/admin/modifyconfig.tpl:72
+#: modules/Ztools/templates/admin/modifyconfig.tpl:73
 msgid "Create specified directory"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:60
+#: modules/Ztools/templates/admin/modifyconfig.tpl:61
 msgid "Default scripts directory"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:67
+#: modules/Ztools/templates/admin/modifyconfig.tpl:68
 msgid "This is the place, where you upload scripts to execute."
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:67
+#: modules/Ztools/templates/admin/modifyconfig.tpl:68
 #: modules/Ztools/templates/admin/scripts.tpl:16
 msgid "See example.php for sample."
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:77
+#: modules/Ztools/templates/admin/modifyconfig.tpl:78
 msgid "Display scripts"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:79
+#: modules/Ztools/templates/admin/modifyconfig.tpl:80
 msgid "Not sorted"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:80
+#: modules/Ztools/templates/admin/modifyconfig.tpl:81
 msgid "Alphabetical order"
 msgstr ""
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:85
+#: modules/Ztools/templates/admin/modifyconfig.tpl:87
+msgid "Download files"
+msgstr ""
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:89
+msgid "Use HTTP ranges"
+msgstr ""
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:91
+msgid ""
+"This allow client (browser) to resume aborted downloads. Disable if broken "
+"files are received."
+msgstr ""
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:96
 #: modules/Ztools/templates/admin/editfile.tpl:52
 msgid "Save"
 msgstr ""

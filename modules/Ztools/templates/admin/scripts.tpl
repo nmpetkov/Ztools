@@ -22,7 +22,7 @@
             <input id="script_{$index}" type="hidden" name="scripts[{$index}]" value="{$script}" />
             &nbsp;&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='editfile' filename=$script}">{gt text='Edit'}</a>
             &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='deletefile' filename=$script}" onclick="return confirm('{gt text="Are you sure you want to delete file\\n"|cat:$script|cat:"?"}')">{gt text='Delete'}</a>
-            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='downloadfile' filename=$script}">{gt text='Download'}</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='downloadscript' filename=$script}">{gt text='Download'}</a>
         </div>
         {/foreach}
         <div class="z-formrow">
