@@ -1,11 +1,11 @@
 <?php
 /**
- * Zwork Zikula Module
+ * Ztools Zikula Module
  *
  * @copyright Nikolay Petkov
  * @license GNU/GPL
  */
-class Zwork_Controller_Admin extends Zikula_AbstractController
+class Ztools_Controller_Admin extends Zikula_AbstractController
 {
     /**
      * Main administration function
@@ -19,26 +19,26 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function modifyconfig()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         // Get module configuration vars
         $vars = $this->getVars();
-        if (!isset($vars['zwork_url_cpanel'])) {
-            $vars['zwork_url_cpanel'] = '';
+        if (!isset($vars['ztools_url_cpanel'])) {
+            $vars['ztools_url_cpanel'] = '';
         }
-        if (!isset($vars['zwork_url_phpmyadmin'])) {
-            $vars['zwork_url_phpmyadmin'] = '';
+        if (!isset($vars['ztools_url_phpmyadmin'])) {
+            $vars['ztools_url_phpmyadmin'] = '';
         }
-        if (!isset($vars['zwork_scriptssort'])) {
-            $vars['zwork_scriptssort'] = '0';
+        if (!isset($vars['ztools_scriptssort'])) {
+            $vars['ztools_scriptssort'] = '0';
         }
-        if (!isset($vars['zwork_showphpinfo'])) {
-            $vars['zwork_showphpinfo'] = '1';
+        if (!isset($vars['ztools_showphpinfo'])) {
+            $vars['ztools_showphpinfo'] = '1';
         }
 
         $this->view->assign('vars', $vars);
-        $this->view->assign('scriptsdir_exist', is_dir($vars['zwork_scriptsdir']));
-        $this->view->assign('backupsdir_exist', is_dir($vars['zwork_backupsdir']));
+        $this->view->assign('scriptsdir_exist', is_dir($vars['ztools_scriptsdir']));
+        $this->view->assign('backupsdir_exist', is_dir($vars['ztools_backupsdir']));
 
         return $this->view->fetch('admin/modifyconfig.tpl');
     }
@@ -49,43 +49,43 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
     public function updateconfig()
     {
         $this->checkCsrfToken();
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         $vars = array();
-        $vars['zwork_backupsdir'] = FormUtil::getPassedValue('zwork_backupsdir', 'userdata/Zwork/backups');
-        $vars['zwork_scriptsdir'] = FormUtil::getPassedValue('zwork_scriptsdir', 'userdata/Zwork/scripts');
-        $vars['zwork_scriptssort'] = FormUtil::getPassedValue('zwork_scriptssort', "0");
-        $vars['zwork_showphpinfo'] = FormUtil::getPassedValue('zwork_showphpinfo', "0");
-        $vars['zwork_url_cpanel'] = FormUtil::getPassedValue('zwork_url_cpanel', '');
-        $vars['zwork_url_phpmyadmin'] = FormUtil::getPassedValue('zwork_url_phpmyadmin', '');
+        $vars['ztools_backupsdir'] = FormUtil::getPassedValue('ztools_backupsdir', 'userdata/Ztools/backups');
+        $vars['ztools_scriptsdir'] = FormUtil::getPassedValue('ztools_scriptsdir', 'userdata/Ztools/scripts');
+        $vars['ztools_scriptssort'] = FormUtil::getPassedValue('ztools_scriptssort', "0");
+        $vars['ztools_showphpinfo'] = FormUtil::getPassedValue('ztools_showphpinfo', "0");
+        $vars['ztools_url_cpanel'] = FormUtil::getPassedValue('ztools_url_cpanel', '');
+        $vars['ztools_url_phpmyadmin'] = FormUtil::getPassedValue('ztools_url_phpmyadmin', '');
         $scriptsdir_createfolder = (bool)FormUtil::getPassedValue('scriptsdir_createfolder', false, 'POST');
         $backupsdir_createfolder = (bool)FormUtil::getPassedValue('backupsdir_createfolder', false, 'POST');
 
         // set the new variables
         $this->setVars($vars);
 
-        if ($backupsdir_createfolder && !empty($vars['zwork_backupsdir'])) {
-            if (is_dir($vars['zwork_backupsdir'])) {
-                 LogUtil::registerStatus($this->__f('Directory exists: %s.', $vars['zwork_backupsdir']));
+        if ($backupsdir_createfolder && !empty($vars['ztools_backupsdir'])) {
+            if (is_dir($vars['ztools_backupsdir'])) {
+                 LogUtil::registerStatus($this->__f('Directory exists: %s.', $vars['ztools_backupsdir']));
             } else {
-                if (FileUtil::mkdirs($vars['zwork_backupsdir'], 0777)) {
-                    LogUtil::registerStatus($this->__f('Directory is created: %s.', $vars['zwork_backupsdir']));
+                if (FileUtil::mkdirs($vars['ztools_backupsdir'], 0777)) {
+                    LogUtil::registerStatus($this->__f('Directory is created: %s.', $vars['ztools_backupsdir']));
                 } else {
-                    LogUtil::registerError($this->__f('Can not create directory %s.', $vars['zwork_backupsdir']) 
+                    LogUtil::registerError($this->__f('Can not create directory %s.', $vars['ztools_backupsdir']) 
                     .'<br />'. $this->__('Please create it manually, for example with FTP client.'));
                 }
             }
         }
 
-        if ($scriptsdir_createfolder && !empty($vars['zwork_scriptsdir'])) {
-            if (is_dir($vars['zwork_scriptsdir'])) {
-                 LogUtil::registerStatus($this->__f('Directory exists: %s.', $vars['zwork_scriptsdir']));
+        if ($scriptsdir_createfolder && !empty($vars['ztools_scriptsdir'])) {
+            if (is_dir($vars['ztools_scriptsdir'])) {
+                 LogUtil::registerStatus($this->__f('Directory exists: %s.', $vars['ztools_scriptsdir']));
             } else {
-                if (FileUtil::mkdirs($vars['zwork_scriptsdir'], 0777)) {
-                    LogUtil::registerStatus($this->__f('Directory is created: %s.', $vars['zwork_scriptsdir']) 
+                if (FileUtil::mkdirs($vars['ztools_scriptsdir'], 0777)) {
+                    LogUtil::registerStatus($this->__f('Directory is created: %s.', $vars['ztools_scriptsdir']) 
                     .'<br />'. $this->__('Please create it manually, for example with FTP client.'));
                 } else {
-                    LogUtil::registerError($this->__f('Can not create directory %s.', $vars['zwork_scriptsdir']));
+                    LogUtil::registerError($this->__f('Can not create directory %s.', $vars['ztools_scriptsdir']));
                 }
             }
         }
@@ -102,24 +102,24 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function scripts()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         // Get module configuration vars
         $vars = $this->getVars();
 
         $scripts = array();
 
-        if (empty($vars['zwork_scriptsdir'])) {
+        if (empty($vars['ztools_scriptsdir'])) {
             LogUtil::registerError($this->__('Please specify in module settings directory for scripts to execute!'));
         } else {
-            if (is_dir($vars['zwork_scriptsdir'])) {
-                $files = scandir($vars['zwork_scriptsdir']);
+            if (is_dir($vars['ztools_scriptsdir'])) {
+                $files = scandir($vars['ztools_scriptsdir']);
                 foreach ($files as $file) {
-                    if (!is_dir($vars['zwork_scriptsdir'] . (substr($vars['zwork_scriptsdir'], -1) == '/' ? '' : '/') . $file)) {
+                    if (!is_dir($vars['ztools_scriptsdir'] . (substr($vars['ztools_scriptsdir'], -1) == '/' ? '' : '/') . $file)) {
                     $scripts[] = $file;
                     }
                 }
-                if ($vars['zwork_scriptssort']) {
+                if ($vars['ztools_scriptssort']) {
                     natcasesort($scripts);
                 }
             } else {
@@ -140,7 +140,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
     public function executescripts()
     {
         $this->checkCsrfToken();
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         $execute = FormUtil::getPassedValue('execute', array());
         $scripts = FormUtil::getPassedValue('scripts', array());
@@ -182,7 +182,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function displaysysinfo()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_READ), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_READ), LogUtil::getErrorMsgPermission());
 
         // Get module configuration vars
         $vars = $this->getVars();
@@ -218,7 +218,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function displaysysinforaw()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
 
         phpinfo();
         exit();
@@ -229,7 +229,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function displaybrowserinfo()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
 
         $this->view->assign('user_ip', System::serverGetVar('REMOTE_ADDR'));
         $this->view->assign('user_port', System::serverGetVar('REMOTE_PORT'));
@@ -246,7 +246,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function displaycookies()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_OVERVIEW), LogUtil::getErrorMsgPermission());
 
         echo System::serverGetVar('HTTP_COOKIE');
         exit();
@@ -257,7 +257,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function editfile($args)
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         $filename = FormUtil::getPassedValue('filename', isset($args['filename']) ? $args['filename'] : null, 'REQUEST');
 
@@ -285,7 +285,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function deletefile($args)
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         $filename = FormUtil::getPassedValue('filename', isset($args['filename']) ? $args['filename'] : null, 'REQUEST');
 
@@ -314,7 +314,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
     public function savescript()
     {
         $this->checkCsrfToken();
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         $filename = FormUtil::getPassedValue('filename', '');
         $filecontent = FormUtil::getPassedValue('filecontent', '');
@@ -351,7 +351,7 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
     public function lockscriptsdir($args)
     {
         $this->checkCsrfToken();
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
         $lock = FormUtil::getPassedValue('lock', '');
         $unlock = FormUtil::getPassedValue('unlock', '');
@@ -379,20 +379,20 @@ class Zwork_Controller_Admin extends Zikula_AbstractController
      */
     public function backupdb()
     {
-        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Zwork::', '::', ACCESS_EDIT), LogUtil::getErrorMsgPermission());
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_EDIT), LogUtil::getErrorMsgPermission());
 
         // Get module configuration vars
         $vars = $this->getVars();
 
         $backups = array();
 
-        if (empty($vars['zwork_backupsdir'])) {
+        if (empty($vars['ztools_backupsdir'])) {
             LogUtil::registerError($this->__('Please specify in module settings directory for backups to store!'));
         } else {
-            if (is_dir($vars['zwork_backupsdir'])) {
-                $files = scandir($vars['zwork_backupsdir']);
+            if (is_dir($vars['ztools_backupsdir'])) {
+                $files = scandir($vars['ztools_backupsdir']);
                 foreach ($files as $file) {
-                    if (!is_dir($vars['zwork_backupsdir'] . (substr($vars['zwork_backupsdir'], -1) == '/' ? '' : '/') . $file)) {
+                    if (!is_dir($vars['ztools_backupsdir'] . (substr($vars['ztools_backupsdir'], -1) == '/' ? '' : '/') . $file)) {
                     $backups[] = $file;
                     }
                 }

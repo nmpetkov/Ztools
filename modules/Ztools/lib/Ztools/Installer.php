@@ -1,11 +1,11 @@
 <?php
 /**
- * Zwork Zikula Module
+ * Ztools Zikula Module
  *
  * @copyright Nikolay Petkov
  * @license GNU/GPL
  */
-class Zwork_Installer extends Zikula_AbstractInstaller
+class Ztools_Installer extends Zikula_AbstractInstaller
 {
     /**
      * Initializes a new install
@@ -15,12 +15,12 @@ class Zwork_Installer extends Zikula_AbstractInstaller
     public function install()
     {
         // Set up module config variables
-        $this->setVar('zwork_backupsdir', 'userdata/Zwork/backups');
-        $this->setVar('zwork_scriptsdir', 'userdata/Zwork/scripts');
-        $this->setVar('zwork_scriptssort', "0");
-        $this->setVar('zwork_showphpinfo', "1");
-        $this->setVar('zwork_url_cpanel', '');
-        $this->setVar('zwork_url_phpmyadmin', '');
+        $this->setVar('ztools_backupsdir', 'userdata/Ztools/backups');
+        $this->setVar('ztools_scriptsdir', 'userdata/Ztools/scripts');
+        $this->setVar('ztools_scriptssort', "0");
+        $this->setVar('ztools_showphpinfo', "1");
+        $this->setVar('ztools_url_cpanel', '');
+        $this->setVar('ztools_url_phpmyadmin', '');
 
         return true;
     }

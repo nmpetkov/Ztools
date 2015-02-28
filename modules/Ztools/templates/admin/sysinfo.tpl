@@ -1,19 +1,19 @@
-{checkpermission component="Zwork::" instance="::" level="ACCESS_ADMIN" assign="rightsAdmin"}
+{checkpermission component="Ztools::" instance="::" level="ACCESS_ADMIN" assign="rightsAdmin"}
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="info" size="small"}
     <h3>{gt text='Server information'}</h3>
 </div>
 
-<form class="z-form" action="{modurl modname="Zwork" type="admin" func="main"}" method="post" enctype="application/x-www-form-urlencoded">
+<form class="z-form" action="{modurl modname="Ztools" type="admin" func="main"}" method="post" enctype="application/x-www-form-urlencoded">
     <fieldset>
         <legend>{gt text='General info'}</legend>
         {if $rightsAdmin}
         <strong>
-            {if empty($vars.zwork_url_cpanel)}
+            {if empty($vars.ztools_url_cpanel)}
             <a href="#" title="{gt text='Please enter URL in settings.'}" onclick="alert('{gt text='Please enter URL in settings.'}')">{gt text='Hosting admin panel'}</a>
             {else}
-            <a href="{$vars.zwork_url_cpanel}" target="_blank" title="{gt text='Open on new page'}">{gt text='Hosting admin panel'}</a>
+            <a href="{$vars.ztools_url_cpanel}" target="_blank" title="{gt text='Open on new page'}">{gt text='Hosting admin panel'}</a>
             {/if}
         </strong>
         {/if}
@@ -35,10 +35,10 @@
         <legend>{gt text='Database info'}</legend>
         {if $rightsAdmin}
         <strong>
-            {if empty($vars.zwork_url_phpmyadmin)}
+            {if empty($vars.ztools_url_phpmyadmin)}
             <a href="#" title="{gt text='Please enter URL in settings.'}" onclick="alert('{gt text='Please enter URL in settings.'}')">{gt text='Database admin panel'}</a>
             {else}
-            <a href="{$vars.zwork_url_phpmyadmin}" target="_blank" title="{gt text='Open on new page'}">{gt text='Database admin panel'}</a>
+            <a href="{$vars.ztools_url_phpmyadmin}" target="_blank" title="{gt text='Open on new page'}">{gt text='Database admin panel'}</a>
             {/if}
         </strong>
         {/if}
@@ -59,11 +59,11 @@
             <span><strong>{$dbparams.dbname}</strong></span>
         </div>
     </fieldset>
-    {if $vars.zwork_showphpinfo != 2}
+    {if $vars.ztools_showphpinfo != 2}
     <fieldset>
         <legend>{gt text='PHP info'}</legend>
-        <strong><a href="{modurl modname='zwork' type='admin' func='displaysysinforaw'}" target="_blank" title="{gt text='Open on new page'}">{gt text='Display PHP info in new page'}</a></strong>
-        {if $vars.zwork_showphpinfo == 1}
+        <strong><a href="{modurl modname='ztools' type='admin' func='displaysysinforaw'}" target="_blank" title="{gt text='Open on new page'}">{gt text='Display PHP info in new page'}</a></strong>
+        {if $vars.ztools_showphpinfo == 1}
         <div style="font-size: 130%; margin-top: 5px">
             {$phpinfo}
         </div>

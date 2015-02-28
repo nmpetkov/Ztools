@@ -1,11 +1,11 @@
 <?php
 /**
- * Zwork Zikula Module
+ * Ztools Zikula Module
  *
  * @copyright Nikolay Petkov
  * @license GNU/GPL
  */
-class Zwork_Api_Admin extends Zikula_AbstractApi
+class Ztools_Api_Admin extends Zikula_AbstractApi
 {
     /**
      * Get available admin panel links
@@ -16,31 +16,31 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
     {
         $links = array();
     
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_READ)) {
+        if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_READ)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'displaysysinfo'),
                 'text' => $this->__('Server information'),
                 'class' => 'z-icon-es-info');
         }
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_OVERVIEW)) {
+        if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_OVERVIEW)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'displaybrowserinfo'),
                 'text' => $this->__('Client information'),
                 'class' => 'z-icon-es-info');
         }
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_EDIT)) {
+        if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_EDIT)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'backupdb'),
                 'text' => $this->__('Backup database'),
                 'class' => 'z-icon-es-export');
         }
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
+        if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'scripts'),
                 'text' => $this->__('Scripts'),
                 'class' => 'z-icon-es-gears');
         }
-        if (SecurityUtil::checkPermission('Zwork::', '::', ACCESS_ADMIN)) {
+        if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'modifyconfig'),
                 'text' => $this->__('Settings'),
@@ -102,14 +102,14 @@ class Zwork_Api_Admin extends Zikula_AbstractApi
 
     public function getBackupsDir()
     {
-        $dir = $this->getVar('zwork_backupsdir');
+        $dir = $this->getVar('ztools_backupsdir');
 
         return $dir . (substr($dir, -1) == '/' ? '' : '/');
     }
 
     public function getScriptsDir()
     {
-        $dir = $this->getVar('zwork_scriptsdir');
+        $dir = $this->getVar('ztools_scriptsdir');
 
         return $dir . (substr($dir, -1) == '/' ? '' : '/');
     }
