@@ -30,10 +30,9 @@
     <input type="hidden" name="filename" value="{$filename}" />
     <fieldset>
         <legend>{gt text='Script'}</legend>
-        <div class="z-formrow">
-            <div>
-            <label for="filecontent">{$filename}</label>
-            <textarea id="filecontent" name="filecontent" cols="100" rows="40">{$filecontent}</textarea>
+        <div>
+        <label for="filecontent"><strong>{$filename}</strong></label>
+        <textarea id="filecontent" name="filecontent" cols="100" rows="40">{$filecontent}</textarea>
 <script>
   var editor = CodeMirror.fromTextArea(document.getElementById("filecontent"), {
     mode: "application/x-httpd-php",
@@ -45,14 +44,21 @@
     autoCloseTags: true
   });
 </script>
-            </div>
+        </div>
+        <div>
+            <label for="filesaveasnew">{gt text='Save as new file'}</label>
+            <input id="filesaveasnew" type="text" name="filesaveasnew" size=40 maxlength=255 />
+            <span class="z-sub z-italic">{gt text='If you enter here, the file will save as new with this name.'}</span>
         </div>
     </fieldset>
-    <div class="z-buttons z-formbuttons">
+    <div class="z-buttons">
+        <div>
         {button src="button_ok.png" set="icons/extrasmall" __alt="Save" __title="Save" __text="Save"}
         {button name="edit" value="1" src="edit.png" set="icons/extrasmall" __alt="Save and edit" __title="Save and edit" __text="Save and edit"}
         {button name="execute" value="1" src="exec.png" set="icons/extrasmall" __alt="Save and execute" __title="Save and execute" __text="Save and execute"}
+        {button name="execedit" value="1" src="exec.png" set="icons/extrasmall" __alt="Execute and edit" __title="Execute and edit" __text="Execute and edit"}
         <a href="{modurl modname="Ztools" type="admin" func='main'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>
+        </div>
     </div>
 </form>
 {adminfooter}

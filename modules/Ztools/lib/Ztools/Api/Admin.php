@@ -280,4 +280,36 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
 
         return true;
     }
+
+    public function createBackup($args)
+    {
+        $filename = isset($args['filename']) ? $args['filename'] : '';
+        $tables = isset($args['tables']) ? $args['tables'] : null;
+
+        if (empty($filename)) {
+            LogUtil::registerError($this->__('Error! File name can not be empty.'));
+            return false;
+        } elseif (file_exists($filename)) {
+            LogUtil::registerError($this->__f('Error! File %s already exist.', $filename));
+            return false;
+        }
+
+        $handle = fopen($filename, 'w');
+        if ($handle) {
+            if (ModUtil::apiFunc($this->name, 'backup', 'createBackup', array('fhandle' => $handle, 'tables' => $tables))) {
+                LogUtil::registerStatus($this->__f('Done! Database backup is created in file %s.', $filename));
+            } else {
+                LogUtil::registerStatus($this->__f('Error creating database backup in file %s.', $filename));
+            }
+        } else {
+            LogUtil::registerError($this->__f('Error! Can not create file %s.', $filename));
+            return false;
+        }
+        fclose($handle);
+        if (file_exists($filename)) {
+            LogUtil::registerStatus($this->__f('Size of created file is %s bytes.', filesize($filename)));
+        }
+
+        return true;
+    }
 }

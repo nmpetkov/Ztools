@@ -117,14 +117,21 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
             LogUtil::registerError($this->__('Please specify in module settings directory for scripts to execute!'));
         } else {
             if (is_dir($vars['ztools_scriptsdir'])) {
-                $files = scandir($vars['ztools_scriptsdir']);
-                foreach ($files as $file) {
-                    if (!is_dir($vars['ztools_scriptsdir'] . (substr($vars['ztools_scriptsdir'], -1) == '/' ? '' : '/') . $file)) {
-                    $scripts[] = $file;
-                    }
+                if (phpversion() >= '5.4.0') {
+                    $files = scandir($vars['ztools_scriptsdir'], SCANDIR_SORT_NONE);
+                } else {
+                    $files = scandir($vars['ztools_scriptsdir']);
                 }
                 if ($vars['ztools_scriptssort']) {
-                    natcasesort($scripts);
+                    natcasesort($files);
+                }
+            
+                $scriptsDir = ModUtil::apiFunc($this->name, 'admin', 'getScriptsDir');
+                foreach ($files as $key => $file) {
+                    if (!is_dir($scriptsDir . $file)) {
+                        $scripts[$key]['name'] = $file;
+                        $scripts[$key]['size'] = filesize($scriptsDir . $file);
+                    }
                 }
             } else {
                 LogUtil::registerError($this->__('Please visit module settings and create directory for scripts to execute!'));
@@ -178,6 +185,25 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
             }
         }
 
+        return $this->scripts();
+    }
+
+    /**
+     * Execute one script (can be called with GET parameter)
+     */
+    public function executescript($args)
+    {
+        $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
+
+        $filename = isset($args['filename']) ? $args['filename'] : FormUtil::getPassedValue('filename', null, 'REQUEST');
+        $postedit = isset($args['postedit']) ? $args['postedit'] : FormUtil::getPassedValue('postedit', 0, 'REQUEST');
+
+        // execute given script
+        ModUtil::apiFunc($this->name, 'admin', 'executeScript', array('filename' => $filename));
+  
+        if ($postedit) {
+            return System::redirect(ModUtil::url($this->name, 'admin', 'editfile', array('filename' => $filename)));
+        }
         return $this->scripts();
     }
 
@@ -263,7 +289,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
     {
         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
-        $filename = FormUtil::getPassedValue('filename', isset($args['filename']) ? $args['filename'] : null, 'REQUEST');
+        $filename = isset($args['filename']) ? $args['filename'] : FormUtil::getPassedValue('filename', null, 'REQUEST');
 
         if (empty($filename)) {
             LogUtil::registerArgsError();
@@ -291,7 +317,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
     {
         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN), LogUtil::getErrorMsgPermission());
 
-        $filename = FormUtil::getPassedValue('filename', isset($args['filename']) ? $args['filename'] : null, 'REQUEST');
+        $filename = isset($args['filename']) ? $args['filename'] : FormUtil::getPassedValue('filename', null, 'REQUEST');
 
         if (empty($filename)) {
             LogUtil::registerArgsError();
@@ -301,7 +327,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
 
         if (file_exists($filenameWithpath)) {
             if (unlink($filenameWithpath)) {
-            LogUtil::registerStatus($this->__f('File %s is deleted.', $filenameWithpath));
+                LogUtil::registerStatus($this->__f('File %s is deleted.', $filenameWithpath));
             } else {
                 LogUtil::registerError($this->__f('Error! File %s can not be deleted.', $filenameWithpath));
             }
@@ -343,11 +369,23 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
 
         $filename = FormUtil::getPassedValue('filename', '');
         $filecontent = FormUtil::getPassedValue('filecontent', '');
-        $edit = FormUtil::getPassedValue('edit', '');
-        $execute = FormUtil::getPassedValue('execute', '');
+        $edit = FormUtil::getPassedValue('edit', 0);
+        $execute = FormUtil::getPassedValue('execute', 0);
+        $execedit = FormUtil::getPassedValue('execedit', 0);
+        $filesaveasnew = FormUtil::getPassedValue('filesaveasnew', '');
 
-        if (empty($filename)) {
-            LogUtil::registerError($this->__('Error! File name is empty.'));
+        if (empty($filesaveasnew)) {
+            if (empty($filename)) {
+                LogUtil::registerError($this->__('Error! File name is empty.'));
+            }
+        } else {
+            $filesaveasnew = pathinfo($filesaveasnew, PATHINFO_FILENAME) . '.php'; // force php extension
+            $filenameWithpath = $this->getScriptFullPath($filesaveasnew);
+            $fileIsCreated = ModUtil::apiFunc($this->name, 'admin', 'createFile', array('filename' => $filenameWithpath, 'filecontent' => $filecontent));
+            if ($fileIsCreated) {
+                $filename = $filesaveasnew;
+                LogUtil::registerStatus($this->__f('New file %s is created.', $filename));
+            }
         }
         $filenameWithpath = $this->getScriptFullPath($filename);
 
@@ -364,7 +402,9 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         if ($edit) {
             return System::redirect(ModUtil::url($this->name, 'admin', 'editfile', array('filename' => $filename)));
         } elseif ($execute) {
-                ModUtil::apiFunc($this->name, 'admin', 'executeScript', array('filename' => $filename));
+            ModUtil::apiFunc($this->name, 'admin', 'executeScript', array('filename' => $filename));
+        } elseif ($execedit) {
+            return $this->executescript(array('filename' => $filename, 'postedit' => 1));
         }
 
         return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
@@ -403,25 +443,37 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $vars = $this->getVars();
 
         $backups = array();
+        $filessize = 0;
 
         if (empty($vars['ztools_backupsdir'])) {
             LogUtil::registerError($this->__('Please specify in module settings directory for backups to store!'));
         } else {
             if (is_dir($vars['ztools_backupsdir'])) {
-                $files = scandir($vars['ztools_backupsdir']);
-                foreach ($files as $file) {
-                    if (!is_dir($vars['ztools_backupsdir'] . (substr($vars['ztools_backupsdir'], -1) == '/' ? '' : '/') . $file)) {
-                    $backups[] = $file;
+                $files = scandir($vars['ztools_backupsdir'], 1); // descending order
+
+                $backupsDir = ModUtil::apiFunc($this->name, 'admin', 'getBackupsDir');
+                foreach ($files as $key => $file) {
+                    if (!is_dir($backupsDir . $file)) {
+                        $backups[$key]['name'] = $file;
+                        $fileSize = filesize($backupsDir . $file);
+                        $filessize += $fileSize;
+                        $backups[$key]['size'] = $fileSize;
                     }
                 }
-                natcasesort($backups);
             } else {
                 LogUtil::registerError($this->__('Please visit module settings and create directory for backups to store!'));
             }
         }
+        
+        // List with tables in database
+        $tables = ModUtil::apiFunc($this->name, 'backup', 'getTables');
 
         $this->view->assign('vars', $vars);
         $this->view->assign('backups', $backups);
+        $this->view->assign('filescount', count($backups));
+        $this->view->assign('filessize', $filessize);
+        $this->view->assign('tables', $tables);
+        $this->view->assign('tablestotal', count($tables));
 
         return $this->view->fetch('admin/backupdb.tpl');
     }
@@ -435,17 +487,72 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $this->throwForbiddenUnless(SecurityUtil::checkPermission('Ztools::', '::', ACCESS_EDIT), LogUtil::getErrorMsgPermission());
 
         $create = FormUtil::getPassedValue('create', 0);
+        $delete = FormUtil::getPassedValue('delete', 0);
         $download = FormUtil::getPassedValue('download', 0);
         $restore = FormUtil::getPassedValue('restore', 0);
-        $past_backup = FormUtil::getPassedValue('past_backup', '');
+        $past_backup = FormUtil::getPassedValue('past_backup', false);
+        $tablestoexport = FormUtil::getPassedValue('tablestoexport', null);
+        $tablestotal = FormUtil::getPassedValue('tablestotal', 0);
+        $selectedtables = FormUtil::getPassedValue('selectedtables', 0);
 
         if ($create) {
             // Create backup
             // sample: 2015-02_28 22-56-16_cmstory1_climbingguidebg_structure.sql
             // Only stem, extension will add createBackup
-            $newBackupFilename = '';
+            $connection = $this->entityManager->getConnection();
+            $dbparams = $connection->getParams();
+            $today = getdate(); 
+            $backupFilename = $today['year'].'-'.str_pad($today['mon'], 2, '0', STR_PAD_LEFT).'-'.str_pad($today['mday'], 2, '0', STR_PAD_LEFT)
+                .'_'.str_pad($today['hours'], 2, '0', STR_PAD_LEFT).'-'.str_pad($today['minutes'], 2, '0', STR_PAD_LEFT).'-'.str_pad($today['seconds'], 2, '0', STR_PAD_LEFT)
+                .'_'.$dbparams['dbname'];
+            $args = array();
+            $tablesCountInfo = '_tables-all';
+            if ($selectedtables && is_array($tablestoexport)) {
+                $tablestoexport_count = count($tablestoexport);
+                if ($tablestoexport_count > 0) {
+                    $args['tables'] = $tablestoexport;
+                    // add info for tables to the archive name
+                    if ($tablestoexport_count < $tablestotal) {
+                        $tablesCountInfo = '_tables-' . $tablestoexport_count;
+                    }
+                }
+            }
+            $backupFilename .= $tablesCountInfo . '-' . $tablestotal . '.sql';
+            $args['filename'] = $this->getBackupFullPath($backupFilename);
+            ModUtil::apiFunc($this->name, 'admin', 'createBackup', $args);
+        }
 
-            $fileIsCreated = ModUtil::apiFunc($this->name, 'admin', 'createBackup', array('filename' => $newBackupFilename));
+        if ($delete) {
+            // Delete selected files
+            if (is_array($past_backup)) {
+                foreach ($past_backup as $filename) {
+                    if (!empty($filename)) {
+                        $filenameWithpath = $this->getBackupFullPath($filename);
+
+                        if (file_exists($filenameWithpath)) {
+                            if (unlink($filenameWithpath)) {
+                                LogUtil::registerStatus($this->__f('File %s is deleted.', $filenameWithpath));
+                            } else {
+                                LogUtil::registerError($this->__f('Error! File %s can not be deleted.', $filenameWithpath));
+                            }
+                        } else {
+                            LogUtil::registerStatus($this->__f('File does not exist: %s', $filenameWithpath));
+                        }
+                    }
+                }
+            }
+        }
+
+        if ($restore) {
+            // Restore from existing backup file
+            if (empty($past_backup)) {
+                 LogUtil::registerStatus($this->__('Please select a file from the list.'));
+            } else {
+                // here to check to see if this is last backup!
+                $vars = $this->getVars();
+                 LogUtil::registerStatus('Not yet ready!');
+                //ModUtil::apiFunc($this->name, 'admin', 'restoreBackup', array('filename' => $this->getBackupFullPath($past_backup[0])));
+            }
         }
 
         if ($download) {
@@ -454,21 +561,21 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
                  LogUtil::registerStatus($this->__('Please select a file from the list.'));
             } else {
                 $vars = $this->getVars();
-                ModUtil::apiFunc($this->name, 'admin', 'downloadFile', array('filename' => $this->getBackupFullPath($past_backup), 'useranges' => $vars['ztools_downloaduseranges']));
+                ModUtil::apiFunc($this->name, 'admin', 'downloadFile', array('filename' => $this->getBackupFullPath($past_backup[0]), 'useranges' => $vars['ztools_downloaduseranges']));
             }
         }
 
         return $this->backupdb();
     }
 
-    public function getScriptFullPath($filename)
+    private function getScriptFullPath($filename)
     {
         $scriptsdir = ModUtil::apiFunc($this->name, 'admin', 'getScriptsDir');
 
         return DataUtil::formatForOS($scriptsdir . $filename);
     }
 
-    public function getBackupFullPath($filename)
+    private function getBackupFullPath($filename)
     {
         $scriptsdir = ModUtil::apiFunc($this->name, 'admin', 'getBackupsDir');
 

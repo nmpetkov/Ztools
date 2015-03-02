@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 07:33+0000\n"
-"PO-Revision-Date: 2015-03-02 09:37+0200\n"
+"POT-Creation-Date: 2015-03-02 15:47+0000\n"
+"PO-Revision-Date: 2015-03-02 17:48+0200\n"
 "Last-Translator: N.Petkov <nik@osi.bg>\n"
 "Language-Team: www.cmstory.com <office@cmstory.com>\n"
 "Language: bg_BG\n"
@@ -86,14 +86,14 @@ msgid "Result from: %s"
 msgstr "Резултат от: %s"
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:96
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:284
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:303
 #, php-format
 msgid "Error! File does not exist: %s"
 msgstr "Грешка! Файлът не съществува: %s"
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:155
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:313
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:503
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:332
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:536
 #, php-format
 msgid "Error! File %s can not be deleted."
 msgstr "Грешка! File %s не може да бъде изтрит."
@@ -104,8 +104,8 @@ msgid "Can not read from file %s."
 msgstr "Не може да се чете от файл %s."
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:277
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:316
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:506
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:335
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:539
 #, php-format
 msgid "File does not exist: %s"
 msgstr "Файлът не съществува: %s"
@@ -189,6 +189,7 @@ msgstr ""
 "поставят скриптовете за изпълнение!"
 
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:167
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:387
 #, php-format
 msgid "New file %s is created."
 msgstr "Новият файл %s е създаден."
@@ -201,45 +202,45 @@ msgstr "Готово! Избраните скриптове са изпълне�
 msgid "Please select scripts to execute!"
 msgstr "Моля изберете скрипт за изпълнение!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:311
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:501
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:330
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:534
 #, php-format
 msgid "File %s is deleted."
 msgstr "Файл %s е изтрит."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:357
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:379
 msgid "Error! File name is empty."
 msgstr "Грешка! Името на файла е празно."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:363
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:394
 #, php-format
 msgid "Error! Can not write content to file %s."
 msgstr "Грешка! Не може да се запише съдържанието във файл %s."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:365
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:396
 #, php-format
 msgid "Done! File %s is saved."
 msgstr "Готово! Файл %s е запазен."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:368
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:399
 #, php-format
 msgid "Error! File %s does not exist."
 msgstr "Грешка! Файл %s не съществува."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:416
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:449
 msgid "Please specify in module settings directory for backups to store!"
 msgstr ""
 "Моля укажете в настройките на модула в коя директория ще се съхраняват "
 "архивите!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:431
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:464
 msgid "Please visit module settings and create directory for backups to store!"
 msgstr ""
 "Моля посетете настройките на модула и създайте директорията, в която ще се "
 "съхраняват архивите!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:516
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:528
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:549
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:561
 msgid "Please select a file from the list."
 msgstr "Моля изберете файл от списъка."
 
@@ -275,7 +276,7 @@ msgstr "Създай архив"
 #: modules/Ztools/templates/admin/backupdb.tpl:38
 #: modules/Ztools/templates/admin/modifyconfig.tpl:97
 #: modules/Ztools/templates/admin/scripts.tpl:36
-#: modules/Ztools/templates/admin/editfile.tpl:55
+#: modules/Ztools/templates/admin/editfile.tpl:63
 msgid "Cancel"
 msgstr "Отказ"
 
@@ -293,8 +294,16 @@ msgid "Past backups"
 msgstr "Минали архиви"
 
 #: modules/Ztools/templates/admin/backupdb.tpl:50
+msgid "file"
+msgstr "файл"
+
+#: modules/Ztools/templates/admin/backupdb.tpl:50
 msgid "files"
 msgstr "файла"
+
+#: modules/Ztools/templates/admin/backupdb.tpl:50
+msgid "byte"
+msgstr "байт"
 
 #: modules/Ztools/templates/admin/backupdb.tpl:50
 #: modules/Ztools/templates/admin/backupdb.tpl:54
@@ -542,7 +551,7 @@ msgstr ""
 "Изключете го, ако са получени счупени файлове."
 
 #: modules/Ztools/templates/admin/modifyconfig.tpl:96
-#: modules/Ztools/templates/admin/editfile.tpl:52
+#: modules/Ztools/templates/admin/editfile.tpl:59
 msgid "Save"
 msgstr "Запази"
 
@@ -575,8 +584,8 @@ msgid "Edit"
 msgstr "Редактирай"
 
 #: modules/Ztools/templates/admin/scripts.tpl:24
-msgid "Are you sure you want to delete file\\n"
-msgstr "Сигурни ли сте, че искате да изтриете файл\\n"
+msgid "Are you sure you want to delete file"
+msgstr "Сигурни ли сте, че искате да изтриете файл"
 
 #: modules/Ztools/templates/admin/scripts.tpl:29
 msgid "Create empty PHP file:"
@@ -636,13 +645,25 @@ msgstr "Редакция на скрипт"
 msgid "Script"
 msgstr "Скрипт"
 
-#: modules/Ztools/templates/admin/editfile.tpl:53
+#: modules/Ztools/templates/admin/editfile.tpl:52
+msgid "Save as new file"
+msgstr "Запиши като нов файл"
+
+#: modules/Ztools/templates/admin/editfile.tpl:54
+msgid "If you enter here, the file will save as new with this name."
+msgstr "Ако въведете тук, файлът ще запишете като нов с това име."
+
+#: modules/Ztools/templates/admin/editfile.tpl:60
 msgid "Save and edit"
 msgstr "Запази и редактирай"
 
-#: modules/Ztools/templates/admin/editfile.tpl:54
+#: modules/Ztools/templates/admin/editfile.tpl:61
 msgid "Save and execute"
 msgstr "Запази и изпълни"
+
+#: modules/Ztools/templates/admin/editfile.tpl:62
+msgid "Execute and edit"
+msgstr "Изпълни и редактирай"
 
 #: modules/Ztools/templates/admin/clientinfo.tpl:11
 msgid "User IP address and port"
@@ -671,3 +692,6 @@ msgstr "Бисквитки"
 #: modules/Ztools/templates/admin/clientinfo.tpl:33
 msgid "Display on new page"
 msgstr "Показва на нова страница"
+
+#~ msgid "Are you sure you want to delete file\\n"
+#~ msgstr "Сигурни ли сте, че искате да изтриете файл\\n"

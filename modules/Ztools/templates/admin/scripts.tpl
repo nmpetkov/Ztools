@@ -17,12 +17,12 @@
         </div>
         {foreach from=$scripts key=index item=script}
         <div class="z-formrow">
-            <label for="script_{$index}">{$script}</label>
+            <label for="script_{$index}"><strong>{$script.name}</strong><br /><div class="z-sub z-formnote">{$script.size|formatnumber:0} {gt text='bytes'}</div></label>
             <input id="script_{$index}" type="checkbox" name="execute[{$index}]" />
-            <input id="script_{$index}" type="hidden" name="scripts[{$index}]" value="{$script}" />
-            &nbsp;&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='editfile' filename=$script}">{gt text='Edit'}</a>
-            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='deletefile' filename=$script}" onclick="return confirm('{gt text="Are you sure you want to delete file\\n"|cat:$script|cat:"?"}')">{gt text='Delete'}</a>
-            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='downloadscript' filename=$script}">{gt text='Download'}</a>
+            <input id="script_{$index}" type="hidden" name="scripts[{$index}]" value="{$script.name}" />
+            &nbsp;&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='editfile' filename=$script.name}">{gt text='Edit'}</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='deletefile' filename=$script.name}" onclick="return confirm('{gt text="Are you sure you want to delete file"} {$script.name}?')">{gt text='Delete'}</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;<a href="{modurl modname='Ztools' type='admin' func='downloadscript' filename=$script.name}">{gt text='Download'}</a>
         </div>
         {/foreach}
         <div class="z-formrow">
