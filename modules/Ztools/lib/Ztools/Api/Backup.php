@@ -5,6 +5,9 @@
  * @copyright Nikolay Petkov
  * @license GNU/GPL
  */
+ 
+use Ifsnop\Mysqldump as IMysqldump;
+
 class Ztools_Api_Backup extends Zikula_AbstractApi
 {
      private $debugmode = true;
@@ -13,11 +16,19 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
      
      private $max_execution_time = 0;
      
+     private $export_method = 1;
+     
+     private $typeoutput = 1; // 1 file, 2 return content
+     
+     private $filename = '';
+     
      private $fhandle = 0;
      
      private $doctr_conn_name = 'default';
      
      private $connection = null;
+
+     private $tables_all = true;
 
      private $aTables = array();
 
@@ -26,14 +37,18 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
      /**
      * Create database backup
      * @parameters array
-     *      ['fhandle'] file handle where to write created backup content
-     *          valid (>0) - content will write in previously opened file
-     *          empty - content will return in array element ['content']
+     *      ['export_method'] Export (dump) methid
+     *          1 - Mysqldump-php class
+     *          2 - Ztools internal method
+     *      ['typeoutput'] Output destination
+     *          1 - content will write in file
+     *          2 - content will return in array element ['content']
+     *      ['filename'] (only if ['typeoutput'] = 1) - file name with path - where to write created backup content
      *      ['doctr_conn_name'] name of valid doctrine connection to database, defaults to 'default'
      *      ['tables'] array with tables to backup, defaults to all if set to null
      * @return array
      *      ['success'] - true/false
-     *      ['content'] (only if ['fhandle'] is empty) - content of created backup, returned only if no valid handle of open file passed
+     *      ['content'] (only if ['typeoutput'] = 2) - content of created backup, returned only if no valid handle of open file passed
      *      ['exectime'] execution time, sec
      */
     public function createBackup($args)
@@ -42,22 +57,32 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
         $aResult['success'] = false;
         $this->starttime = time();
 
-        $this->fhandle = isset($args['fhandle']) ? $args['fhandle'] : '';
+        $this->export_method = isset($args['export_method']) ? $args['export_method'] : 1;
+        $this->typeoutput = isset($args['typeoutput']) ? $args['typeoutput'] : 1;
+        
+        $this->filename = isset($args['filename']) ? $args['filename'] : '';
+        if (empty($this->filename)) {
+            LogUtil::registerError($this->__('Error! File name can not be empty.'));
+            return false;
+        }
+
         if (isset($args['doctr_conn_name']) && $args['doctr_conn_name']) {
             $this->doctr_conn_name =  $args['doctr_conn_name'];
             $this->prepareConnection();
             if (!$this->connection) {
                 return $aResult;
             }
-        }
-        if (!$this->connection) {
+        } else if (!$this->connection) {
             $this->prepareConnection();
             if (!$this->connection) {
                 return $aResult;
             }
+        } else {
+            return false;
         }
 
         // Attempt to avoid some specific errors
+        error_reporting(E_ALL);
         ini_set('display_errors', '1');    // how all errors (if by default is set to 0 - this is admin user)
         //ini_set('max_execution_time', $this->max_execution_time);  // 0 for no time limit
         LogUtil::registerStatus($this->__f('Create backup start time: %s.', DateUtil::formatDatetime(time(), '%Y-%m-%d %H:%M:%S')));
@@ -65,8 +90,90 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
         // prepare array with tables to backup
         if (isset($args['tables']) && is_array($args['tables'])) {
             $this->aTables = $args['tables'];
+            $this->tables_all = false;
         } else {
             $this->aTables = $this->getTables();
+            $this->tables_all = true;
+        }
+
+        // Use speciies export method
+        if ($this->export_method == 1) {
+            if (!$this->exportByMysqldumpphp()) {
+                return false;
+            }
+        } elseif ($this->export_method == 2) {
+            if (!$this->exportByZtools()) {
+                return false;
+            }
+        }
+
+        // Prepare result and return
+        $exectime = time() - $this->starttime;
+        LogUtil::registerStatus($this->__f('Create backup end time: %s.', DateUtil::formatDatetime(time(), '%Y-%m-%d %H:%M:%S')) . ' ' . $this->__f('Execution time: %s seconds.', $exectime));
+        $aResult['success'] = true;
+        $aResult['exectime'] = $exectime;
+        if ($this->typeoutput == 2) {
+            $aResult['content'] = $this->returnContent;
+        }
+
+        return $aResult;
+    }
+
+     /**
+     * Export by Mysqldump-php class
+     */
+    public function exportByMysqldumpphp()
+    {
+        global $ZConfig;
+        // [host], [user],[password],[dbname],[dbdriver] => mysql,  [dbtabletype] => myisam/..., [charset] => utf8, [collate] => utf8_general_ci
+        $dbinfo = $ZConfig['DBInfo']['databases']['default'];
+
+        include_once("modules/Ztools/lib/vendor/Mysqldump/Mysqldump.php");
+
+        $dump = new IMysqldump\Mysqldump($dbinfo['dbname'], $dbinfo['user'], $dbinfo['password'], $dbinfo['host'], $dbinfo['dbdriver'],
+          array('include-tables' => $this->tables_all ? array() : $this->aTables,
+                'exclude-tables' => array(),
+                'default-character-set' => IMysqldump\Mysqldump::UTF8,
+                'compress' => IMysqldump\Mysqldump::NONE,
+                'no-data' => false,
+                'add-drop-table' => true,
+                'single-transaction' => true,
+                'lock-tables' => true,
+                'add-locks' => true,
+                'extended-insert' => false,
+                'disable-keys' => true,
+                'skip-triggers' => false,
+                'add-drop-trigger' => true,
+                'databases' => false,
+                'add-drop-database' => false,
+                'skip-tz-utz' => false,
+                'no-autocommit' => true,
+                'hex-blob' => true,
+                'no-create-info' => false,
+                'where' => '')
+            );
+        try {
+            $dump->start($this->filename);
+        } catch (Exception $e) {
+            LogUtil::registerError($this->__('Error!') . ' ' . $e->getMessage());
+            return false;
+        }
+
+        return true;
+    }
+
+     /**
+     * Export by Ztools method
+     */
+    public function exportByZtools()
+    {
+        // Open output file
+        if ($this->typeoutput == 1) {
+            $this->fhandle = fopen($this->filename, 'wb');
+            if (!$this->fhandle) {
+                LogUtil::registerError($this->__f('Error! Can not create file %s.', $this->filename));
+                return false;
+            }
         }
 
         // start statements
@@ -96,15 +203,12 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
         $sql .= 'SET AUTOCOMMIT = 1;' . "\n"; 
         $this->writeToOutput($sql);
 
-        $exectime = time() - $this->starttime;
-        LogUtil::registerStatus($this->__f('Create backup end time: %s.', DateUtil::formatDatetime(time(), '%Y-%m-%d %H:%M:%S')) . ' ' . $this->__f('Execution time: %s seconds.', $exectime));
-
-        // prepare result and return
-        $aResult['exectime'] = $exectime;
-        if (empty($fhandle)) {
-            $aResult['content'] = $this->returnContent;
+        // close output file
+        if ($this->typeoutput == 1) {
+            fclose($this->fhandle);
         }
-        return $aResult;
+
+        return true;
     }
 
      /**
@@ -190,8 +294,8 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
 
     private function writeToOutput($content = '')
     {
-        if ($this->fhandle) {
-                $nbytes = fwrite($this->fhandle, $content);
+        if ($this->typeoutput == 1) {
+            $nbytes = fwrite($this->fhandle, $content);
             if ($this->debugmode) {
                 fwrite($this->fhandle, '-- TIME: ' .  (time() - $this->starttime) . ' s, MEMORY: ' . memory_get_peak_usage(). "\n");
             }

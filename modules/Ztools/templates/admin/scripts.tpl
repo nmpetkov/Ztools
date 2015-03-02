@@ -54,7 +54,7 @@
     </fieldset>
     <div class="z-buttons z-formbuttons">
         {button src="button_ok.png" name="unlock" value="1" set="icons/extrasmall" __alt="Unlock" __title="Unlock" __text="Unlock"}
-        {button src="button_cancel.png" name="lock" value="1"  set="icons/extrasmall" __alt="Lock" __title="Lock" __text="Lock"}
+        {button src="encrypted.png" name="lock" value="1"  set="icons/extrasmall" __alt="Lock" __title="Lock" __text="Lock"}
     </div>
 </form>
 

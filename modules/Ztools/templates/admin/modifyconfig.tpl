@@ -53,6 +53,20 @@
             <input id="backupsdir_createfolder" type="checkbox" name="backupsdir_createfolder" />
         </div>
         {/if}
+        <div class="z-formrow">
+            <label for="ztools_exportmethod">{gt text="Default export method"}</label>
+            <select id="ztools_exportmethod" name="ztools_exportmethod" size="1">
+                <option value="1"{if $vars.ztools_exportmethod == "1"} selected="selected"{/if}>Mysqldump-php</option>
+                <option value="2"{if $vars.ztools_exportmethod == "2"} selected="selected"{/if}>Ztools</option>
+            </select>
+        </div>
+        <div class="z-formrow">
+            <label for="ztools_expmethodshow">{gt text="Display export method selector"}</label>
+            <select id="ztools_expmethodshow" name="ztools_expmethodshow" size="1">
+                <option value="0"{if $vars.ztools_expmethodshow == "0"} selected="selected"{/if}>{gt text="No"}</option>
+                <option value="1"{if $vars.ztools_expmethodshow == "1"} selected="selected"{/if}>{gt text="Yes"}</option>
+            </select>
+        </div>
     </fieldset>
 
     <fieldset>

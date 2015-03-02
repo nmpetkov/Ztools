@@ -283,6 +283,7 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
 
     public function createBackup($args)
     {
+        $export_method = isset($args['export_method']) ? $args['export_method'] : 1;
         $filename = isset($args['filename']) ? $args['filename'] : '';
         $tables = isset($args['tables']) ? $args['tables'] : null;
 
@@ -294,18 +295,14 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
             return false;
         }
 
-        $handle = fopen($filename, 'w');
-        if ($handle) {
-            if (ModUtil::apiFunc($this->name, 'backup', 'createBackup', array('fhandle' => $handle, 'tables' => $tables))) {
-                LogUtil::registerStatus($this->__f('Done! Database backup is created in file %s.', $filename));
-            } else {
-                LogUtil::registerStatus($this->__f('Error creating database backup in file %s.', $filename));
-            }
+        $aResult = ModUtil::apiFunc($this->name, 'backup', 'createBackup', 
+                array('export_method' => $export_method, 'filename' => $filename, 'tables' => $tables));
+        if (is_array($aResult) && isset($aResult['success']) && $aResult['success']) {
+            LogUtil::registerStatus($this->__f('Done! Database backup is created in file %s.', $filename));
         } else {
-            LogUtil::registerError($this->__f('Error! Can not create file %s.', $filename));
-            return false;
+            LogUtil::registerStatus($this->__f('Error creating database backup in file %s.', $filename));
         }
-        fclose($handle);
+
         if (file_exists($filename)) {
             LogUtil::registerStatus($this->__f('Size of created file is %s bytes.', filesize($filename)));
         }

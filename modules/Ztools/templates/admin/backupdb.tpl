@@ -1,5 +1,5 @@
 {ajaxheader modname='ztools' filename='ztools_admin_display.js' nobehaviour=true noscriptaculous=true effects=true}
-
+{checkpermission component="Ztools::" instance="::" level="ACCESS_ADMIN" assign="rightsAdmin"}
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="export" size="small"}
@@ -11,10 +11,11 @@
     <fieldset>
         <legend>{gt text='Database backups'}</legend>
         <div class="z-informationmsg">
-            {gt text='To create new backup, use <Create> button below.'}
-            {* Fatal error: Allowed memory size of [x] bytes exhausted (tried to allocate [y] bytes): You have to increase parameter 'memory_limit' in PHP settings.*}
-            {* Fatal error: Allowed memory size of [x] bytes exhausted (tried to allocate [y] bytes) *}
-            {* Fatal error: Maximum execution time of [n] seconds exceeded: You have to increase parameter 'max_execution_time' in PHP settings. *}
+            {gt text='To create new backup, use <Create> button below.'} {gt text='Possible errors, related to your PHP host settings'}:
+            <div class="z-sub">
+                [Fatal error: Allowed memory size of 'n' bytes exhausted] - {gt text='Solution is to increase `%s` PHP setting.' tag1='memory_limit'} {gt text='Current value is %s.' tag1='memory_limit'|ini_get}<br />
+                [Fatal error: Maximum execution time of 'n' seconds exceeded] - {gt text='Solution is to increase `%s` PHP setting.' tag1='max_execution_time'} {gt text='Current value is %s seconds.' tag1='max_execution_time'|ini_get}
+            </div>
         </div>
         <div class="z-formrow">
             <label for="selectedtables">{gt text='Selected tables only'}</label>
@@ -33,14 +34,26 @@
                 </select>
             </div>
         </div>{* end hidden *}
+        {if $vars.ztools_expmethodshow}
+        <div class="z-formrow">
+            <label for="export_method">{gt text="Export method"}<br />
+            </label>
+            <select id="export_method" name="export_method" size="1">
+                <option value="1"{if $vars.ztools_exportmethod == "1"} selected="selected"{/if}>Mysqldump-php</option>
+                <option value="2"{if $vars.ztools_exportmethod == "2"} selected="selected"{/if}>Ztools</option>
+            </select>
+        </div>
+        {/if}
         <div class="z-buttons z-formbuttons">
             {button src="button_ok.png" name="create" value="1" set="icons/extrasmall" __alt="Create" __title="Create backup" __text="Create"}
             <a href="{modurl modname="Ztools" type="admin" func='main'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>
         </div>
+        {if $rightsAdmin}
         <div class="z-formrow">
             <label for="backupsdir">{gt text='Backups directory'}</label>
             <input id="backupsdir" type="text" name="backupsdir" value="{$vars.ztools_backupsdir|safetext}" disabled />
         </div>
+        {/if}
 
         <div class="z-informationmsg">
             {gt text='Here is list of past database backups, available in directory:'} {$vars.ztools_backupsdir|safetext}
@@ -54,12 +67,12 @@
                 <option value="{$backup.name}">{$backup.name}, {$backup.size|formatnumber:0} {gt text='bytes'}</option>
                 {/foreach}
             </select>
-            <div class="z-sub z-formnote">{gt text='File name format'}: {gt text='date'}_{gt text='time'}_{gt text='database'}_{gt text='tables count-archived-total'}</div>
+            <div class="z-sub z-formnote">{gt text='File name format'}: {gt text='date'}_{gt text='time'}_{gt text='database'}_{gt text='tables count-archived-total'}_{gt text='method'}</div>
         </div>
     </fieldset>
     <div class="z-buttons z-formbuttons">
         {button src="fileimport.png" name="download" value="1" set="icons/extrasmall" __alt="Download" __title="Download backup" __text="Download"}
-        {button src="fileimport.png" name="delete" value="1" set="icons/extrasmall" __alt="Delete" __title="Delete backup" __text="Delete"}
+        {button src="14_layer_deletelayer.png" name="delete" value="1" set="icons/extrasmall" __alt="Delete" __title="Delete backup" __text="Delete"}
         {button src="kcmdf.png"  name="restore" value="1" set="icons/extrasmall" __alt="Restore" __title="Restore backup" __text="Restore"}
     </div>
 </form>

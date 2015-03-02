@@ -38,6 +38,12 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         if (!isset($vars['ztools_downloaduseranges'])) {
             $vars['ztools_downloaduseranges'] = '0';
         }
+        if (!isset($vars['ztools_exportmethod'])) {
+            $vars['ztools_exportmethod'] = '1';
+        }
+        if (!isset($vars['ztools_expmethodshow'])) {
+            $vars['ztools_expmethodshow'] = '1';
+        }
 
         $this->view->assign('vars', $vars);
         $this->view->assign('scriptsdir_exist', is_dir($vars['ztools_scriptsdir']));
@@ -57,11 +63,13 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $vars = array();
         $vars['ztools_backupsdir'] = FormUtil::getPassedValue('ztools_backupsdir', 'userdata/Ztools/backups');
         $vars['ztools_scriptsdir'] = FormUtil::getPassedValue('ztools_scriptsdir', 'userdata/Ztools/scripts');
-        $vars['ztools_scriptssort'] = FormUtil::getPassedValue('ztools_scriptssort', "0");
-        $vars['ztools_showphpinfo'] = FormUtil::getPassedValue('ztools_showphpinfo', "0");
+        $vars['ztools_scriptssort'] = FormUtil::getPassedValue('ztools_scriptssort', '0');
+        $vars['ztools_showphpinfo'] = FormUtil::getPassedValue('ztools_showphpinfo', '0');
         $vars['ztools_downloaduseranges'] = FormUtil::getPassedValue('ztools_downloaduseranges', "0");
         $vars['ztools_url_cpanel'] = FormUtil::getPassedValue('ztools_url_cpanel', '');
         $vars['ztools_url_phpmyadmin'] = FormUtil::getPassedValue('ztools_url_phpmyadmin', '');
+        $vars['ztools_exportmethod'] = FormUtil::getPassedValue('ztools_exportmethod', '1');
+        $vars['ztools_expmethodshow'] = FormUtil::getPassedValue('ztools_expmethodshow', '1');
         $scriptsdir_createfolder = (bool)FormUtil::getPassedValue('scriptsdir_createfolder', false, 'POST');
         $backupsdir_createfolder = (bool)FormUtil::getPassedValue('backupsdir_createfolder', false, 'POST');
 
@@ -494,6 +502,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $tablestoexport = FormUtil::getPassedValue('tablestoexport', null);
         $tablestotal = FormUtil::getPassedValue('tablestotal', 0);
         $selectedtables = FormUtil::getPassedValue('selectedtables', 0);
+        $export_method = FormUtil::getPassedValue('export_method', 1);
 
         if ($create) {
             // Create backup
@@ -517,8 +526,12 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
                     }
                 }
             }
-            $backupFilename .= $tablesCountInfo . '-' . $tablestotal . '.sql';
+            $backupFilename .= $tablesCountInfo . '-' . $tablestotal;
+            $backupFilename .= '_m-' . $export_method;
+            $backupFilename .= '.sql';
             $args['filename'] = $this->getBackupFullPath($backupFilename);
+            $args['export_method'] = $export_method;
+
             ModUtil::apiFunc($this->name, 'admin', 'createBackup', $args);
         }
 
