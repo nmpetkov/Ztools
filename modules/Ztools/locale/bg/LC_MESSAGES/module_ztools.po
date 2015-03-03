@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 21:16+0000\n"
-"PO-Revision-Date: 2015-03-02 23:17+0200\n"
+"POT-Creation-Date: 2015-03-03 13:22+0000\n"
+"PO-Revision-Date: 2015-03-03 15:23+0200\n"
 "Last-Translator: N.Petkov <nik@osi.bg>\n"
 "Language-Team: www.cmstory.com <office@cmstory.com>\n"
 "Language: bg_BG\n"
@@ -47,7 +47,7 @@ msgid "Backup"
 msgstr "Архивиране"
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:40
-#: modules/Ztools/templates/admin/modifyconfig.tpl:73
+#: modules/Ztools/templates/admin/modifyconfig.tpl:97
 #: modules/Ztools/templates/admin/scripts.tpl:13
 msgid "Scripts"
 msgstr "Скриптове"
@@ -58,7 +58,7 @@ msgstr "Настройки"
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:59
 #: modules/Ztools/lib/Ztools/Api/Admin.php:291
-#: modules/Ztools/lib/Ztools/Api/Backup.php:65
+#: modules/Ztools/lib/Ztools/Api/Backup.php:71
 msgid "Error! File name can not be empty."
 msgstr "Грешка! Името на файла не може да бъде празно."
 
@@ -70,7 +70,7 @@ msgstr "Грешка! Файл %s вече съществува."
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:68
 #: modules/Ztools/lib/Ztools/Api/Admin.php:143
-#: modules/Ztools/lib/Ztools/Api/Backup.php:174
+#: modules/Ztools/lib/Ztools/Api/Backup.php:219
 #, php-format
 msgid "Error! Can not create file %s."
 msgstr "Грешка! Не може да се създаде файл %s."
@@ -87,14 +87,14 @@ msgid "Result from: %s"
 msgstr "Резултат от: %s"
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:96
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:311
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:320
 #, php-format
 msgid "Error! File does not exist: %s"
 msgstr "Грешка! Файлът не съществува: %s"
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:155
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:340
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:549
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:349
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:560
 #, php-format
 msgid "Error! File %s can not be deleted."
 msgstr "Грешка! File %s не може да бъде изтрит."
@@ -105,8 +105,8 @@ msgid "Can not read from file %s."
 msgstr "Не може да се чете от файл %s."
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:277
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:343
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:552
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:352
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:563
 #, php-format
 msgid "File does not exist: %s"
 msgstr "Файлът не съществува: %s"
@@ -126,123 +126,127 @@ msgstr "Грешка при създаване на архив на базата
 msgid "Size of created file is %s bytes."
 msgstr "Размер на създадения файл е %s байта."
 
-#: modules/Ztools/lib/Ztools/Api/Backup.php:88
+#: modules/Ztools/lib/Ztools/Api/Backup.php:94
 #, php-format
 msgid "Create backup start time: %s."
 msgstr "Създаване на архив начален час: %s."
 
-#: modules/Ztools/lib/Ztools/Api/Backup.php:112
+#: modules/Ztools/lib/Ztools/Api/Backup.php:122
 #, php-format
 msgid "Create backup end time: %s."
 msgstr "Създаване на архив краен час: %s."
 
-#: modules/Ztools/lib/Ztools/Api/Backup.php:112
+#: modules/Ztools/lib/Ztools/Api/Backup.php:122
 #, php-format
 msgid "Execution time: %s seconds."
 msgstr "Време за изпълнение: %s секунди."
 
-#: modules/Ztools/lib/Ztools/Api/Backup.php:158
-#: modules/Ztools/lib/Ztools/Api/Backup.php:284
+#: modules/Ztools/lib/Ztools/Api/Backup.php:162
+msgid "Status:"
+msgstr "Статус"
+
+#: modules/Ztools/lib/Ztools/Api/Backup.php:203
+#: modules/Ztools/lib/Ztools/Api/Backup.php:329
 msgid "Error!"
 msgstr "Грешка!"
 
-#: modules/Ztools/lib/Ztools/Api/Backup.php:318
+#: modules/Ztools/lib/Ztools/Api/Backup.php:363
 msgid "Error! Can not obtain connection to database."
 msgstr "Грешка! Не може да се установи връзка с базата данни."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:81
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:94
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:90
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:103
 #, php-format
 msgid "Directory exists: %s."
 msgstr "Директорията съществува:  %s."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:84
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:97
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:93
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:106
 #, php-format
 msgid "Directory is created: %s."
 msgstr "Директорията е създадена: %s."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:86
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:100
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:95
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:109
 #, php-format
 msgid "Can not create directory %s."
 msgstr "Не може да се създаде директория %s."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:87
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:98
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:96
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:107
 msgid "Please create it manually, for example with FTP client."
 msgstr "Моля създайте го ръчно, например с FTP клиент."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:108
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:117
 msgid "Done! Updated configuration."
 msgstr "Готово! Конфигурацията е запазена."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:125
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:134
 msgid "Please specify in module settings directory for scripts to execute!"
 msgstr ""
 "Моля укажете в настройките на модула в коя директория са скриптовете за "
 "изпълнение!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:145
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:154
 msgid ""
 "Please visit module settings and create directory for scripts to execute!"
 msgstr ""
 "Моля посетете настройките на модула и създайте директорията, в която се "
 "поставят скриптовете за изпълнение!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:175
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:395
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:184
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:404
 #, php-format
 msgid "New file %s is created."
 msgstr "Новият файл %s е създаден."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:189
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:198
 msgid "Done! Executed selected scripts."
 msgstr "Готово! Избраните скриптове са изпълнени."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:192
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:201
 msgid "Please select scripts to execute!"
 msgstr "Моля изберете скрипт за изпълнение!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:338
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:547
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:347
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:558
 #, php-format
 msgid "File %s is deleted."
 msgstr "Файл %s е изтрит."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:387
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:396
 msgid "Error! File name is empty."
 msgstr "Грешка! Името на файла е празно."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:402
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:411
 #, php-format
 msgid "Error! Can not write content to file %s."
 msgstr "Грешка! Не може да се запише съдържанието във файл %s."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:404
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:413
 #, php-format
 msgid "Done! File %s is saved."
 msgstr "Готово! Файл %s е запазен."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:407
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:416
 #, php-format
 msgid "Error! File %s does not exist."
 msgstr "Грешка! Файл %s не съществува."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:457
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:466
 msgid "Please specify in module settings directory for backups to store!"
 msgstr ""
 "Моля укажете в настройките на модула в коя директория ще се съхраняват "
 "архивите!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:472
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:481
 msgid "Please visit module settings and create directory for backups to store!"
 msgstr ""
 "Моля посетете настройките на модула и създайте директорията, в която ще се "
 "съхраняват архивите!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:562
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:574
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:573
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:585
 msgid "Please select a file from the list."
 msgstr "Моля изберете файл от списъка."
 
@@ -283,7 +287,7 @@ msgid "Tables to export"
 msgstr "Таблици за експортиране"
 
 #: modules/Ztools/templates/admin/backupdb.tpl:27
-#: modules/Ztools/templates/admin/backupdb.tpl:63
+#: modules/Ztools/templates/admin/backupdb.tpl:68
 msgid "Total"
 msgstr "Общо"
 
@@ -291,99 +295,115 @@ msgstr "Общо"
 msgid "Export method"
 msgstr "Метод за експорта"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:48
+#: modules/Ztools/templates/admin/backupdb.tpl:41
+#: modules/Ztools/templates/admin/modifyconfig.tpl:60
+msgid "Mysqldump php"
+msgstr "Mysqldump php"
+
+#: modules/Ztools/templates/admin/backupdb.tpl:42
+#: modules/Ztools/templates/admin/modifyconfig.tpl:61
+#: modules/Ztools/templates/admin/modifyconfig.tpl:67
+msgid "Mysqldump shell"
+msgstr "Mysqldump shell"
+
+#: modules/Ztools/templates/admin/backupdb.tpl:43
+#: modules/Ztools/templates/admin/modifyconfig.tpl:62
+msgid "Ztools native"
+msgstr "Ztools native"
+
+#: modules/Ztools/templates/admin/backupdb.tpl:53
 msgid "Create"
 msgstr "Създай"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:48
+#: modules/Ztools/templates/admin/backupdb.tpl:53
 msgid "Create backup"
 msgstr "Създай архив"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:49
-#: modules/Ztools/templates/admin/modifyconfig.tpl:111
+#: modules/Ztools/templates/admin/backupdb.tpl:54
+#: modules/Ztools/templates/admin/modifyconfig.tpl:135
 #: modules/Ztools/templates/admin/scripts.tpl:36
 #: modules/Ztools/templates/admin/editfile.tpl:60
 msgid "Cancel"
 msgstr "Отказ"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:53
+#: modules/Ztools/templates/admin/backupdb.tpl:58
 msgid "Backups directory"
 msgstr "Директория за архивите"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:59
+#: modules/Ztools/templates/admin/backupdb.tpl:64
 msgid "Here is list of past database backups, available in directory:"
 msgstr ""
 "Това е списък с последните архиви на базата данни, достъпни в директория:"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:62
+#: modules/Ztools/templates/admin/backupdb.tpl:67
 msgid "Past backups"
 msgstr "Минали архиви"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:63
+#: modules/Ztools/templates/admin/backupdb.tpl:68
 msgid "file"
 msgstr "файл"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:63
+#: modules/Ztools/templates/admin/backupdb.tpl:68
 msgid "files"
 msgstr "файла"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:63
+#: modules/Ztools/templates/admin/backupdb.tpl:68
 msgid "byte"
 msgstr "байт"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:63
-#: modules/Ztools/templates/admin/backupdb.tpl:67
+#: modules/Ztools/templates/admin/backupdb.tpl:68
+#: modules/Ztools/templates/admin/backupdb.tpl:72
 #: modules/Ztools/templates/admin/scripts.tpl:20
 msgid "bytes"
 msgstr "байта"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:70
+#: modules/Ztools/templates/admin/backupdb.tpl:75
 msgid "File name format"
 msgstr "Формат на името на файла"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:70
+#: modules/Ztools/templates/admin/backupdb.tpl:75
 msgid "date"
 msgstr "дата"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:70
+#: modules/Ztools/templates/admin/backupdb.tpl:75
 msgid "time"
 msgstr "час"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:70
+#: modules/Ztools/templates/admin/backupdb.tpl:75
 msgid "database"
 msgstr "база данни"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:70
+#: modules/Ztools/templates/admin/backupdb.tpl:75
 msgid "tables count-archived-total"
 msgstr "брой таблици-архивирани-общо"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:70
+#: modules/Ztools/templates/admin/backupdb.tpl:75
 msgid "method"
 msgstr "метод"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:74
+#: modules/Ztools/templates/admin/backupdb.tpl:79
 #: modules/Ztools/templates/admin/scripts.tpl:25
 msgid "Download"
 msgstr "Изтегли"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:74
+#: modules/Ztools/templates/admin/backupdb.tpl:79
 msgid "Download backup"
 msgstr "Изтегли архив"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:75
+#: modules/Ztools/templates/admin/backupdb.tpl:80
 #: modules/Ztools/templates/admin/scripts.tpl:24
 msgid "Delete"
 msgstr "Изтрий"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:75
+#: modules/Ztools/templates/admin/backupdb.tpl:80
 msgid "Delete backup"
 msgstr "Изтрий архив"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:76
+#: modules/Ztools/templates/admin/backupdb.tpl:81
 msgid "Restore"
 msgstr "Възстанови"
 
-#: modules/Ztools/templates/admin/backupdb.tpl:76
+#: modules/Ztools/templates/admin/backupdb.tpl:81
 msgid "Restore backup"
 msgstr "Възстанови от архив"
 
@@ -459,19 +479,19 @@ msgstr "PHP информация"
 msgid "Display PHP info in new page"
 msgstr "Покажи PHP информация на нова страница"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:4
+#: modules/Ztools/templates/admin/modifyconfig.tpl:5
 msgid "Module settings"
 msgstr "Настройки на модула"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:10
+#: modules/Ztools/templates/admin/modifyconfig.tpl:11
 msgid "General settings"
 msgstr "Общи настройки"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:12
+#: modules/Ztools/templates/admin/modifyconfig.tpl:13
 msgid "Hosting admin URL"
 msgstr "URL за администрация на хостинга"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:15
+#: modules/Ztools/templates/admin/modifyconfig.tpl:16
 msgid ""
 "Enter here URL address to your hosting provider admin panel (Cpanel or "
 "other)."
@@ -479,116 +499,162 @@ msgstr ""
 "Въведете тук URL адреса на администраторския панел на вашия доставчик на "
 "хостинга (Cpanel или друг)."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:16
-#: modules/Ztools/templates/admin/modifyconfig.tpl:24
+#: modules/Ztools/templates/admin/modifyconfig.tpl:17
+#: modules/Ztools/templates/admin/modifyconfig.tpl:25
 msgid "Link will appear in the info page for easy access."
 msgstr "Връзката ще се появява на информационната страница за бърз достъп."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:20
+#: modules/Ztools/templates/admin/modifyconfig.tpl:21
 msgid "Database admin URL"
 msgstr "URL за администрация на базата данни"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:23
+#: modules/Ztools/templates/admin/modifyconfig.tpl:24
 msgid ""
 "Enter here URL address to your database admin panel (phpMyAdmin or other)."
 msgstr ""
 "Въведете тук URL адреса на администраторския панел за базата данни "
 "(phpMyAdmin или друг)."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:28
+#: modules/Ztools/templates/admin/modifyconfig.tpl:29
 msgid "Display PHP info"
 msgstr "Покажи PHP информация"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:30
+#: modules/Ztools/templates/admin/modifyconfig.tpl:31
 msgid "With link in new page"
 msgstr "С препратка в нова страница"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:31
+#: modules/Ztools/templates/admin/modifyconfig.tpl:32
 msgid "Always on info page"
 msgstr "Винаги на информационната страница"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:32
+#: modules/Ztools/templates/admin/modifyconfig.tpl:33
 msgid "Never"
 msgstr "Никога"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:38
+#: modules/Ztools/templates/admin/modifyconfig.tpl:39
 msgid "Backups"
 msgstr "Архиви"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:40
+#: modules/Ztools/templates/admin/modifyconfig.tpl:41
 msgid "Default backups directory"
 msgstr "Директория по подразбиране за архивите"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:43
-#: modules/Ztools/templates/admin/modifyconfig.tpl:78
+#: modules/Ztools/templates/admin/modifyconfig.tpl:44
+#: modules/Ztools/templates/admin/modifyconfig.tpl:102
 msgid "Directory exist."
 msgstr "Директорията съществува."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:45
-#: modules/Ztools/templates/admin/modifyconfig.tpl:80
+#: modules/Ztools/templates/admin/modifyconfig.tpl:46
+#: modules/Ztools/templates/admin/modifyconfig.tpl:104
 msgid "Directory does not exist!"
 msgstr "Директорията не съществува."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:47
+#: modules/Ztools/templates/admin/modifyconfig.tpl:48
 msgid "This is the place, where database backup files are stored."
 msgstr ""
 "Това е мястото, където се съхраняват архивните файлове на базата данни."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:52
-#: modules/Ztools/templates/admin/modifyconfig.tpl:87
+#: modules/Ztools/templates/admin/modifyconfig.tpl:53
+#: modules/Ztools/templates/admin/modifyconfig.tpl:111
 msgid "Create specified directory"
 msgstr "Създай указаната директория"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:57
+#: modules/Ztools/templates/admin/modifyconfig.tpl:58
 msgid "Default export method"
 msgstr "Метод за експорт по подразбиране"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:64
+#: modules/Ztools/templates/admin/modifyconfig.tpl:60
+#: modules/Ztools/templates/admin/modifyconfig.tpl:62
+msgid "pure php/sql code"
+msgstr "чист PHP/SQL код"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:61
+msgid "call to mysqldump executable - fastest, but depend on server rights"
+msgstr ""
+"извиква mysqldump команда - най-бързият, но зависи от правата на сървъра"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:66
+msgid "Mysqldump executable"
+msgstr "Mysqldump изпълним файл"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:67
+msgid "Only for method"
+msgstr "Само за метод"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:73
+msgid "File exist."
+msgstr "Файлът съществува."
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:75
+msgid "File does not exist!"
+msgstr "Файлът не съществува!"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:77
+msgid ""
+"Ordinary path is `/usr/bin/mysqldump`, but leave empty if you are not sure, "
+"this is OK for most cases."
+msgstr ""
+"Обикновено пътят е `/usr/bin/mysqldump`, но оставете празно, ако не сте "
+"сигурни, това е добре за повечето случаи."
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:81
 msgid "Display export method selector"
 msgstr "Показва за избор метод за експорт"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:66
+#: modules/Ztools/templates/admin/modifyconfig.tpl:83
 msgid "No"
 msgstr "Не"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:67
+#: modules/Ztools/templates/admin/modifyconfig.tpl:84
 msgid "Yes"
 msgstr "Да"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:75
+#: modules/Ztools/templates/admin/modifyconfig.tpl:88
+msgid "Compression"
+msgstr "Компресия"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:90
+msgid "None"
+msgstr "Няма"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:91
+msgid "Gzip"
+msgstr "Gzip"
+
+#: modules/Ztools/templates/admin/modifyconfig.tpl:99
 msgid "Default scripts directory"
 msgstr "Директория по подразбиране за скриптове"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:82
+#: modules/Ztools/templates/admin/modifyconfig.tpl:106
 msgid "This is the place, where you upload scripts to execute."
 msgstr "Това е мястото, където качвате скриптовете за изпълнение."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:82
+#: modules/Ztools/templates/admin/modifyconfig.tpl:106
 #: modules/Ztools/templates/admin/scripts.tpl:16
 msgid "See example.php for sample."
 msgstr "За пример вижте example.php."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:92
+#: modules/Ztools/templates/admin/modifyconfig.tpl:116
 msgid "Display scripts"
 msgstr "Покажи скриптовете"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:94
+#: modules/Ztools/templates/admin/modifyconfig.tpl:118
 msgid "Not sorted"
 msgstr "Не сортирани"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:95
+#: modules/Ztools/templates/admin/modifyconfig.tpl:119
 msgid "Alphabetical order"
 msgstr "По азбучен ред ред"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:101
+#: modules/Ztools/templates/admin/modifyconfig.tpl:125
 msgid "Download files"
 msgstr "Изтегляне на файлове"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:103
+#: modules/Ztools/templates/admin/modifyconfig.tpl:127
 msgid "Use HTTP ranges"
 msgstr "Използват се HTTP диапазони"
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:105
+#: modules/Ztools/templates/admin/modifyconfig.tpl:129
 msgid ""
 "This allow client (browser) to resume aborted downloads. Disable if broken "
 "files are received."
@@ -596,7 +662,7 @@ msgstr ""
 "Това позволява на клиента (браузъра) да възобнови прекъснати тегления. "
 "Изключете го, ако са получени счупени файлове."
 
-#: modules/Ztools/templates/admin/modifyconfig.tpl:110
+#: modules/Ztools/templates/admin/modifyconfig.tpl:134
 #: modules/Ztools/templates/admin/editfile.tpl:56
 msgid "Save"
 msgstr "Запази"

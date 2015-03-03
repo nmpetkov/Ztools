@@ -35,15 +35,29 @@
             </div>
         </div>{* end hidden *}
         {if $vars.ztools_expmethodshow}
-        <div class="z-formrow">
-            <label for="export_method">{gt text="Export method"}<br />
-            </label>
-            <select id="export_method" name="export_method" size="1">
-                <option value="1"{if $vars.ztools_exportmethod == "1"} selected="selected"{/if}>Mysqldump-php</option>
-                <option value="2"{if $vars.ztools_exportmethod == "2"} selected="selected"{/if}>Ztools</option>
-            </select>
-        </div>
+            <div class="z-formrow">
+                <label for="export_method">{gt text="Export method"}</label>
+                <select id="export_method" name="export_method" size="1">
+                    <option value="1"{if $vars.ztools_exportmethod == "1"} selected="selected"{/if}>{gt text="Mysqldump php"}</option>
+                    <option value="2"{if $vars.ztools_exportmethod == "2"} selected="selected"{/if}>{gt text="Mysqldump shell"}</option>
+                    <option value="3"{if $vars.ztools_exportmethod == "3"} selected="selected"{/if}>{gt text="Ztools native"}</option>
+                </select>
+            </div>
+        {else}
+            <input type="hidden" name="export_method" value="{$vars.ztools_exportmethod}" />
         {/if}
+        {if $rightsAdmin}
+            <div class="z-formrow">
+                <label for="export_compress">{gt text="Compression"}</label>
+                <select id="export_compress" name="export_compress" size="1">
+                    <option value="0"{if $vars.ztools_exportcompress == "0"} selected="selected"{/if}>{gt text="None"}</option>
+                    <option value="1"{if $vars.ztools_exportcompress == "1"} selected="selected"{/if}>{gt text="Gzip"}</option>
+                </select>
+            </div>
+        {else}
+            <input type="hidden" name="export_compress" value="{$vars.ztools_exportcompress}" />
+        {/if}
+
         <div class="z-buttons z-formbuttons">
             {button src="button_ok.png" name="create" value="1" set="icons/extrasmall" __alt="Create" __title="Create backup" __text="Create"}
             <a href="{modurl modname="Ztools" type="admin" func='main'}" title="{gt text="Cancel"}">{img modname=core src="button_cancel.png" set="icons/extrasmall" __alt="Cancel" __title="Cancel"} {gt text="Cancel"}</a>

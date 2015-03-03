@@ -75,11 +75,11 @@ foreach ($tables as $key => $table) {
                         $file_stem = basename($src);
                         $file_stem = _Clean_Filestem($file_stem);
                     }
-                    $dest = $destdir[$key] . (substr($destdir[$key], -1) == '/' ? '' : '/') . $file_stem;
+                    $dest = $destdir[$key] . (substr($destdir[$key], -1) == DIRECTORY_SEPARATOR ? '' : DIRECTORY_SEPARATOR) . $file_stem;
                     $src_full = $src;
                     if (!empty($domain_if_not)) {
-                        if ((substr($src, 0, 1) != '/') && (substr($src, 0, 7) != 'http://') && (substr($src, 0, 8) != 'https://')) {
-                            $src_full = $domain_if_not . (substr($domain_if_not, -1) == '/' ? '' : '/') . $src;
+                        if ((substr($src, 0, 1) != DIRECTORY_SEPARATOR) && (substr($src, 0, 7) != 'http://') && (substr($src, 0, 8) != 'https://')) {
+                            $src_full = $domain_if_not . (substr($domain_if_not, -1) == DIRECTORY_SEPARATOR ? '' : DIRECTORY_SEPARATOR) . $src;
                         }
                     }
                     // check if image type is in dest extention

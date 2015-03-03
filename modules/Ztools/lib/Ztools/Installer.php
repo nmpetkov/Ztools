@@ -22,8 +22,10 @@ class Ztools_Installer extends Zikula_AbstractInstaller
         $this->setVar('ztools_downloaduseranges', '0');
         $this->setVar('ztools_url_cpanel', '');
         $this->setVar('ztools_url_phpmyadmin', '');
-        $this->setVar('ztools_exportmethod', '1');
+        $this->setVar('ztools_exportmethod', '2');
+        $this->setVar('ztools_exportcompress', '0');
         $this->setVar('ztools_expmethodshow', '1');
+        $this->setVar('ztools_mysqldumpexe', '');
 
         return true;
     }

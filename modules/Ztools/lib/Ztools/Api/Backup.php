@@ -17,6 +17,8 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
      private $max_execution_time = 0;
      
      private $export_method = 1;
+
+     private $export_compress = 0;
      
      private $typeoutput = 1; // 1 file, 2 return content
      
@@ -40,6 +42,9 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
      *      ['export_method'] Export (dump) methid
      *          1 - Mysqldump-php class
      *          2 - Ztools internal method
+     *      ['export_compress'] Export compression
+     *          0 - None
+     *          1 - Gzip
      *      ['typeoutput'] Output destination
      *          1 - content will write in file
      *          2 - content will return in array element ['content']
@@ -58,6 +63,8 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
         $this->starttime = time();
 
         $this->export_method = isset($args['export_method']) ? $args['export_method'] : 1;
+        $this->export_compress = isset($args['export_compress']) ? $args['export_compress'] : 0;
+        $this->ztools_exportcompress = isset($args['ztools_exportcompress']) ? $args['ztools_exportcompress'] : 0;
         $this->typeoutput = isset($args['typeoutput']) ? $args['typeoutput'] : 1;
         
         $this->filename = isset($args['filename']) ? $args['filename'] : '';
@@ -98,10 +105,14 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
 
         // Use speciies export method
         if ($this->export_method == 1) {
-            if (!$this->exportByMysqldumpphp()) {
+            if (!$this->exportByMysqldump_php()) {
                 return false;
             }
         } elseif ($this->export_method == 2) {
+            if (!$this->exportByMysqldump_shell()) {
+                return false;
+            }
+        } elseif ($this->export_method == 3) {
             if (!$this->exportByZtools()) {
                 return false;
             }
@@ -120,9 +131,47 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
     }
 
      /**
+     * Export by mysqldump shell command
+     */
+    public function exportByMysqldump_shell()
+    {
+        global $ZConfig;
+        // [host], [user],[password],[dbname],[dbdriver] => mysql,  [dbtabletype] => myisam/..., [charset] => utf8, [collate] => utf8_general_ci
+        $dbinfo = $ZConfig['DBInfo']['databases']['default'];
+        
+        $command = $this->getVar('ztools_mysqldumpexe');
+        if (empty($mysqldump_path)) {
+            $command = 'mysqldump';
+        }
+
+        $parameters = ' --user=' . $dbinfo['user'] .
+                      ' --password=' . $dbinfo['password'] .
+                      ' --host=' . $dbinfo['host'];
+        $parameters .= ' --skip-extended-insert=1'; // separate INSERT statement for each row
+        $parameters .= ' --hex-blob=1'; // dump binary columns in hex
+        $parameters .= ' --disable-keys=1'; 
+        $parameters .= ' ' . $dbinfo['dbname'];
+        if (!$this->tables_all && is_array($this->aTables)) {
+            foreach ($this->aTables as $table) {
+                $parameters .= ' ' . $table;
+            }
+        }
+        if ($this->export_compress == 1) {
+            $parameters .= ' | gzip';
+        }
+        $parameters .= ' > ' . System::serverGetVar('DOCUMENT_ROOT') . DIRECTORY_SEPARATOR . $this->filename;
+
+        $return_var = 0;
+        exec($command . $parameters, $return_var);
+        LogUtil::registerStatus($this->__('Status:') . ' ' . $return_var);
+        
+        return true;
+    }
+
+     /**
      * Export by Mysqldump-php class
      */
-    public function exportByMysqldumpphp()
+    public function exportByMysqldump_php()
     {
         global $ZConfig;
         // [host], [user],[password],[dbname],[dbdriver] => mysql,  [dbtabletype] => myisam/..., [charset] => utf8, [collate] => utf8_general_ci
@@ -134,7 +183,7 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
           array('include-tables' => $this->tables_all ? array() : $this->aTables,
                 'exclude-tables' => array(),
                 'default-character-set' => IMysqldump\Mysqldump::UTF8,
-                'compress' => IMysqldump\Mysqldump::NONE,
+                'compress' => $this->export_compress == 1 ? IMysqldump\Mysqldump::GZIP : IMysqldump\Mysqldump::NONE,
                 'no-data' => false,
                 'add-drop-table' => true,
                 'single-transaction' => true,
@@ -169,7 +218,11 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
     {
         // Open output file
         if ($this->typeoutput == 1) {
-            $this->fhandle = fopen($this->filename, 'wb');
+            if ($this->export_compress == 1) {
+                $this->fhandle = gzopen($this->filename, 'wb');
+            } else {
+                $this->fhandle = fopen($this->filename, 'wb');
+            }
             if (!$this->fhandle) {
                 LogUtil::registerError($this->__f('Error! Can not create file %s.', $this->filename));
                 return false;
@@ -205,7 +258,11 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
 
         // close output file
         if ($this->typeoutput == 1) {
-            fclose($this->fhandle);
+            if ($this->export_compress == 1) {
+                gzclose($this->fhandle);
+            } else {
+                fclose($this->fhandle);
+            }
         }
 
         return true;
@@ -222,7 +279,7 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
 
         // comments
         $sql = "--\n" ;
-        $sql .= '-- Tabel structure for table `' . $table . '`' . "\n" ;
+        $sql .= '-- Structure for table `' . $table . '`' . "\n" ;
         $sql .= "--\n" ;
 
         // Drop the table
@@ -295,9 +352,17 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
     private function writeToOutput($content = '')
     {
         if ($this->typeoutput == 1) {
-            $nbytes = fwrite($this->fhandle, $content);
+            if ($this->export_compress == 1) {
+                $nbytes = gzwrite($this->fhandle, $content);
+            } else {
+                $nbytes = fwrite($this->fhandle, $content);
+            }
             if ($this->debugmode) {
-                fwrite($this->fhandle, '-- TIME: ' .  (time() - $this->starttime) . ' s, MEMORY: ' . memory_get_peak_usage(). "\n");
+                if ($this->export_compress == 1) {
+                    gzwrite($this->fhandle, '-- TIME: ' .  (time() - $this->starttime) . ' s, MEMORY: ' . memory_get_peak_usage(). "\n");
+                } else {
+                    fwrite($this->fhandle, '-- TIME: ' .  (time() - $this->starttime) . ' s, MEMORY: ' . memory_get_peak_usage(). "\n");
+                }
             }
             return $nbytes;
         } else {

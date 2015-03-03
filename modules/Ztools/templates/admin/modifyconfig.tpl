@@ -1,3 +1,4 @@
+{ajaxheader modname='ztools' filename='ztools_admin_display.js' nobehaviour=true noscriptaculous=true effects=true}
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="config" size="small"}
@@ -56,15 +57,38 @@
         <div class="z-formrow">
             <label for="ztools_exportmethod">{gt text="Default export method"}</label>
             <select id="ztools_exportmethod" name="ztools_exportmethod" size="1">
-                <option value="1"{if $vars.ztools_exportmethod == "1"} selected="selected"{/if}>Mysqldump-php</option>
-                <option value="2"{if $vars.ztools_exportmethod == "2"} selected="selected"{/if}>Ztools</option>
+                <option value="1"{if $vars.ztools_exportmethod == "1"} selected="selected"{/if}>{gt text="Mysqldump php"} ({gt text="pure php/sql code"})</option>
+                <option value="2"{if $vars.ztools_exportmethod == "2"} selected="selected"{/if}>{gt text="Mysqldump shell"} ({gt text="call to mysqldump executable - fastest, but depend on server rights"})</option>
+                <option value="3"{if $vars.ztools_exportmethod == "3"} selected="selected"{/if}>{gt text="Ztools native"} ({gt text="pure php/sql code"})</option>
             </select>
+        </div>
+        <div class="z-formrow">
+            <label for="ztools_mysqldumpexe">{gt text='Mysqldump executable'}<br />
+                <div class="z-sub z-formnote">{gt text='Only for method'} `{gt text="Mysqldump shell"}`</div>
+            </label>
+            <input id="ztools_mysqldumpexe" type="text" name="ztools_mysqldumpexe" value="{$vars.ztools_mysqldumpexe|safetext}" />
+            <div class="z-informationmsg z-formnote">
+                {if empty($vars.ztools_mysqldumpexe)}
+                {elseif $mysqldumpexe_exist}
+                    {gt text='File exist.'} 
+                {else}
+                    {gt text='File does not exist!'} 
+                {/if}
+                {gt text='Ordinary path is `/usr/bin/mysqldump`, but leave empty if you are not sure, this is OK for most cases.'}
+            </div>
         </div>
         <div class="z-formrow">
             <label for="ztools_expmethodshow">{gt text="Display export method selector"}</label>
             <select id="ztools_expmethodshow" name="ztools_expmethodshow" size="1">
                 <option value="0"{if $vars.ztools_expmethodshow == "0"} selected="selected"{/if}>{gt text="No"}</option>
                 <option value="1"{if $vars.ztools_expmethodshow == "1"} selected="selected"{/if}>{gt text="Yes"}</option>
+            </select>
+        </div>
+        <div class="z-formrow">
+            <label for="ztools_exportcompress">{gt text="Compression"}</label>
+            <select id="ztools_exportcompress" name="ztools_exportcompress" size="1">
+                <option value="0"{if $vars.ztools_exportcompress == "0"} selected="selected"{/if}>{gt text="None"}</option>
+                <option value="1"{if $vars.ztools_exportcompress == "1"} selected="selected"{/if}>{gt text="Gzip"}</option>
             </select>
         </div>
     </fieldset>

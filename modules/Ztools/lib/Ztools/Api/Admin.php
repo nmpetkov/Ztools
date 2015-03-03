@@ -104,14 +104,14 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
     {
         $dir = $this->getVar('ztools_backupsdir');
 
-        return $dir . (substr($dir, -1) == '/' ? '' : '/');
+        return $dir . (substr($dir, -1) == DIRECTORY_SEPARATOR ? '' : DIRECTORY_SEPARATOR);
     }
 
     public function getScriptsDir()
     {
         $dir = $this->getVar('ztools_scriptsdir');
 
-        return $dir . (substr($dir, -1) == '/' ? '' : '/');
+        return $dir . (substr($dir, -1) == DIRECTORY_SEPARATOR ? '' : DIRECTORY_SEPARATOR);
     }
 
     public function getScriptsDirLockStatus($args)
@@ -284,6 +284,7 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
     public function createBackup($args)
     {
         $export_method = isset($args['export_method']) ? $args['export_method'] : 1;
+        $export_compress = isset($args['export_compress']) ? $args['export_compress'] : 0;
         $filename = isset($args['filename']) ? $args['filename'] : '';
         $tables = isset($args['tables']) ? $args['tables'] : null;
 
@@ -296,7 +297,7 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
         }
 
         $aResult = ModUtil::apiFunc($this->name, 'backup', 'createBackup', 
-                array('export_method' => $export_method, 'filename' => $filename, 'tables' => $tables));
+                array('export_method' => $export_method, 'export_compress' => $export_compress, 'filename' => $filename, 'tables' => $tables));
         if (is_array($aResult) && isset($aResult['success']) && $aResult['success']) {
             LogUtil::registerStatus($this->__f('Done! Database backup is created in file %s.', $filename));
         } else {

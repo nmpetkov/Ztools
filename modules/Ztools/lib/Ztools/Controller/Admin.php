@@ -41,13 +41,20 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         if (!isset($vars['ztools_exportmethod'])) {
             $vars['ztools_exportmethod'] = '1';
         }
+        if (!isset($vars['ztools_exportcompress'])) {
+            $vars['ztools_exportcompress'] = '0';
+        }
         if (!isset($vars['ztools_expmethodshow'])) {
             $vars['ztools_expmethodshow'] = '1';
+        }
+        if (!isset($vars['ztools_mysqldumpexe'])) {
+            $vars['ztools_mysqldumpexe'] = '';
         }
 
         $this->view->assign('vars', $vars);
         $this->view->assign('scriptsdir_exist', is_dir($vars['ztools_scriptsdir']));
         $this->view->assign('backupsdir_exist', is_dir($vars['ztools_backupsdir']));
+        $this->view->assign('mysqldumpexe_exist', @file_exists($vars['ztools_mysqldumpexe']));
 
         return $this->view->fetch('admin/modifyconfig.tpl');
     }
@@ -69,7 +76,9 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $vars['ztools_url_cpanel'] = FormUtil::getPassedValue('ztools_url_cpanel', '');
         $vars['ztools_url_phpmyadmin'] = FormUtil::getPassedValue('ztools_url_phpmyadmin', '');
         $vars['ztools_exportmethod'] = FormUtil::getPassedValue('ztools_exportmethod', '1');
+        $vars['ztools_exportcompress'] = FormUtil::getPassedValue('ztools_exportcompress', '0');
         $vars['ztools_expmethodshow'] = FormUtil::getPassedValue('ztools_expmethodshow', '1');
+        $vars['ztools_mysqldumpexe'] = FormUtil::getPassedValue('ztools_mysqldumpexe', '');
         $scriptsdir_createfolder = (bool)FormUtil::getPassedValue('scriptsdir_createfolder', false, 'POST');
         $backupsdir_createfolder = (bool)FormUtil::getPassedValue('backupsdir_createfolder', false, 'POST');
 
@@ -503,6 +512,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $tablestotal = FormUtil::getPassedValue('tablestotal', 0);
         $selectedtables = FormUtil::getPassedValue('selectedtables', 0);
         $export_method = FormUtil::getPassedValue('export_method', 1);
+        $export_compress = FormUtil::getPassedValue('export_compress', 0);
 
         if ($create) {
             // Create backup
@@ -529,8 +539,12 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
             $backupFilename .= $tablesCountInfo . '-' . $tablestotal;
             $backupFilename .= '_m-' . $export_method;
             $backupFilename .= '.sql';
+            if ($export_compress == 1) {
+                $backupFilename .= '.gz';
+            }
             $args['filename'] = $this->getBackupFullPath($backupFilename);
             $args['export_method'] = $export_method;
+            $args['export_compress'] = $export_compress;
 
             ModUtil::apiFunc($this->name, 'admin', 'createBackup', $args);
         }
@@ -578,7 +592,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
             }
         }
 
-        return $this->backupdb();
+        return System::redirect(ModUtil::url($this->name, 'admin', 'backupdb'));
     }
 
     private function getScriptFullPath($filename)
