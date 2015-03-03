@@ -10,31 +10,35 @@ use Ifsnop\Mysqldump as IMysqldump;
 
 class Ztools_Api_Backup extends Zikula_AbstractApi
 {
-     private $debugmode = true;
+    private $debugmode = true;
 
-     private $starttime = 0;
-     
-     private $max_execution_time = 0;
-     
-     private $export_method = 1;
+    private $starttime = 0;
 
-     private $export_compress = 0;
-     
-     private $typeoutput = 1; // 1 file, 2 return content
-     
-     private $filename = '';
-     
-     private $fhandle = 0;
-     
-     private $doctr_conn_name = 'default';
-     
-     private $connection = null;
+    private $max_execution_time = 0;
 
-     private $tables_all = true;
+    private $export_method = 1;
 
-     private $aTables = array();
+    private $export_compress = 0;
+    
+    private $hex_blob = 1; // dump binary columns in hex
 
-     private $returnContent = '';
+    private $typeoutput = 1; // 1 file, 2 return content
+
+    private $dbinfo = null;
+
+    private $filename = '';
+
+    private $fhandle = 0;
+
+    private $doctr_conn_name = 'default';
+
+    private $connection = null;
+
+    private $tables_all = true;
+
+    private $aTables = array();
+
+    private $returnContent = '';
 
      /**
      * Create database backup
@@ -103,6 +107,11 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
             $this->tables_all = true;
         }
 
+
+        // [host], [user],[password],[dbname],[dbdriver] => mysql,  [dbtabletype] => myisam/..., [charset] => utf8, [collate] => utf8_general_ci
+        global $ZConfig;
+        $this->dbinfo = $ZConfig['DBInfo']['databases']['default'];
+
         // Use speciies export method
         if ($this->export_method == 1) {
             if (!$this->exportByMysqldump_php()) {
@@ -134,23 +143,19 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
      * Export by mysqldump shell command
      */
     public function exportByMysqldump_shell()
-    {
-        global $ZConfig;
-        // [host], [user],[password],[dbname],[dbdriver] => mysql,  [dbtabletype] => myisam/..., [charset] => utf8, [collate] => utf8_general_ci
-        $dbinfo = $ZConfig['DBInfo']['databases']['default'];
-        
+    {       
         $command = $this->getVar('ztools_mysqldumpexe');
         if (empty($mysqldump_path)) {
             $command = 'mysqldump';
         }
 
-        $parameters = ' --user=' . $dbinfo['user'] .
-                      ' --password=' . $dbinfo['password'] .
-                      ' --host=' . $dbinfo['host'];
+        $parameters = ' --user=' . $this->dbinfo['user'] .
+                      ' --password=' . $this->dbinfo['password'] .
+                      ' --host=' . $this->dbinfo['host'];
         $parameters .= ' --skip-extended-insert=1'; // separate INSERT statement for each row
-        $parameters .= ' --hex-blob=1'; // dump binary columns in hex
+        $parameters .= ' --hex-blob=' . $this->hex_blob; // dump binary columns in hex
         $parameters .= ' --disable-keys=1'; 
-        $parameters .= ' ' . $dbinfo['dbname'];
+        $parameters .= ' ' . $this->dbinfo['dbname'];
         if (!$this->tables_all && is_array($this->aTables)) {
             foreach ($this->aTables as $table) {
                 $parameters .= ' ' . $table;
@@ -173,13 +178,9 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
      */
     public function exportByMysqldump_php()
     {
-        global $ZConfig;
-        // [host], [user],[password],[dbname],[dbdriver] => mysql,  [dbtabletype] => myisam/..., [charset] => utf8, [collate] => utf8_general_ci
-        $dbinfo = $ZConfig['DBInfo']['databases']['default'];
-
         include_once("modules/Ztools/lib/vendor/Mysqldump/Mysqldump.php");
 
-        $dump = new IMysqldump\Mysqldump($dbinfo['dbname'], $dbinfo['user'], $dbinfo['password'], $dbinfo['host'], $dbinfo['dbdriver'],
+        $dump = new IMysqldump\Mysqldump($this->dbinfo['dbname'], $this->dbinfo['user'], $this->dbinfo['password'], $this->dbinfo['host'], $this->dbinfo['dbdriver'],
           array('include-tables' => $this->tables_all ? array() : $this->aTables,
                 'exclude-tables' => array(),
                 'default-character-set' => IMysqldump\Mysqldump::UTF8,
@@ -197,7 +198,7 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
                 'add-drop-database' => false,
                 'skip-tz-utz' => false,
                 'no-autocommit' => true,
-                'hex-blob' => true,
+                'hex-blob' => $this->hex_blob ? true : false,
                 'no-create-info' => false,
                 'where' => '')
             );
@@ -231,14 +232,12 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
 
         // start statements
         $sql = '';
-        $sql .= "--\n";
-        $sql .= "-- Mysql Backup\n";
-        $sql .= "--\n";
-        $sql .= '-- Created: ' . DateUtil::formatDatetime(time(), '%Y-%m-%d %H:%M:%S') . "\n";
-        $sql .= "--\n";
-        $result = $this->connection->fetchArray('SELECT DATABASE()');
-        $sql .= "-- Database: " . $result[0] . "\n";
-        $sql .= "--\n";
+        $sql .= "-- Ztools Mysql Backup" . PHP_EOL;
+        $sql .= "--" . PHP_EOL;
+        $sql .= '-- Created: ' . DateUtil::formatDatetime(time(), '%Y-%m-%d %H:%M:%S') . PHP_EOL;
+        $sql .= "--" . PHP_EOL;
+        $sql .= "-- Host: " . $this->dbinfo['host'] . "\tDatabase: " . $this->dbinfo['dbname'] . PHP_EOL;
+        $sql .= "--" . PHP_EOL;
         $sql .= 'SET AUTOCOMMIT = 0;' . "\n";
         $sql .= 'SET FOREIGN_KEY_CHECKS=0;' . "\n\n";
         $sql .= 'SET SESSION SQL_MODE = NO_AUTO_VALUE_ON_ZERO;' . "\n\n";
@@ -246,7 +245,7 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
 
         // export table by table
         foreach ($this->aTables as $table) {
-            $this->backupTable($table);
+            $this->exportTable($table);
         }
 
         // end statements
@@ -271,7 +270,7 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
      /**
      * Backup given table
      */
-    public function backupTable($table)
+    public function exportTable($table)
     {
         // number of fields in table
         $result = $this->connection->fetchArray('SELECT count(*) FROM '.$table);
@@ -290,6 +289,25 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
         $create_table = $result[1];
         $sql .= $create_table.";" . "\n\n" ;
 
+        // Get column types
+        $columns = $this->connection->fetchAssoc('SHOW COLUMNS FROM '.$table);
+        $columnTypes = array();
+        foreach($columns as $key => $col) {
+            // decode type column
+            $types = array();
+            $colParts = explode(" ", $col['Type']);
+            if($fparen = strpos($colParts[0], "(")) {
+                $types['type'] = substr($colParts[0], 0, $fparen);
+                $types['length']  = str_replace(")", "", substr($colParts[0], $fparen+1));
+                $types['attributes'] = isset($colParts[1]) ? $colParts[1] : NULL;
+            } else {
+                $types['type'] = $colParts[0];
+            }
+            $types['is_numeric'] = in_array($types['type'], array('bit', 'tinyint', 'smallint', 'mediumint', 'int', 'integer', 'bigint', 'real', 'double', 'float', 'decimal', 'numeric'));
+            $types['is_blob'] = in_array($types['type'], array('tinyblob', 'blob', 'mediumblob', 'longblob', 'binary', 'varbinary', 'bit'));
+            $columnTypes[$col['Field']] = array('is_numeric'=> $types['is_numeric'], 'is_blob' => $types['is_blob'], 'type' => $types['type']);
+        }
+
         // select all data from the table
         $items = $this->connection->fetchAssoc('SELECT * FROM '.$table);
         foreach ($items as $item) {
@@ -298,12 +316,26 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
             $i = 0;
             foreach ($item as $field => $fieldContent) {
                 $i++;
-                $sql .= '"'. ereg_replace("\n", "\\n", addslashes($fieldContent)) .'"' ;
+                // Escape field content
+                if (is_null($fieldContent)) {
+                    $sql .= "NULL";
+                } elseif ($this->hex_blob && $columnTypes[$field]['is_blob']) {
+                    if ($columnTypes[$field]['type'] == 'bit' || !empty($fieldContent)) {
+                        $sql .= "0x${fieldContent}";
+                    } else {
+                        $sql .= "''";
+                    }
+                } elseif ($columnTypes[$field]['is_numeric']) {
+                    $sql .= $fieldContent;
+                } else {
+                    $sql .= $this->connection->quote($fieldContent);
+                    //$sql .= "'" . ereg_replace("\n", "\\n", addslashes($fieldContent)) . "'";
+                }
                 $sql .= $i < $fieldCount ? ', ' : '';
             }
-            $sql .= ");" ."\n" ;
+            $sql .= ");" . PHP_EOL ;
         }
-        $sql .= "\n\n" ; 
+        $sql .= PHP_EOL . PHP_EOL ;
         $this->writeToOutput($sql);
 
         unset($sql);

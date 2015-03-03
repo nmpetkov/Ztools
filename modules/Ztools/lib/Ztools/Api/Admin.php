@@ -256,7 +256,7 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
                 header('Accept-Ranges: bytes');
 
                 // send file content
-                set_time_limit(0);
+                @set_time_limit(0);
                 fseek($handle, $seek_start);
                 while(!feof($handle)) {
                     print(@fread($handle, 1024*8));
