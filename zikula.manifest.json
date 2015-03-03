@@ -1,0 +1,25 @@
+{
+    "extension": {
+        "title": "System tools",
+        "url": "https://github.com/nmpetkov/Ztools",
+        "icon": "http://www.cmstory.com/images/github/ztools.png"
+    },
+    "version": {
+        "keywords": [
+            "zikula",
+            "tools",
+            "backup",
+            "database",
+            "scripts"
+        ],
+        "semver": "1.0.1",
+        "dependencies": {
+            "zikula/core": ">1.3.0 <1.5"
+        },
+        "composerpath": "composer.json",
+        "description": "Provides administrators of Zikula sites with various tools, system, server and client (browser) information, backup database with options, PHP code execution.",
+        "urls": {
+            "issues": "https://github.com/nmpetkov/Ztools/issues"
+        }
+    }
+}
