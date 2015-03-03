@@ -1,5 +1,5 @@
 {
-    "name": "nmpetkov/Ztools",
+    "name": "nmpetkov/ztools-module",
     "description": "Provides administrators of Zikula sites with various tools, system, server and client (browser) information, backup database with options, PHP code execution.",
     "type": "zikula-module",
     "license": "GPL-3.0+",
