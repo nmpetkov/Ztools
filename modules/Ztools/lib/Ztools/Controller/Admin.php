@@ -32,6 +32,9 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         if (!isset($vars['ztools_scriptssort'])) {
             $vars['ztools_scriptssort'] = '0';
         }
+        if (!isset($vars['ztools_scriptseditor'])) {
+            $vars['ztools_scriptseditor'] = '1';
+        }
         if (!isset($vars['ztools_showphpinfo'])) {
             $vars['ztools_showphpinfo'] = '1';
         }
@@ -71,6 +74,7 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
         $vars['ztools_backupsdir'] = FormUtil::getPassedValue('ztools_backupsdir', 'userdata/Ztools/backups');
         $vars['ztools_scriptsdir'] = FormUtil::getPassedValue('ztools_scriptsdir', 'userdata/Ztools/scripts');
         $vars['ztools_scriptssort'] = FormUtil::getPassedValue('ztools_scriptssort', '0');
+        $vars['ztools_scriptseditor'] = FormUtil::getPassedValue('ztools_scriptseditor', '1');
         $vars['ztools_showphpinfo'] = FormUtil::getPassedValue('ztools_showphpinfo', '0');
         $vars['ztools_downloaduseranges'] = FormUtil::getPassedValue('ztools_downloaduseranges', "0");
         $vars['ztools_url_cpanel'] = FormUtil::getPassedValue('ztools_url_cpanel', '');
@@ -321,6 +325,10 @@ class Ztools_Controller_Admin extends Zikula_AbstractController
             return System::redirect(ModUtil::url($this->name, 'admin', 'scripts'));
         }
 
+        // Get module configuration vars
+        $vars = $this->getVars();
+
+        $this->view->assign('vars', $vars);
         $this->view->assign('filename', $filename);
         $this->view->assign('filecontent', $filecontent);
 

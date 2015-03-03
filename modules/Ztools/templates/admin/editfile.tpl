@@ -1,22 +1,24 @@
-{* add basic CodeMirror functionality *}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/lib/codemirror.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/selection/active-line.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/matchbrackets.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/closebrackets.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/matchtags.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/closetag.js'}
-{pageaddvar name='stylesheet' value='modules/Ztools/javascript/vendor/codemirror/lib/codemirror.css'}
-{* add Javascript-mode dependencies *}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/javascript/javascript.js'}
-{* add PHP-mode dependencies (replace dependency loading by require.js!) *}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/xml/xml.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/htmlmixed/htmlmixed.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/clike/clike.js'}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/php/php.js'}
-{* add SPARQL-mode dependencies *}
-{pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/sparql/sparql.js'}
-{* codemirror style overwrites *}
-{pageaddvar name='stylesheet' value='modules/Ztools/style/codemirror.css'}
+{if $vars.ztools_scriptseditor}
+    {* add basic CodeMirror functionality *}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/lib/codemirror.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/selection/active-line.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/matchbrackets.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/closebrackets.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/matchtags.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/addon/edit/closetag.js'}
+    {pageaddvar name='stylesheet' value='modules/Ztools/javascript/vendor/codemirror/lib/codemirror.css'}
+    {* add Javascript-mode dependencies *}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/javascript/javascript.js'}
+    {* add PHP-mode dependencies (replace dependency loading by require.js!) *}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/xml/xml.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/htmlmixed/htmlmixed.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/clike/clike.js'}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/php/php.js'}
+    {* add SPARQL-mode dependencies *}
+    {pageaddvar name='javascript' value='modules/Ztools/javascript/vendor/codemirror/mode/sparql/sparql.js'}
+    {* codemirror style overwrites *}
+    {pageaddvar name='stylesheet' value='modules/Ztools/style/codemirror.css'}
+{/if}
 
 {adminheader}
 
@@ -33,6 +35,7 @@
         <div>
         <label for="filecontent"><strong>{$filename}</strong></label>
         <textarea id="filecontent" name="filecontent" cols="100" rows="40">{$filecontent}</textarea>
+{if $vars.ztools_scriptseditor}
 <script>
   var editor = CodeMirror.fromTextArea(document.getElementById("filecontent"), {
     mode: "application/x-httpd-php",
@@ -44,6 +47,7 @@
     autoCloseTags: true
   });
 </script>
+{/if}
         </div>
         <div>
             <label for="filesaveasnew">{gt text='Save as new file'}</label>
@@ -51,6 +55,9 @@
             <span class="z-sub z-italic">{gt text='If you enter here, the file will save as new with this name.'}</span>
         </div>
     </fieldset>
+
+    {notifydisplayhooks eventname='ztools.ui_hooks.item.form_edit' id=null}
+
     <div class="z-buttons">
         <div>
         {button src="button_ok.png" set="icons/extrasmall" __alt="Save" __title="Save" __text="Save"}

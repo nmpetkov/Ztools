@@ -119,6 +119,13 @@
                 <option value="1"{if $vars.ztools_scriptssort == "1"} selected="selected"{/if}>{gt text="Alphabetical order"}</option>
             </select>
         </div>
+        <div class="z-formrow">
+            <label for="ztools_scriptseditor">{gt text="Internal editor for scripts"}</label>
+            <select id="ztools_scriptseditor" name="ztools_scriptseditor" size="1">
+                <option value="0"{if $vars.ztools_scriptseditor == "0"} selected="selected"{/if}>{gt text="None"}</option>
+                <option value="1"{if $vars.ztools_scriptseditor == "1"} selected="selected"{/if}>{gt text="CodeMirror"}</option>
+            </select>
+        </div>
     </fieldset>
 
     <fieldset>

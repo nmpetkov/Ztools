@@ -19,13 +19,13 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
         if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_READ)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'displaysysinfo'),
-                'text' => $this->__('Server information'),
+                'text' => $this->__('Server'),
                 'class' => 'z-icon-es-info');
         }
         if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_OVERVIEW)) {
             $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'displaybrowserinfo'),
-                'text' => $this->__('Client information'),
+                'text' => $this->__('Client'),
                 'class' => 'z-icon-es-info');
         }
         if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_EDIT)) {
