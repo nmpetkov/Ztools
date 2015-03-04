@@ -46,6 +46,12 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
                 'text' => $this->__('Settings'),
                 'class' => 'z-icon-es-config');
         }
+        if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN)) {
+            $links[] = array(
+                'url' => 'https://github.com/nmpetkov/Ztools/wiki',
+                'text' => $this->__('Wiki'),
+                'class' => 'z-icon-es-help');
+        }
 
         return $links;
     }
