@@ -18,11 +18,11 @@
 		</tr>
 		<tr class="{cycle values='z-odd,z-even'}">
 			<td class="z-bold">{gt text='Country'}</td>
-			<td>{if $item.country_name}{$item.country_name|safetext} ({$item.country|safetext}){else}{$item.country|safetext}{/if}</td>
+			<td>{if $item.country_name}{$item.country_name|safetext} ({$item.country_code|safetext}){else}{$item.country_code|safetext}{/if}</td>
 		</tr>
 		<tr class="{cycle values='z-odd,z-even'}">
 			<td class="z-bold">{gt text='Location'}</td>
-			<td>{$item.loc|safetext}</td>
+			<td>{$item.latitude|safetext}, {$item.longitude|safetext}</td>
 		</tr>
 		<tr class="{cycle values='z-odd,z-even'}">
 			<td class="z-bold">{gt text='Organization'}</td>

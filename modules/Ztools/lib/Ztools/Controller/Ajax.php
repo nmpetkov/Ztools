@@ -42,13 +42,27 @@ class Ztools_Controller_Ajax extends Zikula_Controller_AbstractAjax
                             ob_end_clean();
                         } else {
                             if (is_array($item)) {
-                                if (isset($item['country'])) {
-                                    $item['country_name'] = ZLanguage::getCountryName($item['country']);
-                                } else {
-                                    $item['country_name'] = '';
+                                // Standardize output
+                                $item_s = array();
+                                $item_s['ip'] = $item['ip'];
+                                $item_s['hostname'] = $item['hostname'];
+                                $item_s['city'] = $item['city'];
+                                $item_s['region'] = $item['region'];
+                                $item_s['country_code'] = $item['country'];
+                                $item_s['country_name'] = (isset($item['country']) && $item['country']) ? ZLanguage::getCountryName($item['country']) : '';
+                                $item_s['latitude'] = '';
+                                $item_s['longitude'] = '';
+                                if (isset($item['loc']) && $item['loc']) {
+                                    $aLatLong = explode(',', $item['loc']);
+                                    if (is_array($aLatLong)) {
+                                        $item_s['latitude'] = $aLatLong[0];
+                                        $item_s['longitude'] = $aLatLong[1];
+                                    }
                                 }
+                                $item_s['org'] = $item['org'];
+                                // Generate output
                                 Zikula_AbstractController::configureView();
-                                $this->view->assign('item', $item);
+                                $this->view->assign('item', $item_s);
                                 $this->view->assign('serviceName', $serviceName);
                                 $this->view->assign('serviceLinks', $serviceLinks);
                                 $content .= $this->view->fetch('admin/ipinfo.tpl');
