@@ -1,8 +1,11 @@
 {checkpermission component="Ztools::" instance="::" level="ACCESS_ADMIN" assign="rightsAdmin"}
+{include file='admin/ajax_jquery.tpl'}
+{include file='admin/ipinfo_ajax.tpl'}
+
 {adminheader}
 <div class="z-admin-content-pagetitle">
     {icon type="info" size="small"}
-    <h3>{gt text='Server information'}</h3>
+    <h3>{gt text='Server information'} {$coredata.version_num}</h3>
 </div>
 
 <form class="z-form" action="{modurl modname="Ztools" type="admin" func="main"}" method="post" enctype="application/x-www-form-urlencoded">
@@ -24,7 +27,10 @@
         <div class="z-formrow">
             <label>{gt text='Server IP address and port'}</label>
             <span><strong>{$server_ip}:{$server_port}</strong></span>
-            <div class="z-formnote"><strong><a href="https://ipinfo.io/{$server_ip}" target="_blank">{gt text='See details'}</a></strong></div>
+            <div class="z-formnote">
+                <strong><a href="" onclick="Ztools_showIpInfo('{$server_ip}'); return false;">{gt text='See details'}</a></strong>
+                &nbsp;&nbsp;<a href="https://ipinfo.io/{$server_ip}" target="_blank">{gt text='Visit site'}</a>
+            </div>
         </div>
         <div class="z-formrow">
             <label>{gt text='Site root directory'}</label>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula module\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-03 17:41+0000\n"
-"PO-Revision-Date: 2015-03-03 19:43+0200\n"
+"POT-Creation-Date: 2015-03-06 20:11+0000\n"
+"PO-Revision-Date: 2015-03-06 22:12+0200\n"
 "Last-Translator: N.Petkov <nik@osi.bg>\n"
 "Language-Team: www.cmstory.com <office@cmstory.com>\n"
 "Language: bg_BG\n"
@@ -59,72 +59,76 @@ msgstr "Скриптове"
 msgid "Settings"
 msgstr "Настройки"
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:59
-#: modules/Ztools/lib/Ztools/Api/Admin.php:292
+#: modules/Ztools/lib/Ztools/Api/Admin.php:52
+msgid "Wiki"
+msgstr "Помощ"
+
+#: modules/Ztools/lib/Ztools/Api/Admin.php:65
+#: modules/Ztools/lib/Ztools/Api/Admin.php:298
 #: modules/Ztools/lib/Ztools/Api/Backup.php:76
 msgid "Error! File name can not be empty."
 msgstr "Грешка! Името на файла не може да бъде празно."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:62
-#: modules/Ztools/lib/Ztools/Api/Admin.php:295
+#: modules/Ztools/lib/Ztools/Api/Admin.php:68
+#: modules/Ztools/lib/Ztools/Api/Admin.php:301
 #, php-format
 msgid "Error! File %s already exist."
 msgstr "Грешка! Файл %s вече съществува."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:68
-#: modules/Ztools/lib/Ztools/Api/Admin.php:143
+#: modules/Ztools/lib/Ztools/Api/Admin.php:74
+#: modules/Ztools/lib/Ztools/Api/Admin.php:149
 #: modules/Ztools/lib/Ztools/Api/Backup.php:228
 #, php-format
 msgid "Error! Can not create file %s."
 msgstr "Грешка! Не може да се създаде файл %s."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:74
-#: modules/Ztools/lib/Ztools/Api/Admin.php:148
+#: modules/Ztools/lib/Ztools/Api/Admin.php:80
+#: modules/Ztools/lib/Ztools/Api/Admin.php:154
 #, php-format
 msgid "Error! Can not write to file %s."
 msgstr "Грешка! Не може да се записва във файл %s."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:93
+#: modules/Ztools/lib/Ztools/Api/Admin.php:99
 #, php-format
 msgid "Result from: %s"
 msgstr "Резултат от: %s"
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:96
+#: modules/Ztools/lib/Ztools/Api/Admin.php:102
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:324
 #, php-format
 msgid "Error! File does not exist: %s"
 msgstr "Грешка! Файлът не съществува: %s"
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:155
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:353
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:567
+#: modules/Ztools/lib/Ztools/Api/Admin.php:161
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:357
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:571
 #, php-format
 msgid "Error! File %s can not be deleted."
 msgstr "Грешка! File %s не може да бъде изтрит."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:273
+#: modules/Ztools/lib/Ztools/Api/Admin.php:279
 #, php-format
 msgid "Can not read from file %s."
 msgstr "Не може да се чете от файл %s."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:277
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:356
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:570
+#: modules/Ztools/lib/Ztools/Api/Admin.php:283
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:360
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:574
 #, php-format
 msgid "File does not exist: %s"
 msgstr "Файлът не съществува: %s"
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:302
+#: modules/Ztools/lib/Ztools/Api/Admin.php:308
 #, php-format
 msgid "Done! Database backup is created in file %s."
 msgstr "Готово! Архив на базата данни е създаден във файл %s."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:304
+#: modules/Ztools/lib/Ztools/Api/Admin.php:310
 #, php-format
 msgid "Error creating database backup in file %s."
 msgstr "Грешка при създаване на архив на базата данни във файл %s."
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:308
+#: modules/Ztools/lib/Ztools/Api/Admin.php:314
 #, php-format
 msgid "Size of created file is %s bytes."
 msgstr "Размер на създадения файл е %s байта."
@@ -198,7 +202,7 @@ msgstr ""
 "поставят скриптовете за изпълнение!"
 
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:188
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:408
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:412
 #, php-format
 msgid "New file %s is created."
 msgstr "Новият файл %s е създаден."
@@ -211,47 +215,63 @@ msgstr "Готово! Избраните скриптове са изпълне�
 msgid "Please select scripts to execute!"
 msgstr "Моля изберете скрипт за изпълнение!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:351
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:565
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:355
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:569
 #, php-format
 msgid "File %s is deleted."
 msgstr "Файл %s е изтрит."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:400
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:404
 msgid "Error! File name is empty."
 msgstr "Грешка! Името на файла е празно."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:415
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:419
 #, php-format
 msgid "Error! Can not write content to file %s."
 msgstr "Грешка! Не може да се запише съдържанието във файл %s."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:417
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:421
 #, php-format
 msgid "Done! File %s is saved."
 msgstr "Готово! Файл %s е запазен."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:420
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:424
 #, php-format
 msgid "Error! File %s does not exist."
 msgstr "Грешка! Файл %s не съществува."
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:470
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:474
 msgid "Please specify in module settings directory for backups to store!"
 msgstr ""
 "Моля укажете в настройките на модула в коя директория ще се съхраняват "
 "архивите!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:485
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:489
 msgid "Please visit module settings and create directory for backups to store!"
 msgstr ""
 "Моля посетете настройките на модула и създайте директорията, в която ще се "
 "съхраняват архивите!"
 
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:580
-#: modules/Ztools/lib/Ztools/Controller/Admin.php:592
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:584
+#: modules/Ztools/lib/Ztools/Controller/Admin.php:596
 msgid "Please select a file from the list."
 msgstr "Моля изберете файл от списъка."
+
+#: modules/Ztools/lib/Ztools/Controller/Ajax.php:27
+msgid "No IP passed."
+msgstr "Няма подадено IP."
+
+#: modules/Ztools/lib/Ztools/Controller/Ajax.php:54
+msgid "Could not get info."
+msgstr "Не може да получи информацията."
+
+#: modules/Ztools/templates/admin/ipinfo_ajax.tpl:1
+msgid "IP address information"
+msgstr "Информация за IP адрес"
+
+#: modules/Ztools/templates/admin/ipinfo_ajax.tpl:4
+msgid "Close"
+msgstr "Затвори"
 
 #: modules/Ztools/templates/admin/backupdb.tpl:12
 msgid "Database backups"
@@ -426,79 +446,83 @@ msgstr "Възстанови"
 msgid "Restore backup"
 msgstr "Възстанови от архив"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:5
+#: modules/Ztools/templates/admin/sysinfo.tpl:8
 msgid "Server information"
 msgstr "Информация за сървъра"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:10
+#: modules/Ztools/templates/admin/sysinfo.tpl:13
 #: modules/Ztools/templates/admin/clientinfo.tpl:9
 msgid "General info"
 msgstr "Обща информация"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:14
-#: modules/Ztools/templates/admin/sysinfo.tpl:39
+#: modules/Ztools/templates/admin/sysinfo.tpl:17
+#: modules/Ztools/templates/admin/sysinfo.tpl:45
 msgid "Please enter URL in settings."
 msgstr "Моля въведете URL в настройките."
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:14
-#: modules/Ztools/templates/admin/sysinfo.tpl:16
+#: modules/Ztools/templates/admin/sysinfo.tpl:17
+#: modules/Ztools/templates/admin/sysinfo.tpl:19
 msgid "Hosting admin panel"
 msgstr "Админ панел на хостинга"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:16
-#: modules/Ztools/templates/admin/sysinfo.tpl:41
-#: modules/Ztools/templates/admin/sysinfo.tpl:65
+#: modules/Ztools/templates/admin/sysinfo.tpl:19
+#: modules/Ztools/templates/admin/sysinfo.tpl:47
+#: modules/Ztools/templates/admin/sysinfo.tpl:71
 msgid "Open on new page"
 msgstr "Отваря на нова страница"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:21
+#: modules/Ztools/templates/admin/sysinfo.tpl:24
 msgid "System"
 msgstr "Система"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:25
+#: modules/Ztools/templates/admin/sysinfo.tpl:28
 msgid "Server IP address and port"
 msgstr "IP адрес и порт на сървъра"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:27
+#: modules/Ztools/templates/admin/sysinfo.tpl:31
 #: modules/Ztools/templates/admin/clientinfo.tpl:13
 #: modules/Ztools/templates/admin/clientinfo.tpl:21
 msgid "See details"
 msgstr "Виж детайли"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:30
+#: modules/Ztools/templates/admin/sysinfo.tpl:32
+msgid "Visit site"
+msgstr "Посети сайта"
+
+#: modules/Ztools/templates/admin/sysinfo.tpl:36
 msgid "Site root directory"
 msgstr "Основна директория на сайта"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:35
+#: modules/Ztools/templates/admin/sysinfo.tpl:41
 msgid "Database info"
 msgstr "Информация за базата данни"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:39
-#: modules/Ztools/templates/admin/sysinfo.tpl:41
+#: modules/Ztools/templates/admin/sysinfo.tpl:45
+#: modules/Ztools/templates/admin/sysinfo.tpl:47
 msgid "Database admin panel"
 msgstr "Админ панел на базата данни"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:46
+#: modules/Ztools/templates/admin/sysinfo.tpl:52
 msgid "Database server"
 msgstr "Сървър на базата данни"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:50
+#: modules/Ztools/templates/admin/sysinfo.tpl:56
 msgid "Database driver"
 msgstr "Драйвер на базата данни"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:54
+#: modules/Ztools/templates/admin/sysinfo.tpl:60
 msgid "Database host"
 msgstr "Хост на базата данни"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:58
+#: modules/Ztools/templates/admin/sysinfo.tpl:64
 msgid "Database name"
 msgstr "Име на базата данни"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:64
+#: modules/Ztools/templates/admin/sysinfo.tpl:70
 msgid "PHP info"
 msgstr "PHP информация"
 
-#: modules/Ztools/templates/admin/sysinfo.tpl:65
+#: modules/Ztools/templates/admin/sysinfo.tpl:71
 msgid "Display PHP info in new page"
 msgstr "Покажи PHP информация на нова страница"
 
@@ -827,3 +851,35 @@ msgstr "Бисквитки"
 #: modules/Ztools/templates/admin/clientinfo.tpl:33
 msgid "Display on new page"
 msgstr "Показва на нова страница"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:4
+msgid "IP address"
+msgstr "IP адрес"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:8
+msgid "Host name"
+msgstr "Име на хост"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:12
+msgid "City"
+msgstr "Град"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:16
+msgid "Region"
+msgstr "Регион"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:20
+msgid "Country"
+msgstr "Държава"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:24
+msgid "Location"
+msgstr "Място"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:28
+msgid "Organization"
+msgstr "Организация"
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:33
+msgid "Visit service site"
+msgstr "Посетете сайта на услугата"
