@@ -94,7 +94,11 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
 
         if (file_exists($filenameWithpath)) {
             ob_start();
-            include $filenameWithpath;
+            try {
+                include $filenameWithpath;
+            } catch (Exception $e) {
+                LogUtil::registerError($this->__('Error!', $e->getMessage()));
+            }
             $content = ob_get_clean();
             LogUtil::registerStatus('<strong>' . $this->__f('Result from: %s', $filename) . '</strong>');
             LogUtil::registerStatus($content);
