@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Zikula 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-06 20:11+0000\n"
+"POT-Creation-Date: 2015-03-07 20:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,71 +62,77 @@ msgid "Wiki"
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:65
-#: modules/Ztools/lib/Ztools/Api/Admin.php:298
+#: modules/Ztools/lib/Ztools/Api/Admin.php:302
 #: modules/Ztools/lib/Ztools/Api/Backup.php:76
 msgid "Error! File name can not be empty."
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:68
-#: modules/Ztools/lib/Ztools/Api/Admin.php:301
+#: modules/Ztools/lib/Ztools/Api/Admin.php:305
 #, php-format
 msgid "Error! File %s already exist."
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:74
-#: modules/Ztools/lib/Ztools/Api/Admin.php:149
+#: modules/Ztools/lib/Ztools/Api/Admin.php:153
 #: modules/Ztools/lib/Ztools/Api/Backup.php:228
 #, php-format
 msgid "Error! Can not create file %s."
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Admin.php:80
-#: modules/Ztools/lib/Ztools/Api/Admin.php:154
+#: modules/Ztools/lib/Ztools/Api/Admin.php:158
 #, php-format
 msgid "Error! Can not write to file %s."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:99
+#: modules/Ztools/lib/Ztools/Api/Admin.php:100
+#: modules/Ztools/lib/Ztools/Api/Backup.php:208
+#: modules/Ztools/lib/Ztools/Api/Backup.php:373
+msgid "Error!"
+msgstr ""
+
+#: modules/Ztools/lib/Ztools/Api/Admin.php:103
 #, php-format
 msgid "Result from: %s"
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:102
+#: modules/Ztools/lib/Ztools/Api/Admin.php:106
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:324
 #, php-format
 msgid "Error! File does not exist: %s"
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:161
+#: modules/Ztools/lib/Ztools/Api/Admin.php:165
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:357
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:571
 #, php-format
 msgid "Error! File %s can not be deleted."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:279
+#: modules/Ztools/lib/Ztools/Api/Admin.php:283
 #, php-format
 msgid "Can not read from file %s."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:283
+#: modules/Ztools/lib/Ztools/Api/Admin.php:287
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:360
 #: modules/Ztools/lib/Ztools/Controller/Admin.php:574
 #, php-format
 msgid "File does not exist: %s"
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:308
+#: modules/Ztools/lib/Ztools/Api/Admin.php:312
 #, php-format
 msgid "Done! Database backup is created in file %s."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:310
+#: modules/Ztools/lib/Ztools/Api/Admin.php:314
 #, php-format
 msgid "Error creating database backup in file %s."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Api/Admin.php:314
+#: modules/Ztools/lib/Ztools/Api/Admin.php:318
 #, php-format
 msgid "Size of created file is %s bytes."
 msgstr ""
@@ -148,11 +154,6 @@ msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Backup.php:171
 msgid "Status:"
-msgstr ""
-
-#: modules/Ztools/lib/Ztools/Api/Backup.php:208
-#: modules/Ztools/lib/Ztools/Api/Backup.php:373
-msgid "Error!"
 msgstr ""
 
 #: modules/Ztools/lib/Ztools/Api/Backup.php:415
@@ -251,7 +252,7 @@ msgstr ""
 msgid "No IP passed."
 msgstr ""
 
-#: modules/Ztools/lib/Ztools/Controller/Ajax.php:54
+#: modules/Ztools/lib/Ztools/Controller/Ajax.php:75
 msgid "Could not get info."
 msgstr ""
 
@@ -440,7 +441,7 @@ msgid "Server information"
 msgstr ""
 
 #: modules/Ztools/templates/admin/sysinfo.tpl:13
-#: modules/Ztools/templates/admin/clientinfo.tpl:9
+#: modules/Ztools/templates/admin/clientinfo.tpl:13
 msgid "General info"
 msgstr ""
 
@@ -469,12 +470,13 @@ msgid "Server IP address and port"
 msgstr ""
 
 #: modules/Ztools/templates/admin/sysinfo.tpl:31
-#: modules/Ztools/templates/admin/clientinfo.tpl:13
-#: modules/Ztools/templates/admin/clientinfo.tpl:21
+#: modules/Ztools/templates/admin/clientinfo.tpl:18
+#: modules/Ztools/templates/admin/clientinfo.tpl:28
 msgid "See details"
 msgstr ""
 
 #: modules/Ztools/templates/admin/sysinfo.tpl:32
+#: modules/Ztools/templates/admin/clientinfo.tpl:19
 msgid "Visit site"
 msgstr ""
 
@@ -792,35 +794,35 @@ msgstr ""
 msgid "Execute and edit"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:4
+#: modules/Ztools/templates/admin/clientinfo.tpl:8
 msgid "Client information"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:11
+#: modules/Ztools/templates/admin/clientinfo.tpl:15
 msgid "User IP address and port"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:17
+#: modules/Ztools/templates/admin/clientinfo.tpl:24
 msgid "Browser info"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:19
+#: modules/Ztools/templates/admin/clientinfo.tpl:26
 msgid "User agent"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:24
+#: modules/Ztools/templates/admin/clientinfo.tpl:31
 msgid "Accept language"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:28
+#: modules/Ztools/templates/admin/clientinfo.tpl:35
 msgid "Accept"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:32
+#: modules/Ztools/templates/admin/clientinfo.tpl:39
 msgid "Cookies"
 msgstr ""
 
-#: modules/Ztools/templates/admin/clientinfo.tpl:33
+#: modules/Ztools/templates/admin/clientinfo.tpl:40
 msgid "Display on new page"
 msgstr ""
 
@@ -848,10 +850,14 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: modules/Ztools/templates/admin/ipinfo.tpl:28
+#: modules/Ztools/templates/admin/ipinfo.tpl:30
+msgid "click for map"
+msgstr ""
+
+#: modules/Ztools/templates/admin/ipinfo.tpl:38
 msgid "Organization"
 msgstr ""
 
-#: modules/Ztools/templates/admin/ipinfo.tpl:33
+#: modules/Ztools/templates/admin/ipinfo.tpl:43
 msgid "Visit service site"
 msgstr ""
