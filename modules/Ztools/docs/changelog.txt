@@ -1,0 +1,8 @@
+CHANGELOG
+=========
+
+#### 
+	* Ajax for IP info and map for IP location
+
+#### 1.0.1 (4 Mar 2015)
+	* Initial release.
