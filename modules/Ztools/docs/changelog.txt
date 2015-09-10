@@ -1,8 +1,10 @@
 CHANGELOG
 =========
 
-#### 
-	* Ajax for IP info and map for IP location
+Ztools 1.0.2 (2015-09-10) 
+	- Ajax for IP info and map for IP location
+    - Make Ajax reques robust
+    - Test and corrections to work in Zikula 1.4.0
 
-#### 1.0.1 (4 Mar 2015)
-	* Initial release.
+Ztools 1.0.1 (2015-03-04)
+	- Initial release.
