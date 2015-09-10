@@ -13,7 +13,7 @@ class Ztools_Version extends Zikula_AbstractVersion
         $meta['displayname']    = $this->__('System tools');
         $meta['url']            = $this->__(/*!module name that appears in URL*/'ztools');
         $meta['description']    = $this->__('System tools and code execution.');
-        $meta['version']        = '1.0.1';
+        $meta['version']        = '1.0.2';
         $meta['securityschema'] = array('Ztools::' => '::');
         $meta['core_min']       = '1.3.0';
         $meta['capabilities']   = array(HookUtil::SUBSCRIBER_CAPABLE => array('enabled' => true));
