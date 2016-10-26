@@ -6,10 +6,11 @@ echo 'Hello World example!<br /><br />';
 
 // Example with your data (Zikula UserUtil)
 echo 'Your username is ' . UserUtil::getVar('uname') . '<br /><br />';
-echo 'And this is all info for you in the site:<br />';
+
+/*echo 'And this is all info for you in the site:<br />';
 echo '<pre>';
     print_r(UserUtil::getVars(UserUtil::getVar('uid')));
-echo '</pre>';
+echo '</pre>';*/
 
 // Example with php functions
 echo '<pre>';
