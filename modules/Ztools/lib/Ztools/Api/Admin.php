@@ -146,7 +146,10 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
 
         $htaccessFile = DataUtil::formatForOS($this->getScriptsDir() . '.htaccess');
 
-        unlink($htaccessFile);
+        if (file_exists($htaccessFile)) {
+            unlink($htaccessFile);
+        }
+
         if ($type == 'lock') {
             $handle = fopen($htaccessFile, 'w');
             if (!$handle) {
