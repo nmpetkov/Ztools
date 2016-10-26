@@ -168,7 +168,9 @@ class Ztools_Api_Backup extends Zikula_AbstractApi
 
         $return_var = 0;
         exec($command . $parameters, $return_var);
-        LogUtil::registerStatus($this->__('Status:') . ' ' . $return_var);
+        if ($return_var) {
+            LogUtil::registerStatus($this->__('Status:') . ' ' . print_r($return_var, true));
+        }
         
         return true;
     }
