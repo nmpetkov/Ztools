@@ -42,6 +42,12 @@ class Ztools_Api_Admin extends Zikula_AbstractApi
         }
         if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN)) {
             $links[] = array(
+                'url' => ModUtil::url('Zfiler', 'admin', 'filer'),
+                'text' => $this->__('Filer'),
+                'class' => 'z-icon-es-folder');
+        }
+        if (SecurityUtil::checkPermission('Ztools::', '::', ACCESS_ADMIN)) {
+            $links[] = array(
                 'url' => ModUtil::url($this->name, 'admin', 'modifyconfig'),
                 'text' => $this->__('Settings'),
                 'class' => 'z-icon-es-config');
